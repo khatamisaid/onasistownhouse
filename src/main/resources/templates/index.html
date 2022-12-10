@@ -10,8 +10,8 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
     <link rel="stylesheet" href="css/plugins.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="css/style1.css" />
+    <link rel="stylesheet" href="css/plugins/themify-icons.css" />
 </head>
 
 <body>
@@ -69,6 +69,8 @@
                         </ul>
                     </li> -->
                     <li class="nav-item"><a class="nav-link" href="#tentangkami">Tentang Kami</a></li>
+                    <li th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"
+                        class="nav-item"><a class="nav-link" th:href="@{/admin}">Halaman Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -154,7 +156,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="item">
-                        <div class="position-re o-hidden"> <img src="img/rooms/1.jpg" alt=""> </div> 
+                        <div class="position-re o-hidden"> <img src="img/rooms/1.jpg" alt=""> </div>
                         <!-- <span
                             class="category"><a href="rooms2.html">Book</a></span> -->
                         <div class="con">
@@ -180,7 +182,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="item">
-                        <div class="position-re o-hidden"> <img src="img/rooms/2.jpg" alt=""> </div> 
+                        <div class="position-re o-hidden"> <img src="img/rooms/2.jpg" alt=""> </div>
                         <!-- <span
                             class="category"><a href="rooms2.html">Book</a></span> -->
                         <div class="con">
@@ -206,7 +208,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="item">
-                        <div class="position-re o-hidden"> <img src="img/rooms/3.jpg" alt=""> </div> 
+                        <div class="position-re o-hidden"> <img src="img/rooms/3.jpg" alt=""> </div>
                         <!-- <span
                             class="category"><a href="rooms2.html">Book</a></span> -->
                         <div class="con">
@@ -232,7 +234,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="item">
-                        <div class="position-re o-hidden"> <img src="img/rooms/4.jpg" alt=""> </div> 
+                        <div class="position-re o-hidden"> <img src="img/rooms/4.jpg" alt=""> </div>
                         <!-- <span
                             class="category"><a href="rooms2.html">Book</a></span> -->
                         <div class="con">
@@ -258,7 +260,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="item">
-                        <div class="position-re o-hidden"> <img src="img/rooms/7.jpg" alt=""> </div> 
+                        <div class="position-re o-hidden"> <img src="img/rooms/7.jpg" alt=""> </div>
                         <!-- <span
                             class="category"><a href="rooms2.html">Book</a></span> -->
                         <div class="con">
@@ -488,7 +490,19 @@
     <script src="js/select2.js"></script>
     <script src="js/datepicker.js"></script>
     <script src="js/smooth-scroll.min.js"></script>
-    <script src="js/custom.js"></script>
+    <script src="js/custom1.js"></script>
+    <script th:inline="javascript">
+        document.querySelectorAll(".nav-link").forEach((ele) =>
+            ele.addEventListener("click", function (event) {
+                console.log(ele);
+                event.preventDefault();
+                document
+                    .querySelectorAll(".nav-link")
+                    .forEach((ele) => ele.classList.remove("active"));
+                this.classList.add("active")
+            })
+        );
+    </script>
 </body>
 
 </html>
