@@ -10,8 +10,8 @@ spring:
     name: OnasisTownHouse
   datasource:
       url: jdbc:mysql://192.168.100.90/onasistownhouse
-      username: root
-      password: 
+      username: amaeschiffer
+      password: ImNumber4#@4
       driverClassName: com.mysql.cj.jdbc.Driver
   jpa: 
       database: default
