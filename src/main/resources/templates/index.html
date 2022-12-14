@@ -69,8 +69,8 @@
                         </ul>
                     </li> -->
                     <li class="nav-item"><a class="nav-link" href="#tentangkami">Tentang Kami</a></li>
-                    <li th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"
-                        class="nav-item"><a class="nav-link" th:href="@{/admin}">Halaman Admin</a></li>
+                    <li style="cursor: pointer;" th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"
+                        class="nav-item"><a class="nav-link" onclick="window.location.href = '/admin'">Halaman Admin</a></li>
                 </ul>
             </div>
         </div>

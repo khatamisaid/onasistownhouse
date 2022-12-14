@@ -14,6 +14,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .card:hover {
+      opacity: 100%;
+    }
+
+    .card {
+      opacity: 60%;
+    }
+  </style>
 </head>
 
 <body>
@@ -30,7 +39,84 @@
       <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
     </svg>
   </div>
-  <div class="rooms1 section-padding bg-cream vh-100">
+
+  <header class="header slider-fade" id="header">
+    <div class="text-center item bg-img" data-overlay-dark="2" data-background="img/slider/12.png">
+      <div class="v-middle caption">
+        <div class="container w-50">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column justify-content-start">
+                <h4 style="color: #815B5B; margin: 0;">Hello,</h4>
+                <h4 style="color: #815B5B; margin: 0;">welcome!</h4>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <div class="logo" style="margin-top: 20px;">
+                    <img src="img/favicon.png" class="logo-img" alt="">
+                  </div>
+                </div>
+                <div class="col">
+                  <form th:action="@{/login}" method="POST">
+                    <div class="form-group">
+                      <input type="text" class="form-control-sm" name="username" id="username"
+                        placeholder="Masukan username">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" name="password" password="password" id="password"
+                        placeholder="Masukan password">
+                    </div>
+                    <div class="form-check mb-2">
+                      <input id="checkBoxShowPassword" class="form-check-input" type="checkbox">
+                      <label id="lblShowPassword" class="form-check-label" for="defaultCheck1">
+                        Show Password
+                      </label>
+                    </div>
+                    <button class="btn w-100 mt-2" style="background-color: #FEBE8C; color: white;">Login</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="container">
+          <div class="row">
+            <div class="col-md-10 offset-md-1">
+              <div class="container">
+                <div class="card" style="border-width: thick; border-color: #FEBE8C;">
+                  <div class="card-body">
+                    <div class="d-flex flex-column">
+                      <h2 style="color: #815B5B; margin: 0;">Hello,</h2>
+                      <h2 style="color: #815B5B; margin: 0;">welcome!</h2>
+                    </div>
+                    <form th:action="@{/login}" method="POST">
+                      <div class="form-group">
+                        <input type="text" class="form-control-sm" name="username" id="username"
+                          placeholder="Masukan username">
+                      </div>
+                      <div class="form-group">
+                        <input type="password" name="password" password="password" id="password"
+                          placeholder="Masukan password">
+                      </div>
+                      <div class="form-check mb-2">
+                        <input id="checkBoxShowPassword" class="form-check-input" type="checkbox">
+                        <label id="lblShowPassword" class="form-check-label" for="defaultCheck1">
+                          Show Password
+                        </label>
+                      </div>
+                      <button class="btn w-100 mt-2" style="background-color: #FEBE8C; color: white;">Login</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </header>
+
+  <!-- <div class="rooms1 section-padding bg-cream vh-100">
     <div class="container w-50">
       <div class="card " style="border-width: thick; border-color: #FEBE8C;">
         <div class="card-body">
@@ -73,7 +159,7 @@
         <p class="m-0 text-center text-white">Copyright &copy; Onasis Town House 2022</p>
       </div>
     </footer>
-  </div>
+  </div> -->
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/jquery-migrate-3.0.0.min.js"></script>
   <script src="js/modernizr-2.6.2.min.js"></script>
