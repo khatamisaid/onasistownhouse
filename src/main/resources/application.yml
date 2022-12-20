@@ -1,6 +1,6 @@
 spring:
    profiles:
-      active: local
+      active: dev
 ---
 spring:
   config:
@@ -70,7 +70,8 @@ server:
   error:
     whitelabel:
       enabled: false
-    path: /error  
+    path: /error 
+storage: /home/onasistownhouse.com/storage 
 ---
 spring:
   config:
@@ -143,7 +144,4 @@ server:
     whitelabel:
       enabled: false
     path: /error
-ftp:
-  remoteHost: 181.215.79.190
-  username: admin_onasis
-  password: xK-pbi9%r8J#h3GH
+storage: C:\\filetemp\\
