@@ -71,8 +71,11 @@ server:
     whitelabel:
       enabled: false
     path: /error 
-storage: /home/onasistownhouse.com/storage/ 
+storage: /home/onasistownhouse.com/storage/
 logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file: /home/onasistownhouse.com/logs/onasistownhouse.com.run_log
 ---
 spring:
@@ -148,4 +151,7 @@ server:
     path: /error
 storage: C:\\filetemp\\
 logging:
-  file: C:\\logs\\onasistownhouse\\onasistownhouse.log
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: C://workspace//onasistownhouse.log
