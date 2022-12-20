@@ -71,7 +71,7 @@ server:
     whitelabel:
       enabled: false
     path: /error 
-storage: /home/onasistownhouse.com/storage 
+storage: /home/onasistownhouse.com/storage/ 
 ---
 spring:
   config:
