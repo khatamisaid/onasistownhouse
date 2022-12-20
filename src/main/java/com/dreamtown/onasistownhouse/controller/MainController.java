@@ -15,6 +15,7 @@ import com.dreamtown.onasistownhouse.utils.FileManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,8 +46,12 @@ public class MainController {
     public ResponseEntity<Map> upload(@RequestParam("file") MultipartFile multipartFile) {
         Map data = new HashMap<>();
         try {
-            multipartFile.transferTo(new File(env.getProperty("storage") + multipartFile.getOriginalFilename()));
+            File fileTemp = new File(env.getProperty("storage") + multipartFile.getOriginalFilename());
+            multipartFile.transferTo(fileTemp);
+            URLConnection connection = fileTemp.toURL().openConnection();
+            String mimeType = connection.getContentType();
             data.put("message", "sukses upload file");
+            data.put("mimeType", mimeType);
         } catch (IllegalStateException | IOException e) {
             System.out.println(e.getMessage());
             data.put("message", "gagal upload file");
