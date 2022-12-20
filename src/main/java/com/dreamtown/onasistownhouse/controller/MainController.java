@@ -2,13 +2,16 @@ package com.dreamtown.onasistownhouse.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.utils.FileManager;
@@ -57,5 +60,11 @@ public class MainController {
             data.put("message", "gagal upload file");
         }
         return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/loadfile/{filename}")
+    @ResponseBody
+    public FileSystemResource loadfile(@PathVariable String filename) {
+        return new FileSystemResource(new File(env.getProperty("storage") + filename));
     }
 }
