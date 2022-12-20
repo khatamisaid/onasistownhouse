@@ -1,6 +1,6 @@
 spring:
    profiles:
-      active: dev
+      active: local
 ---
 spring:
   config:
@@ -72,6 +72,8 @@ server:
       enabled: false
     path: /error 
 storage: /home/onasistownhouse.com/storage/ 
+logging:
+  file: /home/onasistownhouse.com/logs/onasistownhouse.com.run_log
 ---
 spring:
   config:
