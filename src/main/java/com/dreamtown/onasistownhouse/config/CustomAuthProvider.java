@@ -45,7 +45,6 @@ public class CustomAuthProvider implements AuthenticationProvider {
         }catch(NoSuchElementException e){
             throw new BadCredentialsException("Username Tidak ditemukan");
         }
-        
         if (encoder.matches(password, user.getPassword())) {
             httpSession.setAttribute("id", user.getIdUser());
             httpSession.setAttribute("username", user.getUsername());
