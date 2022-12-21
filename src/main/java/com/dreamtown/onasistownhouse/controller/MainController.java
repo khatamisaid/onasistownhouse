@@ -44,6 +44,7 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String index(Model model) {
+        System.out.println("tes logs");
         return "index";
     }
 
@@ -73,7 +74,8 @@ public class MainController {
 
     @RequestMapping(value = "/loadfile/{filename}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<InputStreamResource> loadfile(@PathVariable String filename) throws MalformedURLException, IOException {
+    public ResponseEntity<InputStreamResource> loadfile(@PathVariable String filename)
+            throws MalformedURLException, IOException {
         File fileTemp = new File(env.getProperty("storage") + filename);
         URLConnection connection = fileTemp.toURL().openConnection();
         String mimeType = connection.getContentType();
