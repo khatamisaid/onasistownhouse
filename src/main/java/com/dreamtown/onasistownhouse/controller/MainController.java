@@ -44,7 +44,6 @@ public class MainController {
 
     @GetMapping(value = "/")
     public String index(Model model) {
-        System.out.println("tes logs");
         return "index";
     }
 

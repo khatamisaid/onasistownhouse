@@ -6,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Onasis Town House | CMS</title>
-    <link rel="shortcut icon" href="img/favicon.png" />
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
-    <link rel="stylesheet" href="css/plugins.css" />
-    <link rel="stylesheet" href="css/style6.css" />
-    <link rel="stylesheet" href="css/plugins/themify-icons.css" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/style6.css}" />
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -30,92 +29,12 @@
     </div>
     <!-- Sidebar Section -->
     <a href="#" class="js-cappa-nav-toggle cappa-nav-toggle"><i></i></a>
-    <aside id="cappa-aside">
-        <!-- Logo -->
-        <div class="cappa-logo">
-            <a th:href="@{/admin}">
-                <!-- <img src="img/logo-dark.png" class="logo-img" alt=""> -->
-                <div>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                </div>
-                <h2>Onasis<span>Town House</span></h2>
-            </a>
-        </div>
-        <!-- Menu -->
-        <nav class="cappa-main-menu">
-            <ul>
-                <li class='cappa-sub' th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a
-                        href='about.html'>User
-                        Management</a>
-                    <ul>
-                        <li><a href='index.html'>Tambah User</a></li>
-                        <li><a href='index.html'>Lihat User</a></li>
-                        <li><a href='index2.html'>Ubah Data User</a></li>
-                        <li><a href='index3.html'>Hapus User</a></li>
-                    </ul>
-                </li>
-                <li class='cappa-sub'><a href='#'>Property</a>
-                    <ul>
-                        <li><a href='index.html'>Home Layout 1</a></li>
-                        <li><a href='index2.html'>Home Layout 2</a></li>
-                        <li><a href='index3.html'>Home Layout 3</a></li>
-                        <li class="active"><a href='index4.html'>Home Layout 4</a></li>
-                        <li><a href='index5.html'>Home Layout 5</a></li>
-                        <li><a href='index6.html'>Kenburns Slider</a></li>
-                        <li><a href='index8.html'>Parallax Image</a></li>
-                    </ul>
-                </li>
-                <li><a href='about.html'>Website Title</a></li>
-                <li><a href='about.html'>Calculating</a></li>
-                <!-- <li class='cappa-sub'><a href='#'> Rooms & Suites</a>
-                    <ul>
-                        <li><a href='rooms.html'>Rooms 1</a></li>
-                        <li><a href='rooms2.html'>Rooms 2</a></li>
-                        <li><a href='rooms3.html'>Rooms 3</a></li>
-                        <li><a href='room-details.html'>Room Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="restaurant.html">Restaurant</a></li>
-                <li><a href="spa-wellness.html">Spa Center</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li class='cappa-sub'><a href='#'>News</a>
-                    <ul>
-                        <li><a href='news.html'>News 1</a></li>
-                        <li><a href='news2.html'>News 2</a></li>
-                        <li><a href='post.html'>Single Post</a></li>
-                    </ul>
-                </li>
-                <li><a href='contact.html'>Contact</a></li> -->
-            </ul>
-        </nav>
-        <!-- Sidebar Footer -->
-        <div class="cappa-footer">
-            <div class="footer-column footer-contact">
-                <div class="footer-contact-info">
-                    <div onclick="logout()" class="reservations" style="cursor: pointer;">
-                        <div class="icon"><span class="ti-power-off"></span></div>
-                        <div class="text">
-                            <p>Keluar</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
+    <div th:replace="admin/fragments/aside :: sidebar"></div>
     <!-- Main -->
     <div id="cappa-main">
         <section class="section-padding">
-            <div class="container">
-                <div class="card">
-                    <div class="card-body">
-                        <h2>tes</h2>
-                    </div>
-                </div>
-            </div>
+            <th:block th:replace="~{${'admin/fragments/' + template} :: ${template}}"></th:block>
+            <!-- <div th:replace="admin/fragments/content :: index"></div> -->
         </section>
 
         <!-- <div class="container mt-5">
@@ -176,24 +95,24 @@
         </div> -->
     </div>
     <!-- jQuery -->
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/jquery-migrate-3.0.0.min.js"></script>
-    <script src="js/modernizr-2.6.2.min.js"></script>
-    <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/jquery.isotope.v3.0.2.js"></script>
-    <script src="js/pace.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/scrollIt.min.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/jquery.magnific-popup.js"></script>
-    <script src="js/YouTubePopUp.js"></script>
-    <script src="js/select2.js"></script>
-    <script src="js/datepicker.js"></script>
-    <script src="js/smooth-scroll.min.js"></script>
-    <script src="js/custom6.js"></script>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-3.0.0.min.js}"></script>
+    <script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
+    <script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/js/jquery.isotope.v3.0.2.js}"></script>
+    <script th:src="@{/js/pace.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scrollIt.min.js}"></script>
+    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/js/YouTubePopUp.js}"></script>
+    <script th:src="@{/js/select2.js}"></script>
+    <script th:src="@{/js/datepicker.js}"></script>
+    <script th:src="@{/js/smooth-scroll.min.js}"></script>
+    <script th:src="@{/js/custom6.js}"></script>
     <script th:inline="javascript">
         function logout() {
             window.location.href = "/logout";

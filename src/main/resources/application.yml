@@ -1,6 +1,6 @@
 spring:
    profiles:
-      active: dev
+      active: local
 ---
 spring:
   config:
@@ -16,7 +16,7 @@ spring:
   jpa: 
       database: default
       hibernate: 
-         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+         dialect: org.hibernate.dialect.MariaDB104Dialect
          ddl-auto: none
   thymeleaf:
     cache: false
@@ -49,7 +49,7 @@ spring:
   jpa: 
       database: default
       hibernate: 
-         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+         dialect: org.hibernate.dialect.MariaDB104Dialect
          ddl-auto: update
   thymeleaf:
     cache: false
@@ -92,7 +92,7 @@ spring:
   jpa: 
       database: default
       hibernate: 
-         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+         dialect: org.hibernate.dialect.MariaDB104Dialect
          ddl-auto: update
   thymeleaf:
     cache: false
@@ -128,7 +128,7 @@ spring:
   jpa: 
       database: default
       hibernate: 
-         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+         dialect: org.hibernate.dialect.MariaDB104Dialect
          ddl-auto: update
   thymeleaf:
     cache: false

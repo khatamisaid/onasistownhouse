@@ -1,3 +1,79 @@
-<div th:fragment="aside">
-    
-</div>
+<aside id="cappa-aside" th:fragment="sidebar">
+    <!-- Logo -->
+    <div class="cappa-logo">
+        <a th:href="@{/admin}">
+            <!-- <img src="img/logo-dark.png" class="logo-img" alt=""> -->
+            <div>
+                <i class="star"></i>
+                <i class="star"></i>
+                <i class="star"></i>
+                <i class="star"></i>
+                <i class="star"></i>
+            </div>
+            <h2>Onasis<span>Town House</span></h2>
+        </a>
+    </div>
+    <!-- Menu -->
+    <nav class="cappa-main-menu">
+        <ul>
+            <li style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/managementUser' ? 'active':''}"
+                th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a th:href='@{/admin/managementUser}'>User
+                    Management</a></li>
+            <!-- <li style="cursor: pointer;" class='cappa-sub'
+                th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a href='about.html'>User
+                    Management</a>
+                <ul>
+                    <li><a th:href='@{/admin/managementUser/tambahUser}'>Tambah User</a></li>
+                    <li><a th:href='@{/admin/managementUser/lihatUser}'>Lihat User</a></li>
+                    <li><a th:href='@{/admin/managementUser/ubahDataUser}'>Ubah Data User</a></li>
+                    <li><a th:href='@{/admin/managementUser/hapusUser}'>Hapus User</a></li>
+                </ul>
+            </li> -->
+            <li style="cursor: pointer;" class='cappa-sub'><a href='#'>Property</a>
+                <ul>
+                    <li><a href='index.html'>Home Layout 1</a></li>
+                    <li><a href='index2.html'>Home Layout 2</a></li>
+                    <li><a href='index3.html'>Home Layout 3</a></li>
+                    <li class="active"><a href='index4.html'>Home Layout 4</a></li>
+                    <li><a href='index5.html'>Home Layout 5</a></li>
+                    <li><a href='index6.html'>Kenburns Slider</a></li>
+                    <li><a href='index8.html'>Parallax Image</a></li>
+                </ul>
+            </li>
+            <li><a href='about.html'>Website Title</a></li>
+            <li><a href='about.html'>Calculating</a></li>
+            <!-- <li class='cappa-sub'><a href='#'> Rooms & Suites</a>
+                <ul>
+                    <li><a href='rooms.html'>Rooms 1</a></li>
+                    <li><a href='rooms2.html'>Rooms 2</a></li>
+                    <li><a href='rooms3.html'>Rooms 3</a></li>
+                    <li><a href='room-details.html'>Room Details</a></li>
+                </ul>
+            </li>
+            <li><a href="restaurant.html">Restaurant</a></li>
+            <li><a href="spa-wellness.html">Spa Center</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li class='cappa-sub'><a href='#'>News</a>
+                <ul>
+                    <li><a href='news.html'>News 1</a></li>
+                    <li><a href='news2.html'>News 2</a></li>
+                    <li><a href='post.html'>Single Post</a></li>
+                </ul>
+            </li>
+            <li><a href='contact.html'>Contact</a></li> -->
+        </ul>
+    </nav>
+    <!-- Sidebar Footer -->
+    <div class="cappa-footer">
+        <div class="footer-column footer-contact">
+            <div class="footer-contact-info">
+                <div onclick="logout()" class="reservations" style="cursor: pointer;">
+                    <div class="icon"><span class="ti-power-off"></span></div>
+                    <div class="text">
+                        <p>Keluar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
