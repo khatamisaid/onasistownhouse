@@ -38,7 +38,7 @@ public class Property extends DateAudit {
     private Integer idProperty;
 
     @Column(name = "property_name")
-    private Integer propertyName;
+    private String propertyName;
 
     @Column(name = "harga")
     private Double harga;

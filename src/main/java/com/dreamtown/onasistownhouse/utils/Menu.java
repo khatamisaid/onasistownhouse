@@ -13,11 +13,19 @@ import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 
 @Service
 public class Menu {
-    
+
     @Autowired
     private PropertyRepository propertyRepository;
 
-    public List<Property> getListProperty(){
-        return propertyRepository.findAll();
+    public List<Map> getListProperty() {
+        List<Property> listProperty = propertyRepository.findAll();
+        List<Map> menus = new ArrayList<>();
+        for (Property propery : listProperty) {
+            Map data = new HashMap<>();
+            data.put("text", propery.getPropertyName());
+            data.put("url", "/admin/p/" + propery.getIdProperty());
+            menus.add(data);
+        }
+        return menus;
     }
 }

@@ -16,28 +16,16 @@
     <!-- Menu -->
     <nav class="cappa-main-menu">
         <ul>
-            <li style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/managementUser' ? 'active':''}"
-                th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a th:href='@{/admin/managementUser}'>User
+            <li style="cursor: pointer;"
+                th:classappend="${#httpServletRequest.getRequestURI() == '/admin/managementUser' ? 'active':''}"
+                th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a
+                    th:href='@{/admin/managementUser}'>User
                     Management</a></li>
-            <!-- <li style="cursor: pointer;" class='cappa-sub'
-                th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a href='about.html'>User
-                    Management</a>
-                <ul>
-                    <li><a th:href='@{/admin/managementUser/tambahUser}'>Tambah User</a></li>
-                    <li><a th:href='@{/admin/managementUser/lihatUser}'>Lihat User</a></li>
-                    <li><a th:href='@{/admin/managementUser/ubahDataUser}'>Ubah Data User</a></li>
-                    <li><a th:href='@{/admin/managementUser/hapusUser}'>Hapus User</a></li>
-                </ul>
-            </li> -->
             <li style="cursor: pointer;" class='cappa-sub'><a href='#'>Property</a>
                 <ul>
-                    <li><a href='index.html'>Home Layout 1</a></li>
-                    <li><a href='index2.html'>Home Layout 2</a></li>
-                    <li><a href='index3.html'>Home Layout 3</a></li>
-                    <li class="active"><a href='index4.html'>Home Layout 4</a></li>
-                    <li><a href='index5.html'>Home Layout 5</a></li>
-                    <li><a href='index6.html'>Kenburns Slider</a></li>
-                    <li><a href='index8.html'>Parallax Image</a></li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI()} == ${menu.url} ? 'active':''"
+                        th:each="menu:${menus}"><a th:href="@{${menu.url}}" th:text="${menu.text}"></a></li>
+                    <li><a onclick="openModalTambahProperty()"><i class="ti-plus"></i> Tambah Property</a></li>
                 </ul>
             </li>
             <li><a href='about.html'>Website Title</a></li>
@@ -76,4 +64,9 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        function openModalTambahProperty() {
+            console.log('clicked');
+        }
+    </script>
 </aside>

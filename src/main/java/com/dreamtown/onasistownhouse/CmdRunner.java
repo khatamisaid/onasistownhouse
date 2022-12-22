@@ -3,12 +3,17 @@ package com.dreamtown.onasistownhouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.Role;
 import com.dreamtown.onasistownhouse.entity.User;
+import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.RoleRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
 
@@ -22,6 +27,9 @@ public class CmdRunner implements CommandLineRunner {
 
         @Autowired
         private UserRepository UserRepository;
+
+        @Autowired
+        private PropertyRepository propertyRepository;
 
         @Autowired
         private PasswordEncoder encoder;
@@ -44,5 +52,20 @@ public class CmdRunner implements CommandLineRunner {
                                 new User(3, "marketing", encoder.encode("onasismarketing"), "marketing@onasistownhouse.com",
                                                 marketingRole));
                 logger.info("User and Role Has been created");
+
+                Double harga = 2000000000.0;
+
+                Property property1 = new Property(1, "Mawar", harga, new ArrayList<>());
+                propertyRepository.save(property1);
+                Property property2 = new Property(2, "Melati", harga, new ArrayList<>());
+                propertyRepository.save(property2);
+                Property property3 = new Property(3, "Kamboja", harga, new ArrayList<>());
+                propertyRepository.save(property3);
+                Property property4 = new Property(4, "Taman Anggrek", harga, new ArrayList<>());
+                propertyRepository.save(property4);
+                Property property5 = new Property(5, "Cempaka Putih", harga, new ArrayList<>());
+                propertyRepository.save(property5);
+                logger.info("Property Has been created");
+                
         }
 }

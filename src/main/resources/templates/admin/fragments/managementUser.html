@@ -1,9 +1,158 @@
 <div class="container" th:fragment="managementUser">
+    <style>
+        label {
+            color: #aa8453;
+        }
+
+        input {
+            color: #1b1b1b !important;
+        }
+    </style>
     <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
         <div class="card-body">
             <div class="d-flex justify-content-center">
-                <h2>Management User</h2>
+                <h2>User Management</h2>
+            </div>
+            <div class="row p-3">
+                <div class="table-responsive">
+                    <table id="tableUser" class="table dt-responsive nowrap w-100 dataTable dtr-inline">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                    <button style="background-color: #aa8453; color: white;" type="button"
+                                        id="tambahUser" class="btn" data-toggle="modal" data-target="#modalTambahUser">+
+                                        Tambah User</button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    <div id="modalUser" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="color:#aa8453;" class="modal-title" id="textHeaderModal">Tambah User</h4>
+                    <button type="button" class="close" onclick="dismiss('modalUser')" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" id="formModalUser">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control-sm" id="username" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input style="color: #1b1b1b;" type="email" class="form-control-sm" id="email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input style="color: #1b1b1b;" type="password" class="form-control-sm" id="password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role" id="role" class="custom-select">
+                                <option value="" selected disabled>-- Pilih Role --</option>
+                                <option value="2">Admin</option>
+                                <option value="3">Marketing</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" id="footerModal">
+                    <button id="btnCloseModal" type="button" class="btn btn-secondary" onclick="dismiss('modalUser')">Close</button>
+                    <button id="btnSimpanModal" type="button" class="btn" style="background-color: #aa8453; color: white;">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="assets/js :: js"></div>
+    <script th:inline="javascript">
+        function findUserById(id) {
+            $("#textHeaderModal").text('Lihat Data User');
+            $("#footerModal").hide();
+            $("#modalUser").toggle('modal');
+        }
+        $("#modalUser").on('hidden.bs.modal', function(){
+            $('#formModalUser').trigger("reset");
+            $("#role").val("").change();
+        });
+        function deleteUserById(id) {
+            console.log(id)
+        }
+        function dismiss(id) {
+            $(`#${id}`).toggle('modal');
+        }
+        $(document).ready(function () {
+            showTableUser();
+        });
+        var tableUser;
+        function showTableUser() {
+            tableUser = $("#tableUser").DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>\n        <'table-responsive'tr>\n        <'row align-items-center'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 d-flex justify-content-end'p>>",
+                language: {
+                    "zeroRecords": "Data Tidak Ada",
+                    paginate: {
+                        previous: '<i class="fa fa-lg fa-angle-left"></i>',
+                        next: '<i class="fa fa-lg fa-angle-right"></i>'
+                    }
+                },
+                createdRow: function (row, data, dataIndex) {
+                    $(row).addClass('text-center');
+                },
+                serverSide: true,
+                processing: true,
+                searching: false,
+                lengthMenu: [3, 5, 15],
+                ajax: function (data, callback, settings) {
+                    var page = Math.ceil(
+                        settings._iDisplayStart / settings._iDisplayLength
+                    );
+                    var out = [];
+                    var length = 0;
+                    $.get(`/admin/getUser/all?start=${page}&length=${data.length}`, function (response) {
+                        response.data.content.forEach(function (user, i) {
+                            var action = `<button title="Lihat Data User" type="button" class="btn btn-success" onclick="findUserById(${user.idUser})">
+                                        <i class="ti-eye"></i>
+                                    </button>
+                                    <button title="Ubah Data User" type="button" class="btn btn-primary" onclick="findUserById(${user.idUser})">
+                                        <i class="ti-pencil"></i>
+                                    </button>
+                                    <button title="Hapus Data User" type="button" class="btn btn-danger" onclick="deleteUserById(${user.idUser})" >
+                                        <i class="ti-trash"></i>
+                                    </button>`;
+                            out.push([
+                                ++length,
+                                user.username,
+                                user.email,
+                                user.role.roleName,
+                                action,
+                            ]);
+                        });
+                        callback({
+                            recordsTotal: response.data.totalElements,
+                            recordsFiltered: response.data.totalElements,
+                            data: out
+                        });
+                    });
+
+                }
+            });
+        }
+    </script>
 </div>
