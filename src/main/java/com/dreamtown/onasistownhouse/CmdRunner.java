@@ -5,15 +5,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.dreamtown.onasistownhouse.entity.Property;
+import com.dreamtown.onasistownhouse.entity.PropertyDetails;
+import com.dreamtown.onasistownhouse.entity.PropertyType;
 import com.dreamtown.onasistownhouse.entity.Role;
 import com.dreamtown.onasistownhouse.entity.User;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
+import com.dreamtown.onasistownhouse.repository.PropertyTypeRepository;
 import com.dreamtown.onasistownhouse.repository.RoleRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
 
@@ -30,6 +34,9 @@ public class CmdRunner implements CommandLineRunner {
 
         @Autowired
         private PropertyRepository propertyRepository;
+
+        @Autowired
+        private PropertyTypeRepository propertyTypeRepository;
 
         @Autowired
         private PasswordEncoder encoder;
@@ -57,6 +64,9 @@ public class CmdRunner implements CommandLineRunner {
 
                 Property property1 = new Property(1, "Mawar", harga, new ArrayList<>());
                 propertyRepository.save(property1);
+                PropertyType propertyTypeA = new PropertyType(1, 1, "A", new PropertyDetails());
+                propertyTypeRepository.save(propertyTypeA);
+
                 Property property2 = new Property(2, "Melati", harga, new ArrayList<>());
                 propertyRepository.save(property2);
                 Property property3 = new Property(3, "Kamboja", harga, new ArrayList<>());

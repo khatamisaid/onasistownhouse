@@ -37,9 +37,6 @@ public class PropertyDetails extends DateAudit {
     @Column(name = "id_details_property")
     private Integer idDetailsProperty;
 
-    @Column(name = "id_property")
-    private Integer idProperty;
-
     @Column(name = "luas_tanah")
     private Integer luasTanah;
 
