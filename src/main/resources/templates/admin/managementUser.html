@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Onasis Town House | CMS</title>
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/style6.css}" />
+    <style>
+        .dataTables_wrapper label select {
+            width: 160px;
+            max-width: 100%;
+            height: 35px;
+        }
+
+        label {
+            color: #aa8453;
+        }
+
+        input {
+            color: #1b1b1b !important;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Sidebar Section -->
+    <a href="#" class="js-cappa-nav-toggle cappa-nav-toggle"><i></i></a>
+    <div th:replace="admin/fragments/aside :: sidebar"></div>
+    <!-- Main -->
+    <div id="cappa-main">
+        <section class="section-padding">
+            <div class="container">
+                <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <h2>User Management</h2>
+                        </div>
+                        <div class="row p-3">
+                            <div class="table-responsive">
+                                <table id="tableUser" class="table dt-responsive nowrap w-100 dataTable dtr-inline">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" class="text-right">
+                                                <button style="background-color: #aa8453; color: white;" type="button"
+                                                    id="tambahUser" class="btn" onclick="openModalTambahUser()">+
+                                                    Tambah User</button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="modalUser" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 style="color:#aa8453;" class="modal-title" id="textHeaderModal">Tambah User</h4>
+                                <button type="button" class="close" onclick="dismiss('modalUser')" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="#" id="formModalUser">
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control-sm" id="username" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input style="color: #1b1b1b;" type="email" class="form-control-sm"
+                                            id="email" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input style="color: #1b1b1b;" type="password" class="form-control-sm"
+                                            id="password" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="role">Role</label>
+                                        <select name="role" id="role" class="custom-select">
+                                            <option value="" selected disabled>-- Pilih Role --</option>
+                                            <option value="2">Admin</option>
+                                            <option value="3">Marketing</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer" id="footerModal">
+                                <button id="btnCloseModal" type="button" class="btn btn-secondary"
+                                    onclick="dismiss('modalUser')">Tutup</button>
+                                <button id="btnUbahDataUser" type="button" class="btn"
+                                    style="background-color: #aa8453; color: white;">Ubah Data User</button>
+                                <button id="btnTambahDataUser" type="button" class="btn"
+                                    style="background-color: #aa8453; color: white;">Tambah Data User</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div th:replace="assets/js :: js"></div>
+    <script th:inline="javascript">
+        function findUserById(id) {
+            $("#textHeaderModal").text('Lihat Data User');
+            $("#footerModal").hide();
+            $("#modalUser").toggle('modal');
+        }
+        function editUserById(id) {
+            $("#textHeaderModal").text('Ubah Data User');
+            $("#btnUbahDataUser").show();
+            $("#btnTambahDataUser").hide();
+            $("#footerModal").show();
+            $("#modalUser").toggle('modal');
+        }
+        function openModalTambahUser() {
+            $("#textHeaderModal").text('Tambah Data User');
+            $("#btnUbahDataUser").hide();
+            $("#btnTambahDataUser").show();
+            $("#footerModal").show();
+            $("#modalUser").toggle('modal');
+        }
+        function deleteUserById(id) {
+            Swal.fire({
+                title: 'Yakin ingin menghapus user ?',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                confirmButtonColor: '#dc3741',
+                cancelButtonText: 'Tidak',
+                icon: 'warning'
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Your work has been saved',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
+        }
+        function dismiss(id) {
+            $(`#${id}`).toggle('modal');
+            $('#formModalUser').trigger("reset");
+            $("#role").val("").change();
+        }
+        $(document).ready(function () {
+            showTableUser();
+        });
+        var tableUser;
+        function showTableUser() {
+            tableUser = $("#tableUser").DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>\n        <'table-responsive'tr>\n        <'row align-items-center'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 d-flex justify-content-end'p>>",
+                language: {
+                    "zeroRecords": "Data Tidak Ada",
+                    paginate: {
+                        previous: '<i class="fa fa-lg fa-angle-left"></i>',
+                        next: '<i class="fa fa-lg fa-angle-right"></i>'
+                    }
+                },
+                createdRow: function (row, data, dataIndex) {
+                    $(row).addClass('text-center');
+                },
+                serverSide: true,
+                processing: true,
+                searching: false,
+                lengthMenu: [3, 5, 15],
+                ajax: function (data, callback, settings) {
+                    var page = Math.ceil(
+                        settings._iDisplayStart / settings._iDisplayLength
+                    );
+                    var out = [];
+                    var length = 0;
+                    $.get(`/admin/getUser/all?start=${page}&length=${data.length}`, function (response) {
+                        response.data.content.forEach(function (user, i) {
+                            var action = `<button title="Lihat Data User" type="button" class="btn btn-success" onclick="findUserById(${user.idUser})">
+                                        <i class="ti-eye"></i>
+                                    </button>
+                                    <button title="Ubah Data User" type="button" class="btn btn-primary" onclick="editUserById(${user.idUser})">
+                                        <i class="ti-pencil"></i>
+                                    </button>
+                                    <button title="Hapus Data User" type="button" class="btn btn-danger" onclick="deleteUserById(${user.idUser})" >
+                                        <i class="ti-trash"></i>
+                                    </button>`;
+                            out.push([
+                                ++length,
+                                user.username,
+                                user.email,
+                                user.role.roleName,
+                                action,
+                            ]);
+                        });
+                        callback({
+                            recordsTotal: response.data.totalElements,
+                            recordsFiltered: response.data.totalElements,
+                            data: out
+                        });
+                    });
+
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

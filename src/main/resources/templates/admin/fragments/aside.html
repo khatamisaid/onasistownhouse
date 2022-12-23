@@ -1,4 +1,13 @@
 <aside id="cappa-aside" th:fragment="sidebar">
+    <style>
+        label {
+            color: #aa8453;
+        }
+
+        input {
+            color: #1b1b1b !important;
+        }
+    </style>
     <!-- Logo -->
     <div class="cappa-logo">
         <a th:href="@{/admin}">
@@ -30,25 +39,6 @@
             </li>
             <li><a href='about.html'>Website Title</a></li>
             <li><a href='about.html'>Calculating</a></li>
-            <!-- <li class='cappa-sub'><a href='#'> Rooms & Suites</a>
-                <ul>
-                    <li><a href='rooms.html'>Rooms 1</a></li>
-                    <li><a href='rooms2.html'>Rooms 2</a></li>
-                    <li><a href='rooms3.html'>Rooms 3</a></li>
-                    <li><a href='room-details.html'>Room Details</a></li>
-                </ul>
-            </li>
-            <li><a href="restaurant.html">Restaurant</a></li>
-            <li><a href="spa-wellness.html">Spa Center</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li class='cappa-sub'><a href='#'>News</a>
-                <ul>
-                    <li><a href='news.html'>News 1</a></li>
-                    <li><a href='news2.html'>News 2</a></li>
-                    <li><a href='post.html'>Single Post</a></li>
-                </ul>
-            </li>
-            <li><a href='contact.html'>Contact</a></li> -->
         </ul>
     </nav>
     <!-- Sidebar Footer -->
@@ -64,9 +54,78 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="modalTambahProperty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="color:#aa8453;" class="modal-title" id="exampleModalLabel">Tambah Property</h4>
+                    <button type="button" class="close" onclick="closeModalTambahProperty('modalTambahProperty')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" id="formTambahPropery">
+                        <div class="form-group">
+                            <label for="namaProperty">Nama Property</label>
+                            <input placeholder="masukan nama property" type="text" class="form-control-sm"
+                                id="namaProperty" name="namaProperty" />
+                        </div>
+                        <div class="form-group">
+                            <label for="hargaProperty">Harga</label>
+                            <input placeholder="masukan harga property" type="text" class="form-control-sm"
+                                id="hargaProperty" name="hargaProperty" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModalTambahProperty('modalTambahProperty')">Tutup</button>
+                    <button id="btnTambahProperty" style="background-color: #aa8453; color: white;" type="button"
+                        class="btn">Tambah
+                        Property</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
     <script th:inline="javascript">
+        /* Dengan Rupiah */
+        var dengan_rupiah = document.getElementById('hargaProperty');
+        dengan_rupiah.addEventListener('keyup', function (e) {
+            dengan_rupiah.value = formatRupiah(this.value, 'Rp. ');
+        });
+
+        /* Fungsi */
+        function formatRupiah(angka, prefix) {
+            if (angka == '0') return '';
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+        $("#btnTambahProperty").on('click', function () {
+            console.log("nama Property:" + $("#namaProperty").val());
+            console.log("harga Property:" + $("#hargaProperty").val().trim().replaceAll("Rp.", "").replaceAll(".", ""));
+        });
+        function logout() {
+            window.location.href = "/logout";
+        }
         function openModalTambahProperty() {
-            console.log('clicked');
+            $("#modalTambahProperty").toggle('modal');
+        }
+        function closeModalTambahProperty(id) {
+            $(`#${id}`).toggle('modal');
         }
     </script>
 </aside>

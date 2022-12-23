@@ -44,7 +44,7 @@
                 <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
-                            <h2>Selamat Datang di Content Management Onasis Town House</h2>
+                            <h2 th:text="${property.propertyName}"></h2>
                         </div>
                     </div>
                 </div>
@@ -54,6 +54,7 @@
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
+        
     </script>
 </body>
 

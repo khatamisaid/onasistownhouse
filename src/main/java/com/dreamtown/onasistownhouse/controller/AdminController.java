@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +19,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.Role;
 import com.dreamtown.onasistownhouse.entity.User;
+import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
 import com.dreamtown.onasistownhouse.utils.Menu;
 
@@ -36,10 +39,12 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PropertyRepository propertyRepository;
+
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("username", httpSession.getAttribute("username"));
-        model.addAttribute("template", "index");
         model.addAttribute("menus", menu.getListProperty());
         return "admin/index";
     }
@@ -47,8 +52,17 @@ public class AdminController {
     @RequestMapping(value = "/managementUser", method = RequestMethod.GET)
     public String tambahUser(Model model) {
         model.addAttribute("username", httpSession.getAttribute("username"));
-        model.addAttribute("template", "managementUser");
-        return "admin/index";
+        model.addAttribute("menus", menu.getListProperty());
+        return "admin/managementUser";
+    }
+
+    @RequestMapping(value = "/p/{id}", method = RequestMethod.GET)
+    public String findPropertyWithId(Model model, @PathVariable Integer id) {
+        Property property = propertyRepository.findById(id).get();
+        model.addAttribute("username", httpSession.getAttribute("username"));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("property", property);
+        return "admin/property";
     }
 
     @RequestMapping(value = "/getUser/all", method = RequestMethod.GET)
