@@ -44,6 +44,6 @@ public class Property extends DateAudit {
     private Double harga;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_property", referencedColumnName = "id_property")
-    private List<PropertyDetails> listPropertyDetails;
+    @JoinColumn(name = "id_type_property", referencedColumnName = "id_type_property")
+    private List<PropertyType> listPropertyDetails;
 }
