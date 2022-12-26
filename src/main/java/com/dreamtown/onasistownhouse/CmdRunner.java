@@ -68,16 +68,15 @@ public class CmdRunner implements CommandLineRunner {
                 logger.info("User and Role Has been created");
 
                 Double harga = 2000000000.0;
-
-                PropertyDetails propertyDetails = new PropertyDetails(1, 35, 32, 2, 1, "Jalan Raya", "", harga,
-                                new ArrayList<>(),
-                                new ArrayList<>(), new ArrayList<>());
-                propertyDetailsRepository.save(propertyDetails);
-                PropertyType propertyTypeA = new PropertyType(1, 1, "A", propertyDetails);
-                List<PropertyType> listPropertyType = new ArrayList<>();
-                listPropertyType.add(propertyTypeA);
-                Property property1 = new Property(1, "Mawar", listPropertyType);
-                propertyRepository.save(property1);
+                PropertyDetails propertyDetails1 = new PropertyDetails(1, 1, 35, 40, 2, 1, "Jakarta", "", "A",
+                                harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                PropertyDetails propertyDetails2 = new PropertyDetails(2, 1, 37, 44, 2, 1, "Bandung", "", "B",
+                                harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                List<PropertyDetails> listPropertyDetails = new ArrayList<>();
+                listPropertyDetails.add(propertyDetails1);
+                listPropertyDetails.add(propertyDetails2);
+                Property property = new Property(1, "Mawar", listPropertyDetails);
+                propertyRepository.save(property);
                 // Property property2 = new Property(2, "Melati", harga, new ArrayList<>());
                 // propertyRepository.save(property2);
                 // Property property3 = new Property(3, "Kamboja", harga, new ArrayList<>());

@@ -63,15 +63,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div th:each="tipeProperty : ${property.listPropertyTypes}" class="col-md-4">
+                    <div th:each="propertyDetails : ${property.listPropertyDetails}" class="col-md-4">
                         <div class="item">
                             <div class="position-re o-hidden"> <img th:src="@{/img/rooms/1.jpg}" alt=""> </div>
-                            <span th:attr="onclick=|onOptionPropertyClicked('${tipeProperty.propertyDetails.idDetailsProperty}')|"
+                            <span th:attr="onclick=|onOptionPropertyClicked('${propertyDetails.idDetailsProperty}')|"
                                 style="cursor: pointer;" class="category"><i
                                     class="fa-solid fa-ellipsis-vertical"></i></span>
                             <div class="con">
                                 <h6><a href="room-details.html"
-                                        th:text="'IDR: ' + ${#numbers.formatDecimal(tipeProperty.propertyDetails.harga, 0, 'COMMA', 0, 'POINT')}"></a>
+                                        th:text="'IDR: ' + ${#numbers.formatDecimal(propertyDetails.harga, 0, 'COMMA', 0, 'POINT')}"></a>
                                 </h6>
                                 <h5><a href="room-details.html">Junior Suite</a> </h5>
                                 <div class="line"></div>
@@ -108,7 +108,8 @@
                         <div class="container">
                             <div class="row">
                                 <input id="detailPropertyId" type="text" style="display: none;">
-                                <div id="btnEditOption" class="col mr-2" style="cursor: pointer; background-color: #0069d9;border-radius: 20%;">
+                                <div id="btnEditOption" class="col mr-2"
+                                    style="cursor: pointer; background-color: #0069d9;border-radius: 20%;">
                                     <div class="d-flex justify-content-center mt-3 p-2">
                                         <i style="color: white;" class="fa-solid fa-pencil"></i>
                                     </div>
@@ -116,7 +117,8 @@
                                         <h6 style="color: white;">Edit</h6>
                                     </div>
                                 </div>
-                                <div id="btnHapusOption" class="col" style="cursor: pointer; background-color: #c82333; border-radius: 20%;">
+                                <div id="btnHapusOption" class="col"
+                                    style="cursor: pointer; background-color: #c82333; border-radius: 20%;">
                                     <div class="d-flex justify-content-center mt-3 p-2">
                                         <i style="color: white;" class="fa-solid fa-trash"></i>
                                     </div>
@@ -141,10 +143,10 @@
             $("#detailPropertyId").val(idDetailsProperty);
             $("#modalOptions").toggle('modal');
         }
-        $("#btnEditOption").on('click',function(){
+        $("#btnEditOption").on('click', function () {
             window.location.href = `${window.location.pathname}/${$("#detailPropertyId").val()}`;
         });
-        $("#btnHapusOption").on('click',function(){
+        $("#btnHapusOption").on('click', function () {
             console.log($("#detailPropertyId").val());
         });
     </script>

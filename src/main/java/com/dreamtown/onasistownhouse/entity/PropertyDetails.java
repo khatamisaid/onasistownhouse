@@ -37,6 +37,9 @@ public class PropertyDetails extends DateAudit {
     @Column(name = "id_details_property")
     private Integer idDetailsProperty;
 
+    @Column(name = "id_property")
+    private Integer idProperty;
+
     @Column(name = "luas_tanah")
     private Integer luasTanah;
 
@@ -54,6 +57,9 @@ public class PropertyDetails extends DateAudit {
 
     @Column(name = "deskripsi", columnDefinition = "TEXT")
     private String deskripsi;
+
+    @Column(name = "tipeProperty")
+    private String tipeProperty;
 
     @Column(name = "harga")
     private Double harga;
