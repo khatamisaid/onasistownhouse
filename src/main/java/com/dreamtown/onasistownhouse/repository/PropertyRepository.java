@@ -6,4 +6,5 @@ import com.dreamtown.onasistownhouse.entity.Property;
 
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
+    Property findOneByPropertyName(String propertyName);
 }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,13 +57,18 @@ public class AdminController {
         return "admin/managementUser";
     }
 
-    @RequestMapping(value = "/p/{id}", method = RequestMethod.GET)
-    public String findPropertyWithId(Model model, @PathVariable Integer id) {
-        Property property = propertyRepository.findById(id).get();
+    @RequestMapping(value = "/p/{propertyName}", method = RequestMethod.GET)
+    public String findPropertyWithId(Model model, @PathVariable String propertyName) {
+        Property property = propertyRepository.findOneByPropertyName(propertyName);
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("property", property);
         return "admin/property";
+    }
+
+    @RequestMapping(value = "/p/{propertyName}/{id}", method = RequestMethod.GET)
+    public String tambahPropertyDetails(Model model, @PathVariable String propertyName, @PathVariable Integer id) {
+        return "admin/detailsProperty";
     }
 
     @RequestMapping(value = "/getUser/all", method = RequestMethod.GET)
@@ -75,5 +81,18 @@ public class AdminController {
         Map res = new HashMap<>();
         res.put("data", pageUser);
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/property/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Property> getPropertyById(@PathVariable Integer id) {
+        return new ResponseEntity<>(propertyRepository.findById(id).get(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/property", method = RequestMethod.POST)
+    public ResponseEntity<Map> postProperty(@RequestBody Property property) {
+        Map response = new HashMap<>();
+        propertyRepository.save(property);
+        response.put("message", "Property Berhasil di tambahkan");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

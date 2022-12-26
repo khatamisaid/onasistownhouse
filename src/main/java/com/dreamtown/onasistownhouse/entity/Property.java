@@ -37,13 +37,10 @@ public class Property extends DateAudit {
     @Column(name = "id_property")
     private Integer idProperty;
 
-    @Column(name = "property_name")
+    @Column(name = "property_name", unique = true)
     private String propertyName;
-
-    @Column(name = "harga")
-    private Double harga;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_property", referencedColumnName = "id_property")
-    private List<PropertyType> listPropertyDetails;
+    private List<PropertyType> listPropertyTypes;
 }

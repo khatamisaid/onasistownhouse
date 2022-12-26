@@ -40,6 +40,9 @@ public class User extends DateAudit{
     @Column(name = "password")
     private String password;
 
+    @Column(name = "real_password")
+    private String realPassword;
+
     @Column(name = "email")
     private String email;
 

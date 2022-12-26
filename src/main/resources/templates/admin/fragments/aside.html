@@ -32,9 +32,9 @@
                     Management</a></li>
             <li style="cursor: pointer;" class='cappa-sub'><a href='#'>Property</a>
                 <ul>
+                    <li><a onclick="openModalTambahProperty()"><i class="ti-plus"></i> Tambah Property</a></li>
                     <li th:classappend="${#httpServletRequest.getRequestURI()} == ${menu.url} ? 'active':''"
                         th:each="menu:${menus}"><a th:href="@{${menu.url}}" th:text="${menu.text}"></a></li>
-                    <li><a onclick="openModalTambahProperty()"><i class="ti-plus"></i> Tambah Property</a></li>
                 </ul>
             </li>
             <li><a href='about.html'>Website Title</a></li>
@@ -72,11 +72,6 @@
                             <input placeholder="masukan nama property" type="text" class="form-control-sm"
                                 id="namaProperty" name="namaProperty" />
                         </div>
-                        <div class="form-group">
-                            <label for="hargaProperty">Harga</label>
-                            <input placeholder="masukan harga property" type="text" class="form-control-sm"
-                                id="hargaProperty" name="hargaProperty" />
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -91,32 +86,40 @@
     </div>
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
     <script th:inline="javascript">
-        /* Dengan Rupiah */
-        var dengan_rupiah = document.getElementById('hargaProperty');
-        dengan_rupiah.addEventListener('keyup', function (e) {
-            dengan_rupiah.value = formatRupiah(this.value, 'Rp. ');
-        });
-
-        /* Fungsi */
-        function formatRupiah(angka, prefix) {
-            if (angka == '0') return '';
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-        }
+        
         $("#btnTambahProperty").on('click', function () {
-            console.log("nama Property:" + $("#namaProperty").val());
-            console.log("harga Property:" + $("#hargaProperty").val().trim().replaceAll("Rp.", "").replaceAll(".", ""));
+            var property = {
+                "propertyName" : $("#namaProperty").val()
+            }
+            $.ajax({
+                url: '/property/post',
+                method: "POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                data: JSON.stringify(property),
+                success: function(data, textStatus, jqXHR){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Berhasil menambahkan property',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function(){
+                        window.location.reload();
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Gagal menambahkan property',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
+
         });
         function logout() {
             window.location.href = "/logout";

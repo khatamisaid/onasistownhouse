@@ -40,7 +40,7 @@ public class PropertyType extends DateAudit{
     @Column(name = "type_property")
     private String typeProperty;
 
-    @JoinColumn(name = "id_type_property", referencedColumnName = "id_type_property", insertable = false, updatable = false)
-    @ManyToOne
+    @JoinColumn(name = "id_type_property", referencedColumnName = "id_details_property", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
     private PropertyDetails propertyDetails;
 }

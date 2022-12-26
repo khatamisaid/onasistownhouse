@@ -55,8 +55,8 @@ public class PropertyDetails extends DateAudit {
     @Column(name = "deskripsi", columnDefinition = "TEXT")
     private String deskripsi;
 
-    @Column(name = "id_type_property")
-    private Integer idTypeProperty;
+    @Column(name = "harga")
+    private Double harga;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_details_property", referencedColumnName = "id_details_property")

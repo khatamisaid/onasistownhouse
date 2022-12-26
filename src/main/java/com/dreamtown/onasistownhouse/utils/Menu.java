@@ -23,7 +23,7 @@ public class Menu {
         for (Property propery : listProperty) {
             Map data = new HashMap<>();
             data.put("text", propery.getPropertyName());
-            data.put("url", "/admin/p/" + propery.getIdProperty());
+            data.put("url", "/admin/p/" + propery.getPropertyName());
             menus.add(data);
         }
         return menus;
