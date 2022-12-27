@@ -32,8 +32,8 @@ public class Photo extends DateAudit{
     @Column(name = "id_photo")
     private Integer idPhoto;
 
-    @Column(name = "nama_photo")
-    private Integer namaPhoto;
+    @Column(name = "nama_photo", columnDefinition = "TEXT")
+    private String namaPhoto;
 
     @Column(name = "id_details_property")
     private Integer idDetailsProperty;

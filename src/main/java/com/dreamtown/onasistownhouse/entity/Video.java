@@ -32,8 +32,8 @@ public class Video extends DateAudit{
     @Column(name = "id_video")
     private Integer idVideo;
 
-    @Column(name = "nama_video")
-    private Integer namaVideo;
+    @Column(name = "nama_video", columnDefinition = "TEXT")
+    private String namaVideo;
 
     @Column(name = "id_details_property")
     private Integer idDetailsProperty;

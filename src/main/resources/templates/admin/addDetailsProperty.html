@@ -202,12 +202,12 @@
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
         var propertyDetails = /*[[${propertyDetails}]]*/null;
-        console.log(propertyDetails);
         $(document).ready(function () {
             initData();
         });
 
         function initData() {
+
             var harga = Number.parseFloat(propertyDetails.harga);
             $("#tipeProperty").val(propertyDetails.tipeProperty);
             $("#hargaProperty").val(harga);
@@ -218,7 +218,6 @@
             $("#carPort").val(propertyDetails.carPort);
             $("#lokasi").val(propertyDetails.lokasi);
             $("#deskripsi").val(propertyDetails.deskripsi);
-            
         }
 
         var listFotoPriview = [];
@@ -236,7 +235,7 @@
             if (listFotoPriview.length > 0) {
                 listFotoPriview.forEach(function (value, i) {
                     $("#fotoSection").append(`<div class="col-md-4 gallery-item">
-                    <i onclick="deletePhoto(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                    <i onclick="testing(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
                                             <a href="#" title="" class="img-zoom">
                                                 
                                                 <div class="gallery-box">
@@ -249,7 +248,7 @@
             }
         }
 
-        function deletePhoto(i) {
+        function testing(i) {
             listFotoPriview.splice(i, 1);
             listFoto.splice(i, 1);
             setTimeout(function () {

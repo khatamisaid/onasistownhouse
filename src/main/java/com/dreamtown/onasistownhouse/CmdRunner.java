@@ -13,12 +13,10 @@ import org.springframework.stereotype.Component;
 
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
-import com.dreamtown.onasistownhouse.entity.PropertyType;
 import com.dreamtown.onasistownhouse.entity.Role;
 import com.dreamtown.onasistownhouse.entity.User;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
-import com.dreamtown.onasistownhouse.repository.PropertyTypeRepository;
 import com.dreamtown.onasistownhouse.repository.RoleRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
 
@@ -35,9 +33,6 @@ public class CmdRunner implements CommandLineRunner {
 
         @Autowired
         private PropertyRepository propertyRepository;
-
-        @Autowired
-        private PropertyTypeRepository propertyTypeRepository;
 
         @Autowired
         private PropertyDetailsRepository propertyDetailsRepository;
@@ -67,27 +62,17 @@ public class CmdRunner implements CommandLineRunner {
                                                 marketingRole));
                 logger.info("User and Role Has been created");
 
-                Double harga = 2000000000.0;
-                PropertyDetails propertyDetails1 = new PropertyDetails(1, 1, 35, 40, 2, 1, "Jakarta", "", "A",
-                                harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-                PropertyDetails propertyDetails2 = new PropertyDetails(2, 1, 37, 44, 2, 1, "Bandung", "", "B",
-                                harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-                List<PropertyDetails> listPropertyDetails = new ArrayList<>();
-                listPropertyDetails.add(propertyDetails1);
-                listPropertyDetails.add(propertyDetails2);
-                Property property = new Property(1, "Mawar", listPropertyDetails);
-                propertyRepository.save(property);
-                // Property property2 = new Property(2, "Melati", harga, new ArrayList<>());
-                // propertyRepository.save(property2);
-                // Property property3 = new Property(3, "Kamboja", harga, new ArrayList<>());
-                // propertyRepository.save(property3);
-                // Property property4 = new Property(4, "Taman Anggrek", harga, new
-                // ArrayList<>());
-                // propertyRepository.save(property4);
-                // Property property5 = new Property(5, "Cempaka Putih", harga, new
-                // ArrayList<>());
-                // propertyRepository.save(property5);
-                logger.info("Property Has been created");
+                // Double harga = 2000000000.0;
+                // PropertyDetails propertyDetails1 = new PropertyDetails(1, 1, 35, 40, 2, 1, "Jakarta", "", "A",
+                //                 harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                // PropertyDetails propertyDetails2 = new PropertyDetails(2, 1, 37, 44, 2, 1, "Bandung", "", "B",
+                //                 harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                // List<PropertyDetails> listPropertyDetails = new ArrayList<>();
+                // listPropertyDetails.add(propertyDetails1);
+                // listPropertyDetails.add(propertyDetails2);
+                // Property property = new Property(1, "Mawar", listPropertyDetails);
+                // propertyRepository.save(property);
+                // logger.info("Property Has been created");
 
         }
 }
