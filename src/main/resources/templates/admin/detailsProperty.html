@@ -199,12 +199,32 @@
         </div>
     </div>
     <!-- jQuery -->
-    <div th:replace="assets/js :: js"></div>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-3.0.0.min.js}"></script>
+    <script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
+    <script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/js/jquery.isotope.v3.0.2.js}"></script>
+    <script th:src="@{/js/pace.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scrollIt.min.js}"></script>
+    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/js/YouTubePopUp.js}"></script>
+    <script th:src="@{/js/select2.js}"></script>
+    <script th:src="@{/js/datepicker.js}"></script>
+    <script th:src="@{/js/smooth-scroll.min.js}"></script>
+    <script th:src="@{/js/custom6.js}"></script>
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script th:inline="javascript">
         var propertyDetails = /*[[${propertyDetails}]]*/null;
         console.log(propertyDetails);
         $(document).ready(function () {
             initData();
+            fotoSection();
         });
 
         function initData() {
@@ -218,7 +238,7 @@
             $("#carPort").val(propertyDetails.carPort);
             $("#lokasi").val(propertyDetails.lokasi);
             $("#deskripsi").val(propertyDetails.deskripsi);
-            
+
         }
 
         var listFotoPriview = [];
@@ -233,14 +253,15 @@
 
         function fotoSection() {
             $("#fotoSection").empty();
-            if (listFotoPriview.length > 0) {
-                listFotoPriview.forEach(function (value, i) {
+            if (propertyDetails.listPhoto.length > 0) {
+                console.log(listFoto);
+                propertyDetails.listPhoto.forEach(function (value) {
                     $("#fotoSection").append(`<div class="col-md-4 gallery-item">
-                    <i onclick="deletePhoto(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
-                                            <a href="#" title="" class="img-zoom">
+                    <i onclick="deletePhoto(${value.idPhoto})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                                            <a onclick="zoomImage('/loadfile/${value.namaPhoto}')" title="" id="image-zoom" class="img-zoom">
                                                 
                                                 <div class="gallery-box">
-                                                    <div class="gallery-img"> <img src="${value}"
+                                                    <div class="gallery-img"> <img src="/loadfile/${value.namaPhoto}"
                                                             class="img-fluid mx-auto d-block" alt="work-img"> </div>
                                                 </div>
                                             </a>
@@ -397,6 +418,33 @@
                     theEvent.preventDefault();
             }
         }
+        function zoomImage(url) {
+            console.log(url);
+            $.magnificPopup.open({
+                items: {
+                    src: `${url}`
+                },
+                type: "image",
+                closeOnContentClick: !0,
+                mainClass: "mfp-fade",
+                gallery: {
+                    enabled: !0,
+                    navigateByImgClick: !0,
+                    preload: [0, 1]
+                }
+            });
+            // $("#image-zoom").magnificPopup({
+            //     type: "image",
+            //     closeOnContentClick: !0,
+            //     mainClass: "mfp-fade",
+            //     gallery: {
+            //         enabled: !0,
+            //         navigateByImgClick: !0,
+            //         preload: [0, 1]
+            //     }
+            // });
+        }
+
     </script>
 </body>
 

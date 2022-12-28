@@ -65,15 +65,18 @@
                 <div class="row">
                     <div th:each="propertyDetails : ${property.listPropertyDetails}" class="col-md-4">
                         <div class="item">
-                            <div class="position-re o-hidden"> <img th:src="@{/img/rooms/1.jpg}" alt=""> </div>
+                            <div class="position-re o-hidden"> <img
+                                    th:src="@{${#lists.size(propertyDetails.listPhoto) == 0 ? '/img/rooms/1.jpg' : '/loadfile/'+propertyDetails.listPhoto[0].namaPhoto}}"
+                                    alt="Gada Foto"> </div>
                             <span th:attr="onclick=|onOptionPropertyClicked('${propertyDetails.idDetailsProperty}')|"
                                 style="cursor: pointer;" class="category"><i
                                     class="fa-solid fa-ellipsis-vertical"></i></span>
                             <div class="con">
-                                <h6><a href="room-details.html"
+                                <h6><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}"
                                         th:text="'IDR: ' + ${#numbers.formatDecimal(propertyDetails.harga, 0, 'COMMA', 0, 'POINT')}"></a>
                                 </h6>
-                                <h5><a href="room-details.html">Junior Suite</a> </h5>
+                                <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}">Junior
+                                        Suite</a> </h5>
                                 <div class="line"></div>
                                 <div class="row facilities">
                                     <div class="col col-md-7">
@@ -85,8 +88,9 @@
                                         </ul>
                                     </div>
                                     <div class="col col-md-5 text-right">
-                                        <div class="permalink"><a href="room-details.html">Details <i
-                                                    class="ti-arrow-right"></i></a></div>
+                                        <div class="permalink"><a
+                                                th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}">Details
+                                                <i class="ti-arrow-right"></i></a></div>
                                     </div>
                                 </div>
                             </div>

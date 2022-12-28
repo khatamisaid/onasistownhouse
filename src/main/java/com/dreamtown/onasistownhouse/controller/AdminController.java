@@ -91,6 +91,7 @@ public class AdminController {
     public String tambahPropertyDetails(Model model, @PathVariable String propertyName, @PathVariable Integer id) {
         PropertyDetails propertyDetails = propertyDetailsRepository.findById(id).get();
         model.addAttribute("propertyDetails", propertyDetails);
+        model.addAttribute("menus", menu.getListProperty());
         return "admin/detailsProperty";
     }
 
@@ -131,7 +132,15 @@ public class AdminController {
     @RequestMapping(value = "/deletePhoto",method = RequestMethod.DELETE)
     public ResponseEntity<Map> deletePhoto(@RequestParam Integer idPhoto){
         Map response = new HashMap<>();
+        String namaFoto = photoRepository.findById(idPhoto).get().getNamaPhoto();
+        File file = new File(env.getProperty("storage") + namaFoto);
+        if(!file.exists()){
+            response.put("message", "file not exists");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        } 
+        file.delete();
         photoRepository.deleteById(idPhoto);
+        response.put("message", "Berhasil menghapus foto");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

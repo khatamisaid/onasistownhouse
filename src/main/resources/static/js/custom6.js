@@ -437,7 +437,7 @@ $(function () {
             navigateByImgClick: !0,
             preload: [0, 1]
         }
-    })
+    });
     $('.magnific-youtube, .magnific-vimeo, .magnific-custom').magnificPopup({
         disableOn: 700,
         type: 'iframe',
