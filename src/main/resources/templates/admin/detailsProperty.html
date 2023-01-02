@@ -254,7 +254,6 @@
         function fotoSection() {
             $("#fotoSection").empty();
             if (propertyDetails.listPhoto.length > 0) {
-                console.log(listFoto);
                 propertyDetails.listPhoto.forEach(function (value) {
                     $("#fotoSection").append(`<div class="col-md-4 gallery-item">
                     <i onclick="deletePhoto(${value.idPhoto})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 

@@ -26,7 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -44,13 +46,6 @@ public class MainController {
     @GetMapping(value = "/")
     public String index(Model model) {
         return "index";
-    }
-
-    @GetMapping(value = "/ftp")
-    public ResponseEntity<Map> ftp(Model model) {
-        Map data = new HashMap<>();
-        data.put("isConnected", fileManager.connected());
-        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 
     @PostMapping(value = "/upload")
@@ -72,14 +67,29 @@ public class MainController {
 
     @RequestMapping(value = "/loadfile/{filename}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<InputStreamResource> loadfile(@PathVariable String filename)
+    public ResponseEntity<InputStreamResource> loadfile(@PathVariable(required = true) String filename)
             throws MalformedURLException, IOException {
-        File fileTemp = new File(env.getProperty("storage") + filename);
+        String splitFileName[] = filename.split("\\.");
+        String extension = splitFileName[splitFileName.length - 1];
+        File fileTemp = null;
+        if (extension.equalsIgnoreCase("mp4")) {
+            fileTemp = new File(env.getProperty("storage.videos") + filename);
+        } else if (extensionJpeg().contains(extension)) {
+            fileTemp = new File(env.getProperty("storage.images") + filename);
+        }
         URLConnection connection = fileTemp.toURL().openConnection();
         String mimeType = connection.getContentType();
         InputStream is = new FileInputStream(fileTemp);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(mimeType))
                 .body(new InputStreamResource(is));
+    }
+
+    private List<String> extensionJpeg() {
+        List<String> ext = new ArrayList<>();
+        ext.add("jpg");
+        ext.add("jpeg");
+        ext.add("png");
+        return ext;
     }
 }

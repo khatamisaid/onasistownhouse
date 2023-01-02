@@ -1,0 +1,62 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-lg">
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-wrapper navbar-brand valign">
+            <a th:href="@{/}">
+                <div class="logo">
+                    <!-- <img src="img/logo.png" class="logo-img" alt=""> -->
+                    <h2>ONASIS <span>Town House</span></h2>
+                </div>
+            </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
+                class="icon-bar"><i class="ti-line-double"></i></span> </button>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown"> <a class="nav-link active" href="#header">Beranda</a>
+                </li>
+                <li class="nav-item dropdown"> <a class="nav-link" onclick="window.location.href = '/property'">Property</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#rekomendasi">Rekomendasi</a></li>
+                <!-- <li class="nav-item dropdown"> <span class="nav-link"> Rooms & Suites <i
+                            class="ti-angle-down"></i></span>
+                    <ul class="dropdown-menu last">
+                        <li class="dropdown-item"><a href="rooms.html">Rooms 1</a></li>
+                        <li class="dropdown-item"><a href="rooms2.html">Rooms 2</a></li>
+                        <li class="dropdown-item"><a href="rooms3.html">Rooms 3</a></li>
+                        <li class="dropdown-item"><a href="room-details.html">Room Details</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="restaurant.html">Restaurant</a></li>
+                <li class="nav-item"><a class="nav-link" href="spa-wellness.html">Spa</a></li>
+                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                <li class="nav-item dropdown"> <span class="nav-link"> News <i class="ti-angle-down"></i></span>
+                    <ul class="dropdown-menu last">
+                        <li class="dropdown-item"><a href="news.html">News 1</a></li>
+                        <li class="dropdown-item"><a href="news2.html">News 2</a></li>
+                        <li class="dropdown-item"><a href="post.html">Single Post</a></li>
+                    </ul>
+                </li> -->
+                <li class="nav-item"><a class="nav-link" href="#tentangkami">Tentang Kami</a></li>
+                <li style="cursor: pointer;"
+                    th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"
+                    class="nav-item"><a class="nav-link" onclick="window.location.href = '/admin'">Halaman Admin</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        document.querySelectorAll(".nav-link").forEach((ele) =>
+            ele.addEventListener("click", function (event) {
+                console.log(ele);
+                event.preventDefault();
+                document
+                    .querySelectorAll(".nav-link")
+                    .forEach((ele) => ele.classList.remove("active"));
+                this.classList.add("active")
+            })
+        );
+    </script>
+</nav>

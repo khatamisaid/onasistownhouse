@@ -49,7 +49,7 @@
     <div id="cappa-main">
         <section class="rooms1 section-padding bg-black">
             <div class="container">
-                <h1>Mawar Property</h1>
+                <h1 th:text="${#strings.containsIgnoreCase(property.propertyName, 'property') ? property.propertyName : property.propertyName + ' Property'}"></h1>
                 <div class="card">
                     <div class="card-body">
                         <form id="detailsPropertyForm" action="#">
@@ -151,10 +151,32 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h3 style="color: #aa8453;">Tambahkan Video</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label
+                                                    style="cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    for="foto">choose file</label>
+                                                <input style="display: none;" type="file" name="video" id="video"
+                                                    class="custom-file-input" accept="video/mp4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="videoSection">
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <div class="d-flex justify-content-center">
                             <button style="background-color: #aa8453; color: white;" type="button" onclick="submit()"
-                                class="btn">Submit</button>
+                                class="btn">Posting</button>
                         </div>
                     </div>
                 </div>
@@ -207,7 +229,6 @@
         });
 
         function initData() {
-
             var harga = Number.parseFloat(propertyDetails.harga);
             $("#tipeProperty").val(propertyDetails.tipeProperty);
             $("#hargaProperty").val(harga);
@@ -237,7 +258,6 @@
                     $("#fotoSection").append(`<div class="col-md-4 gallery-item">
                     <i onclick="testing(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
                                             <a href="#" title="" class="img-zoom">
-                                                
                                                 <div class="gallery-box">
                                                     <div class="gallery-img"> <img src="${value}"
                                                             class="img-fluid mx-auto d-block" alt="work-img"> </div>
@@ -248,6 +268,23 @@
             }
         }
 
+        function videoSection() {
+            $("#videoSection").empty();
+            if (listFotoPriview.length > 0) {
+                listFotoPriview.forEach(function (value, i) {
+                    $("#videoSection").append(`<div class="col-md-4 gallery-item">
+                    <i onclick="testing(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                                            <a href="#" title="" class="img-zoom">
+                                                <div class="gallery-box">
+                                                    <div class="gallery-img"> <img src="${value}"
+                                                            class="img-fluid mx-auto d-block" alt="work-img"> </div>
+                                                </div>
+                                            </a>
+                                        </div>`);
+                });
+            }
+        }
+        
         function testing(i) {
             listFotoPriview.splice(i, 1);
             listFoto.splice(i, 1);

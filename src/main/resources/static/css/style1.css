@@ -5009,7 +5009,7 @@ select {
 }
 @media screen and (max-width: 767px) {
     .logo-wrapper .logo h2 {
-        display: none;
+        display: block;
     }
     .header .caption h1 {
         font-size: 30px;

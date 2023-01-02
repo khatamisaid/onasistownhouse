@@ -149,7 +149,9 @@ server:
     whitelabel:
       enabled: false
     path: /error
-storage: C:\\filetemp\\
+storage: 
+  images: C:\\filetemp\\images\\
+  videos: C:\\filetemp\\videos\\
 logging:
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

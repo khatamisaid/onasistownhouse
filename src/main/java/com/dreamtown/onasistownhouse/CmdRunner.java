@@ -62,15 +62,12 @@ public class CmdRunner implements CommandLineRunner {
                                                 marketingRole));
                 logger.info("User and Role Has been created");
 
-                // Double harga = 2000000000.0;
-                // PropertyDetails propertyDetails1 = new PropertyDetails(1, 1, 35, 40, 2, 1, "Jakarta", "", "A",
-                //                 harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-                // PropertyDetails propertyDetails2 = new PropertyDetails(2, 1, 37, 44, 2, 1, "Bandung", "", "B",
+                // Double harga = 1200000000.0;
+                // PropertyDetails propertyDetails1 = new PropertyDetails(1, 1, 35, 40, 2, 1, "Jalan Pemuda", "", "A",
                 //                 harga, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
                 // List<PropertyDetails> listPropertyDetails = new ArrayList<>();
                 // listPropertyDetails.add(propertyDetails1);
-                // listPropertyDetails.add(propertyDetails2);
-                // Property property = new Property(1, "Mawar", listPropertyDetails);
+                // Property property = new Property(1, "Mawar", "smart_home_jlpemuda.jpg" , listPropertyDetails);
                 // propertyRepository.save(property);
                 // logger.info("Property Has been created");
 

@@ -50,15 +50,16 @@
         <section class="rooms1 section-padding bg-black">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="section-subtitle"></div>
+                    <div class="d-flex justify-content-between">
                         <div class="section-title"
-                            th:text="${#strings.containsIgnoreCase(property.propertyName, 'property') ? property.propertyName : property.propertyName + ' Property'}">
+                            th:utext="${#strings.containsIgnoreCase(property.propertyName, 'property') ? property.propertyName : property.propertyName + ' Property'}">
                         </div>
+                        <div><i title="edit" style="cursor: pointer;" class="p-2 ml-2 fa-solid fa-pencil"></i></div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="item">
-                            <div style="cursor: pointer;"><i class="ti-plus"></i> Tambahkan detail property</div>
+                            <div style="cursor: pointer;"><a th:href="@{${property.propertyName} + '/add'}"><i
+                                        class="ti-plus"></i> Tambahkan detail property</a> </div>
                         </div>
                     </div>
                 </div>
@@ -66,7 +67,7 @@
                     <div th:each="propertyDetails : ${property.listPropertyDetails}" class="col-md-4">
                         <div class="item">
                             <div class="position-re o-hidden"> <img
-                                    th:src="@{${#lists.size(propertyDetails.listPhoto) == 0 ? '/img/rooms/1.jpg' : '/loadfile/'+propertyDetails.listPhoto[0].namaPhoto}}"
+                                    th:src="@{${property.propertyBanner == '' ? '/img/rooms/1.jpg' : '/loadfile/'+property.propertyBanner}}"
                                     alt="Gada Foto"> </div>
                             <span th:attr="onclick=|onOptionPropertyClicked('${propertyDetails.idDetailsProperty}')|"
                                 style="cursor: pointer;" class="category"><i
