@@ -22,6 +22,11 @@ public class PropertyController {
     @Autowired
     private PropertyRepository propertyRepository;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public String property(){
+        return "property";
+    }
+
     @RequestMapping(value = "/post", method = RequestMethod.POST)
     public ResponseEntity<Map> postProperty(@RequestBody Property property) {
         Map response = new HashMap<>();

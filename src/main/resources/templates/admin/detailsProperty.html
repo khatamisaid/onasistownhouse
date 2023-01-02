@@ -151,6 +151,28 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h3 style="color: #aa8453;">Tambahkan Video</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label
+                                                    style="cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    for="video">choose file</label>
+                                                <input style="display: none;" type="file" name="video" id="video"
+                                                    class="custom-file-input" accept="video/mp4">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="videoSection">
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <div class="d-flex justify-content-center">
                             <button style="background-color: #aa8453; color: white;" type="button" onclick="submit()"
@@ -243,6 +265,9 @@
 
         var listFotoPriview = [];
         var listFoto = [];
+
+        var listVideo = [];
+
         function readURL(input, onCallback) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -253,20 +278,42 @@
 
         function fotoSection() {
             $("#fotoSection").empty();
-            if (propertyDetails.listPhoto.length > 0) {
-                propertyDetails.listPhoto.forEach(function (value) {
+            if (listFotoPriview.length > 0) {
+                listFotoPriview.forEach(function (value, i) {
                     $("#fotoSection").append(`<div class="col-md-4 gallery-item">
-                    <i onclick="deletePhoto(${value.idPhoto})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
-                                            <a onclick="zoomImage('/loadfile/${value.namaPhoto}')" title="" id="image-zoom" class="img-zoom">
+                    <i onclick="deletePhoto(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                                            <a onclick="zoomImage('${value}')" title="" id="image-zoom" class="img-zoom">
                                                 
                                                 <div class="gallery-box">
-                                                    <div class="gallery-img"> <img src="/loadfile/${value.namaPhoto}"
+                                                    <div class="gallery-img"> <img src="${value}"
                                                             class="img-fluid mx-auto d-block" alt="work-img"> </div>
                                                 </div>
                                             </a>
                                         </div>`);
                 });
             }
+        }
+
+        function videoSection () {
+            $("#videoSection").empty();
+            if (listVideo.length > 0) {
+                listVideo.forEach(function (value, i) {
+                    $("#videoSection").append(`<div class="col-md-4 gallery-item">
+                    <i onclick="deleteVideo(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                                        <video width="300" controls>
+                                            <source src="${URL.createObjectURL(value)}" id="video_here">
+                                                Your browser does not support HTML5 video.
+                                        </video>
+                                        </div>`);
+                });
+            }
+        }
+
+        function deleteVideo(i) {
+            listVideo.splice(i, 1);
+            setTimeout(function () {
+                videoSection();
+            }, 200);
         }
 
         function deletePhoto(i) {
@@ -286,6 +333,14 @@
                 fotoSection();
             }, 2000);
         });
+
+        $("#video").on('change', function () {
+            listVideo.push(this.files[0]);
+            setTimeout(function () {
+                videoSection();
+            }, 2000);
+        });
+
         /* Dengan Rupiah */
         $('#hargaProperty').on('keyup', function (e) {
             this.value = formatRupiah(this.value, 'Rp. ');
@@ -340,8 +395,8 @@
                 data: JSON.stringify(propertyDetails),
                 success: function (data, textStatus, jqXHR) {
                     var formData = new FormData();
-                    listFoto.forEach(video => {
-                        formData.append("files", video);
+                    listFoto.forEach(foto => {
+                        formData.append("imageFiles", foto);
                     });
                     $.ajax({
                         method: "POST",
@@ -418,7 +473,6 @@
             }
         }
         function zoomImage(url) {
-            console.log(url);
             $.magnificPopup.open({
                 items: {
                     src: `${url}`

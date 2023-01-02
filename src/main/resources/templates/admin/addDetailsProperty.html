@@ -49,19 +49,35 @@
     <div id="cappa-main">
         <section class="rooms1 section-padding bg-black">
             <div class="container">
-                <h1 th:text="${#strings.containsIgnoreCase(property.propertyName, 'property') ? property.propertyName : property.propertyName + ' Property'}"></h1>
+                <h1>Mawar Property</h1>
                 <div class="card">
                     <div class="card-body">
                         <form id="detailsPropertyForm" action="#">
                             <div class="row">
                                 <div class="col md-12">
-                                    <div class="row">
+                                    <div style="margin-bottom: 12px;" class="row">
                                         <div class="col-md-2">
                                             <label for="tipeProperty">Tipe Property</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input placeholder="masukan tipe property" type="text" id="tipeProperty"
-                                                name="tipeProperty" class="form-control-sm" />
+                                            <select name="tipeProperty" id="tipeProperty" class="custom-select">
+                                                <option value="" selected disabled>-- Pilih Tipe Property --</option>
+                                                <option th:each="tipe : ${tipeProperty}" th:value="${tipe}"
+                                                    th:text="${tipe}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 12px;" class="row">
+                                        <div class="col-md-2">
+                                            <label for="tipeProperty">Status Property</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <select name="statusProperty" id="statusProperty" class="custom-select">
+                                                <option value="" selected disabled>-- Pilih Status Property --</option>
+                                                <option th:each="statusProperty : ${propertyStatus}"
+                                                    th:value="${statusProperty.idPropertyStatus}"
+                                                    th:text="${statusProperty.statusName}"></option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -140,7 +156,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label
-                                                    style="cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
                                                     for="foto">choose file</label>
                                                 <input style="display: none;" type="file" name="foto" id="foto"
                                                     class="custom-file-input" accept="image/jpeg, image/png">
@@ -162,8 +178,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label
-                                                    style="cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
-                                                    for="foto">choose file</label>
+                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    for="video">choose file</label>
                                                 <input style="display: none;" type="file" name="video" id="video"
                                                     class="custom-file-input" accept="video/mp4">
                                             </div>
@@ -173,10 +189,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="d-flex flex-row">
+                                        <h3 style="color: #aa8453;">Tambahkan Kontak <i style="cursor: pointer; background-color: #aa8453; color: white; border-radius: 12px;" class="fa fa-plus p-2"></i></h3>
+                                        
+                                    </div>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <div class="d-flex justify-content-center">
                             <button style="background-color: #aa8453; color: white;" type="button" onclick="submit()"
-                                class="btn">Posting</button>
+                                class="btn">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -221,11 +247,32 @@
         </div>
     </div>
     <!-- jQuery -->
-    <div th:replace="assets/js :: js"></div>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-3.0.0.min.js}"></script>
+    <script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
+    <script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/js/jquery.isotope.v3.0.2.js}"></script>
+    <script th:src="@{/js/pace.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scrollIt.min.js}"></script>
+    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/js/YouTubePopUp.js}"></script>
+    <script th:src="@{/js/select2.js}"></script>
+    <script th:src="@{/js/datepicker.js}"></script>
+    <script th:src="@{/js/smooth-scroll.min.js}"></script>
+    <script th:src="@{/js/custom6.js}"></script>
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script th:inline="javascript">
         var propertyDetails = /*[[${propertyDetails}]]*/null;
+        console.log(propertyDetails);
         $(document).ready(function () {
             initData();
+            fotoSection();
         });
 
         function initData() {
@@ -239,10 +286,14 @@
             $("#carPort").val(propertyDetails.carPort);
             $("#lokasi").val(propertyDetails.lokasi);
             $("#deskripsi").val(propertyDetails.deskripsi);
+
         }
 
         var listFotoPriview = [];
         var listFoto = [];
+
+        var listVideo = [];
+
         function readURL(input, onCallback) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -256,8 +307,9 @@
             if (listFotoPriview.length > 0) {
                 listFotoPriview.forEach(function (value, i) {
                     $("#fotoSection").append(`<div class="col-md-4 gallery-item">
-                    <i onclick="testing(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
-                                            <a href="#" title="" class="img-zoom">
+                    <i onclick="deletePhoto(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                                            <a onclick="zoomImage('${value}')" title="" id="image-zoom" class="img-zoom">
+                                                
                                                 <div class="gallery-box">
                                                     <div class="gallery-img"> <img src="${value}"
                                                             class="img-fluid mx-auto d-block" alt="work-img"> </div>
@@ -270,22 +322,27 @@
 
         function videoSection() {
             $("#videoSection").empty();
-            if (listFotoPriview.length > 0) {
-                listFotoPriview.forEach(function (value, i) {
+            if (listVideo.length > 0) {
+                listVideo.forEach(function (value, i) {
                     $("#videoSection").append(`<div class="col-md-4 gallery-item">
-                    <i onclick="testing(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
-                                            <a href="#" title="" class="img-zoom">
-                                                <div class="gallery-box">
-                                                    <div class="gallery-img"> <img src="${value}"
-                                                            class="img-fluid mx-auto d-block" alt="work-img"> </div>
-                                                </div>
-                                            </a>
+                    <i onclick="deleteVideo(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                                        <video width="300" controls>
+                                            <source src="${URL.createObjectURL(value)}" id="video_here">
+                                                Your browser does not support HTML5 video.
+                                        </video>
                                         </div>`);
                 });
             }
         }
-        
-        function testing(i) {
+
+        function deleteVideo(i) {
+            listVideo.splice(i, 1);
+            setTimeout(function () {
+                videoSection();
+            }, 200);
+        }
+
+        function deletePhoto(i) {
             listFotoPriview.splice(i, 1);
             listFoto.splice(i, 1);
             setTimeout(function () {
@@ -302,6 +359,14 @@
                 fotoSection();
             }, 2000);
         });
+
+        $("#video").on('change', function () {
+            listVideo.push(this.files[0]);
+            setTimeout(function () {
+                videoSection();
+            }, 2000);
+        });
+
         /* Dengan Rupiah */
         $('#hargaProperty').on('keyup', function (e) {
             this.value = formatRupiah(this.value, 'Rp. ');
@@ -356,8 +421,8 @@
                 data: JSON.stringify(propertyDetails),
                 success: function (data, textStatus, jqXHR) {
                     var formData = new FormData();
-                    listFoto.forEach(video => {
-                        formData.append("files", video);
+                    listFoto.forEach(foto => {
+                        formData.append("imageFiles", foto);
                     });
                     $.ajax({
                         method: "POST",
@@ -433,6 +498,22 @@
                     theEvent.preventDefault();
             }
         }
+        function zoomImage(url) {
+            $.magnificPopup.open({
+                items: {
+                    src: `${url}`
+                },
+                type: "image",
+                closeOnContentClick: !0,
+                mainClass: "mfp-fade",
+                gallery: {
+                    enabled: !0,
+                    navigateByImgClick: !0,
+                    preload: [0, 1]
+                }
+            });
+        }
+
     </script>
 </body>
 

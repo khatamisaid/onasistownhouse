@@ -11,13 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dreamtown.onasistownhouse.service.VideoStreamService;
 import com.dreamtown.onasistownhouse.utils.FileManager;
+
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,6 +46,9 @@ public class MainController {
 
     @Autowired
     private FileManager fileManager;
+
+    @Autowired
+    private VideoStreamService videoStreamService;
 
     @GetMapping(value = "/")
     public String index(Model model) {
@@ -83,6 +90,15 @@ public class MainController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(mimeType))
                 .body(new InputStreamResource(is));
+    }
+
+    @RequestMapping(value = "/stream/{fileType}/{fileName}", method = RequestMethod.GET)
+    public Mono<ResponseEntity<byte[]>> streamVideo(
+            @RequestHeader(value = "Range", required = false) String httpRangeList,
+            @PathVariable("fileType") String fileType,
+            // @PathVariable("path") String path,
+            @PathVariable("fileName") String fileName) {
+        return Mono.just(videoStreamService.prepareContent(fileName, fileType, httpRangeList));
     }
 
     private List<String> extensionJpeg() {

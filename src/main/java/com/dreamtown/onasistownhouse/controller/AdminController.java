@@ -39,9 +39,11 @@ import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.repository.PhotoRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
+import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
 import com.dreamtown.onasistownhouse.repository.VideoRepository;
 import com.dreamtown.onasistownhouse.utils.Menu;
+import com.dreamtown.onasistownhouse.utils.TipeProperty;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
 
 @Controller
@@ -53,6 +55,9 @@ public class AdminController {
 
     @Autowired
     private Menu menu;
+
+    @Autowired
+    private TipeProperty tipeProperty;
 
     @Autowired
     private UserRepository userRepository;
@@ -68,6 +73,9 @@ public class AdminController {
 
     @Autowired
     private VideoRepository videoRepository;
+
+    @Autowired
+    private PropertyStatusRepository propertyStatusRepository;
 
     @Autowired
     private Environment env;
@@ -108,6 +116,8 @@ public class AdminController {
         Property property = propertyRepository.findOneByPropertyName(propertyName);
         model.addAttribute("property", property);
         model.addAttribute("propertyDetails", new PropertyDetails());
+        model.addAttribute("propertyStatus", propertyStatusRepository.findAll());
+        model.addAttribute("tipeProperty", tipeProperty.getListTipeProperty());
         model.addAttribute("menus", menu.getListProperty());
         return "admin/addDetailsProperty";
     }
