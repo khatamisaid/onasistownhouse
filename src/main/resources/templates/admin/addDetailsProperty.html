@@ -192,15 +192,17 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="d-flex flex-row">
-                                        <h3 style="color: #aa8453;">Tambahkan Kontak <i style="cursor: pointer; background-color: #aa8453; color: white; border-radius: 12px;" class="fa fa-plus p-2"></i></h3>
-                                        
+                                        <h3 style="color: #aa8453;">Tambahkan Kontak <i
+                                                style="cursor: pointer; background-color: #aa8453; color: white; border-radius: 12px;"
+                                                class="fa fa-plus p-2"></i></h3>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" id="phoneSection">
+                                        
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center mt-2">
                             <button style="background-color: #aa8453; color: white;" type="button" onclick="submit()"
                                 class="btn">Submit</button>
                         </div>
@@ -275,6 +277,14 @@
             fotoSection();
         });
 
+        function linkToWhatsapp(){
+            console.log("linkToWhatsapp clicked");
+        }
+
+        function deletePhone(){
+            console.log("deletePhone clicked");
+        }
+
         function initData() {
             var harga = Number.parseFloat(propertyDetails.harga);
             $("#tipeProperty").val(propertyDetails.tipeProperty);
@@ -333,6 +343,11 @@
                                         </div>`);
                 });
             }
+        }
+
+        function phoneSection(){
+            $("#phoneSection").empty();
+            
         }
 
         function deleteVideo(i) {
