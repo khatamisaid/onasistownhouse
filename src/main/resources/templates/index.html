@@ -109,29 +109,36 @@
                     <!-- <div class="section-subtitle">The Cappa Luxury Hotel</div> -->
                     <div class="row">
                         <h3>Rekomendasi Hunian </h3>
-                        <span><i style="cursor: pointer;" class="ti-plus p-2"></i></span>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3">
                     <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg" alt=""> </div>
+                        <div class="position-re o-hidden"> <img
+                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
+                                alt=""> </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg" alt=""> </div>
+                        <div class="position-re o-hidden"> <img
+                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
+                                alt=""> </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg" alt=""> </div>
+                        <div class="position-re o-hidden"> <img
+                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
+                                alt=""> </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg" alt=""> </div>
+                        <div class="position-re o-hidden"> <img
+                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
+                                alt=""> </div>
                     </div>
                 </div>
             </div>
@@ -150,15 +157,20 @@
                 </div>
             </div>
             <div class="row">
-                <i style="border-radius:4px; background-color: white; cursor:pointer; z-index:20; color: black; position: absolute; top:0; right:0;" class="fa fa-pencil-alt p-1 mr-4 mt-4"></i> 
                 <div class="text-center col-md-12">
-                    <a class="vid" href="stream/mp4/transfer">
+                    <a href="#headerPopup" id="headerVideoLink" target="_blank" class="vid">
                         <div class="vid-butn">
                             <span class="icon">
                                 <i class="ti-control-play"></i>
                             </span>
                         </div>
                     </a>
+                </div>
+                <div id="headerPopup" class="mfp-hide embed-responsive embed-responsive-21by9">
+                    <video id="videoPopUp" width="100%" autoplay="autoplay" controls muted>
+                        <source src="stream/mp4/transfer" type="video/mp4" />
+                        Your browser does not support HTML video.
+                    </video>
                 </div>
             </div>
         </div>
@@ -280,7 +292,23 @@
     <script th:src="@{/js/custom1.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        function onclickItem(){
+
+        $('#headerVideoLink').magnificPopup({
+            type: 'inline',
+            midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+            callbacks: {
+                open: function () {
+                    $.magnificPopup.instance.close = function () {
+                        // Do whatever else you need to do here
+                        $("#videoPopUp").get(0).pause();
+
+                        // Call the original close method to close the popup
+                        $.magnificPopup.proto.close.call(this);
+                    };
+                }
+            }
+        });
+        function onclickItem() {
             console.log('tes');
         }
         /*]]>*/
