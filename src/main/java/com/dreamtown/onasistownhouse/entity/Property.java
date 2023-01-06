@@ -43,6 +43,9 @@ public class Property extends DateAudit {
     @Column(name = "property_banner")
     private String propertyBanner;
 
+    @Column(name = "harga")
+    private Double harga;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_property", referencedColumnName = "id_property")
     private List<PropertyDetails> listPropertyDetails;

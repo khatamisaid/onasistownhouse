@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -61,8 +62,9 @@ public class PropertyDetails extends DateAudit {
     @Column(name = "tipeProperty")
     private String tipeProperty;
 
-    @Column(name = "harga")
-    private Double harga;
+    @JoinColumn(name = "id_property_status", referencedColumnName = "id_property_status", insertable = true, updatable = true)
+    @ManyToOne
+    private PropertyStatus propertyStatus;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_details_property", referencedColumnName = "id_details_property")

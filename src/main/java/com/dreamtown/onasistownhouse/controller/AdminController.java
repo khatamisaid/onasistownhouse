@@ -140,13 +140,14 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/property", method = RequestMethod.POST)
-    public ResponseEntity<Map> postProperty(@RequestPart Property property, @RequestPart MultipartFile file) {
+    public ResponseEntity<Map> postProperty(@RequestPart Property property, @RequestPart MultipartFile file) throws IllegalStateException, IOException {
         Map response = new HashMap<>();
         if (file.isEmpty())return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         String[] splitFileName = file.getOriginalFilename().split("\\.");
         String extension = splitFileName[splitFileName.length - 1];
         String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
         File fileTemp = new File(env.getProperty("storage.images") + fileName);
+        file.transferTo(fileTemp);
         property.setPropertyBanner(fileName);
         propertyRepository.save(property);
         response.put("message", "Property Berhasil di tambahkan");
