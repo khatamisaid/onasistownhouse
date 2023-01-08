@@ -49,7 +49,7 @@
     <div id="cappa-main">
         <section class="rooms1 section-padding bg-black">
             <div class="container">
-                <h1>Mawar Property</h1>
+                <h1 th:text="${property.propertyName}"></h1>
                 <div class="card">
                     <div class="card-body">
                         <form id="detailsPropertyForm" action="#">
@@ -80,7 +80,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!-- <div class="row">
                                         <div class="col-md-2">
                                             <label for="hargaProperty">Harga Property</label>
                                         </div>
@@ -88,7 +88,7 @@
                                             <input placeholder="masukan harga property" type="text" id="hargaProperty"
                                                 name="hargaProperty" class="form-control-sm" />
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row">
                                         <div class="col-md-2">
                                             <label for="luasTanah">Luas Tanah (m²)</label>
@@ -197,90 +197,6 @@
                                                 class="fa fa-plus p-2"></i></h3>
                                     </div>
                                     <div class="row" id="phoneSection">
-                                        <div style="background-color: #aa8453; border-radius: 12px;" class="col-md-3 m-2">
-                                            <i onclick="deleteContact()" style="border-radius:4px; margin-right: 4px; margin-top: 2px; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div onclick="clickContact()" class="row p-3" style="cursor: pointer; ">
-                                                <img style="width: 52px;"
-                                                    src="/images/whatsapp-logo.png" alt="">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    Said
-                                                    Muhammad Khatami</p>
-                                            </div>
-                                        </div>
-                                        <div style="background-color: #aa8453; border-radius: 12px;" class="col-md-3 m-2">
-                                            <i style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div class="row p-3">
-                                                <img style="cursor: pointer; width: 52px;"
-                                                    src="/images/whatsapp-logo.png" alt="">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    Said
-                                                    Muhammad Khatami</p>
-                                            </div>
-                                        </div>
-                                        <div style="background-color: #aa8453; border-radius: 12px;" class="col-md-3 m-2">
-                                            <i style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div class="row p-3">
-                                                <img style="cursor: pointer; width: 52px;"
-                                                    src="/images/whatsapp-logo.png" alt="">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    Said
-                                                    Muhammad Khatami</p>
-                                            </div>
-                                        </div>
-                                        <div style="background-color: #aa8453; border-radius: 12px;" class="col-md-3 m-2">
-                                            <i style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div class="row p-3">
-                                                <img style="cursor: pointer; width: 52px;"
-                                                    src="/images/whatsapp-logo.png" alt="">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    Said
-                                                    Muhammad Khatami</p>
-                                            </div>
-                                        </div>
-                                        <div style="background-color: #aa8453; border-radius: 12px;" class="col-md-3 m-2">
-                                            <i style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div class="row p-3">
-                                                <img style="cursor: pointer; width: 52px;"
-                                                    src="/images/whatsapp-logo.png" alt="">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    Said
-                                                    Muhammad Khatami</p>
-                                            </div>
-                                        </div>
-                                        <div style="background-color: #aa8453; border-radius: 12px;" class="col-md-3 m-2">
-                                            <i style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div class="row p-3">
-                                                <img style="cursor: pointer; width: 52px;"
-                                                    src="/images/whatsapp-logo.png" alt="">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    Said
-                                                    Muhammad Khatami</p>
-                                            </div>
-                                        </div>
-                                        <!-- <div style="background-color: #aa8453; border-radius: 12px;" class="col-md-3 m-2">
-                                            <i style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div class="row p-3">
-                                                <img style="cursor: pointer; width: 52px;"
-                                                    src="/images/whatsapp-logo.png" alt="">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    Said
-                                                    Muhammad Khatami</p>
-                                            </div>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -304,29 +220,31 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="namaContact">Nama Kontak</label>
-                            </div>
-                            <div class="col-md-8">
-                                <input id="namaContact" name="namaContact" type="text" class="form-control-sm"
-                                    placeholder="masukan nama kontak" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="nomorTelpon">Nomor Telepon</label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">+62</span>
-                                    </div>
-                                    <input type="text" class="form-control p-2" placeholder="masukan nomor telepon"
-                                        id="namaContact" name="namaContact">
+                        <form action="#" id="formContact">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="namaContact">Nama Kontak</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="namaContact" name="namaContact" type="text" class="form-control-sm"
+                                        placeholder="masukan nama kontak" />
                                 </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="nomerTelpon">Nomor Telepon</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">+62</span>
+                                        </div>
+                                        <input type="text" class="form-control p-2" placeholder="masukan nomor telepon"
+                                            id="nomerTelpon" name="nomerTelpon">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button style="background-color: #aa8453; color: white;" type="button" onclick="tambahContact()"
@@ -359,18 +277,48 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script th:inline="javascript">
         var propertyDetails = /*[[${propertyDetails}]]*/null;
-        console.log(propertyDetails);
         $(document).ready(function () {
             initData();
-            fotoSection();
         });
 
-        function deleteContact(){
-            console.log('asd');
+        function initData() {
+            var harga = Number.parseFloat(propertyDetails.harga);
+            $("#tipeProperty").val(propertyDetails.tipeProperty);
+            // $("#hargaProperty").val(harga);
+            // $("#hargaProperty").trigger('keyup');
+            $("#luasTanah").val(propertyDetails.luasTanah);
+            $("#luasBangunan").val(propertyDetails.luasBangunan);
+            $("#kamarTidur").val(propertyDetails.kamarTidur);
+            $("#carPort").val(propertyDetails.carPort);
+            $("#lokasi").val(propertyDetails.lokasi);
+            $("#deskripsi").val(propertyDetails.deskripsi);
+
         }
 
-        function clickContact(){
-            console.log('dsa');
+        function deleteContact() {
+            listContact.splice(i, 1);
+            setTimeout(function () {
+                phoneSection();
+            }, 200);
+        }
+
+        var listContact = [];
+
+        function tambahContact() {
+            var contactPerson = {
+                "nomerTelpon": $("#nomerTelpon").val(),
+                "namaContact": $("#namaContact").val()
+            }
+            listContact.push(contactPerson);
+            setTimeout(function () {
+                phoneSection();
+            }, 200);
+            $("#formContact").trigger('reset');
+            $("#modalContact").toggle('modal');
+        }
+
+        function clickContact(param) {
+            window.open(`http://wa.me/+62${param}`, '_blank').focus();
         }
 
         function showModalContact() {
@@ -385,20 +333,6 @@
             console.log("deletePhone clicked");
         }
 
-        function initData() {
-            var harga = Number.parseFloat(propertyDetails.harga);
-            $("#tipeProperty").val(propertyDetails.tipeProperty);
-            $("#hargaProperty").val(harga);
-            $("#hargaProperty").trigger('keyup');
-            $("#luasTanah").val(propertyDetails.luasTanah);
-            $("#luasBangunan").val(propertyDetails.luasBangunan);
-            $("#kamarTidur").val(propertyDetails.kamarTidur);
-            $("#carPort").val(propertyDetails.carPort);
-            $("#lokasi").val(propertyDetails.lokasi);
-            $("#deskripsi").val(propertyDetails.deskripsi);
-
-        }
-
         var listFotoPriview = [];
         var listFoto = [];
 
@@ -409,6 +343,26 @@
                 var reader = new FileReader();
                 reader.onload = onCallback;
                 reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function phoneSection() {
+            $("#phoneSection").empty();
+            if (listContact.length > 0) {
+                listContact.forEach(function (value, i) {
+                    $("#phoneSection").append(`<div style="background-color: #aa8453; border-radius: 12px;"
+                                            class="col-md-3 m-2">
+                                            <i onclick="deleteContact(${i})"
+                                                style="border-radius:4px; margin-right: 4px; margin-top: 2px; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
+                                                class="fa fa-times p-1"></i>
+                                            <div onclick="clickContact(${value.nomerTelpon})" class="row p-2" style="cursor: pointer; ">
+                                                <img style="width: 52px;" src="/images/whatsapp-logo.png" alt="">
+                                                <p
+                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
+                                                    ${value.namaContact}</p>
+                                            </div>
+                                        </div>`);
+                });
             }
         }
 
@@ -434,8 +388,8 @@
             $("#videoSection").empty();
             if (listVideo.length > 0) {
                 listVideo.forEach(function (value, i) {
-                    $("#videoSection").append(`<div class="col-md-4 gallery-item">
-                    <i onclick="deleteVideo(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;" class="fa fa-times p-1 mr-4 mt-4"></i> 
+                    $("#videoSection").append(`<div class="col-md-4 gallery-item ml-2">
+                    <i title="hapus" onclick="deleteVideo(${i})" style="border-radius:4px; background-color: black; cursor:pointer; z-index:20; color: white; position: absolute; top:1; left:1;" class="fa fa-times p-1"></i> 
                                         <video width="300" controls>
                                             <source src="${URL.createObjectURL(value)}" id="video_here">
                                                 Your browser does not support HTML5 video.
@@ -443,11 +397,6 @@
                                         </div>`);
                 });
             }
-        }
-
-        function phoneSection() {
-            $("#phoneSection").empty();
-
         }
 
         function deleteVideo(i) {
@@ -486,73 +435,58 @@
             $(`#${id}`).toggle('modal');
         }
         function submit() {
-            if (listFotoPriview.length == 0) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'warning',
-                    title: 'Foto harus diisi minimal 1 untuk display property',
-                    showConfirmButton: true,
-                });
-                return;
-            }
             propertyDetails.idProperty = /*[[${property.idProperty}]]*/null;
-            propertyDetails.tipeProperty = $("#tipeProperty").val();
-            propertyDetails.harga = $("#hargaProperty").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            propertyDetails.tipeProperty = $("#tipeProperty option:selected").val();
+            propertyDetails.propertyStatus = {
+                "idPropertyStatus":$("#statusProperty option:selected").val(),
+                "statusName":$("#statusProperty option:selected").text(),
+            };
             propertyDetails.luasTanah = $("#luasTanah").val();
             propertyDetails.luasBangunan = $("#luasBangunan").val();
             propertyDetails.kamarTidur = $("#kamarTidur").val();
             propertyDetails.carPort = $("#carPort").val();
             propertyDetails.lokasi = $("#lokasi").val();
             propertyDetails.deskripsi = $("#deskripsi").val();
-            console.log(propertyDetails);
-            // $.ajax({
-            //     url: '/admin/postPropertyDetails',
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json"
-            //     },
-            //     data: JSON.stringify(propertyDetails),
-            //     success: function (data, textStatus, jqXHR) {
-            //         var formData = new FormData();
-            //         listFoto.forEach(foto => {
-            //             formData.append("imageFiles", foto);
-            //         });
-            //         $.ajax({
-            //             method: "POST",
-            //             url: `/admin/postListFoto?idDetailsProperty=${data.propertyDetails.idDetailsProperty}`,
-            //             data: formData,
-            //             processData: false,
-            //             contentType: false,
-            //             success: function (data, textStatus, jqXHR) {
-            //                 console.log(textStatus);
-            //             },
-            //             error: function (jqXHR, textStatus, errorThrown) {
-            //                 console.log(textStatus);
-            //             }
-            //         });
-            //         // Swal.fire({
-            //         //     position: 'center',
-            //         //     icon: 'success',
-            //         //     title: 'Berhasil menambahkan detail property',
-            //         //     showConfirmButton: false,
-            //         //     timer: 1500
-            //         // }).then(function () {
-            //         //     window.location.reload();
-            //         // });
-            //     },
-            //     error: function (jqXHR, textStatus, errorThrown) {
-            //         Swal.fire({
-            //             position: 'center',
-            //             icon: 'error',
-            //             title: 'Gagal menambahkan detail property',
-            //             showConfirmButton: false,
-            //             timer: 1500
-            //         })
-            //     }
-            // });
-
-
-
+            propertyDetails.listContactPerson = listContact;
+            var formData = new FormData();
+            listFoto.forEach(foto => {
+                formData.append("images", foto);
+            });
+            listVideo.forEach(video => {
+                formData.append("videos", video);
+            });
+            var jsonData = JSON.stringify(propertyDetails);
+            var blobData = new Blob([jsonData], {
+                type: 'application/json'
+            });
+            formData.append("propertyDetails", blobData);
+            $.ajax({
+                method: "POST",
+                url: `/property/post/${propertyDetails.idProperty}`,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data, textStatus, jqXHR) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Berhasil menambahkan detail property',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function () {
+                        window.location.reload();
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Gagal menambahkan detail property',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
         }
         function validate(evt) {
             var theEvent = evt || window.event;

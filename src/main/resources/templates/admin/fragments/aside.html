@@ -38,7 +38,7 @@
                 </ul>
             </li>
             <li><a href='about.html'>Website Title</a></li>
-            <li><a href='about.html'>Calculating</a></li>
+            <li th:classappend="${#httpServletRequest.getRequestURI() == '/admin/calculating' ? 'active':''}"><a th:href='@{/admin/calculating}'>Calculating</a></li>
         </ul>
     </nav>
     <!-- Sidebar Footer -->

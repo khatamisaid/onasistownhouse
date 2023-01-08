@@ -2,7 +2,9 @@ package com.dreamtown.onasistownhouse.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +108,12 @@ public class AdminController {
     @RequestMapping(value = "/p/{propertyName}/{id}", method = RequestMethod.GET)
     public String propertyDetails(Model model, @PathVariable String propertyName, @PathVariable Integer id) {
         PropertyDetails propertyDetails = propertyDetailsRepository.findById(id).get();
+        Property property = propertyRepository.findOneByPropertyName(propertyName);
         model.addAttribute("propertyDetails", propertyDetails);
+        model.addAttribute("propertyName", propertyName);
+        model.addAttribute("property", property);
+        model.addAttribute("propertyStatus", propertyStatusRepository.findAll());
+        model.addAttribute("tipeProperty", tipeProperty.getListTipeProperty());
         model.addAttribute("menus", menu.getListProperty());
         return "admin/detailsProperty";
     }
@@ -140,9 +147,11 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/property", method = RequestMethod.POST)
-    public ResponseEntity<Map> postProperty(@RequestPart Property property, @RequestPart MultipartFile file) throws IllegalStateException, IOException {
+    public ResponseEntity<Map> postProperty(@RequestPart Property property, @RequestPart MultipartFile file)
+            throws IllegalStateException, IOException {
         Map response = new HashMap<>();
-        if (file.isEmpty())return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        if (file.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         String[] splitFileName = file.getOriginalFilename().split("\\.");
         String extension = splitFileName[splitFileName.length - 1];
         String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
@@ -181,7 +190,8 @@ public class AdminController {
     @RequestMapping(value = "/postingFile", consumes = { MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE }, method = RequestMethod.POST)
     public ResponseEntity<Map> postProperty(@RequestParam Integer idDetailsProperty,
-            @RequestParam(required = true) List<MultipartFile> imageFiles, @RequestParam(required = false) MultipartFile videoFile) {
+            @RequestParam(required = true) List<MultipartFile> imageFiles,
+            @RequestParam(required = false) MultipartFile videoFile) {
         Map response = new HashMap<>();
         if (imageFiles.isEmpty()) {
             response.put("message", "Foto harus diisi");
@@ -222,8 +232,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/calculating", method = RequestMethod.GET)
-    public ResponseEntity<Map> calculating(@RequestParam Integer idDetailsProperty, @RequestParam Integer waktuCicilan){
-        Map data = new HashMap<>();
-        return new ResponseEntity<>(HttpStatus.OK);
+    public String calculatingView(Model model) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        model.addAttribute("tanggal", sdf.format(new Date()));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listProperty", propertyRepository.findAll());
+        model.addAttribute("listTipeProperty", tipeProperty.getListTipeProperty());
+        return "admin/calculating";
     }
+
 }

@@ -73,11 +73,7 @@
                                 style="cursor: pointer;" class="category"><i
                                     class="fa-solid fa-ellipsis-vertical"></i></span>
                             <div class="con">
-                                <h6><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}"
-                                        th:text="'IDR: ' + ${#numbers.formatDecimal(propertyDetails.harga, 0, 'COMMA', 0, 'POINT')}"></a>
-                                </h6>
-                                <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}">Junior
-                                        Suite</a> </h5>
+                                <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}" th:text="'Tipe '+${propertyDetails.tipeProperty}"></a> </h5>
                                 <div class="line"></div>
                                 <div class="row facilities">
                                     <div class="col col-md-7">

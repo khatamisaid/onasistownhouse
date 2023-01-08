@@ -27,6 +27,7 @@ import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
+import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
 
 @Controller
@@ -41,6 +42,9 @@ public class PropertyController {
 
     @Autowired
     private Environment env;
+
+    @Autowired
+    private PropertyStatusRepository propertyStatusRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public String property() {
@@ -66,8 +70,8 @@ public class PropertyController {
 
     @RequestMapping(value = "/post/{idProperty}", method = RequestMethod.POST)
     public ResponseEntity<Map> postDetailsProperty(@PathVariable Integer idProperty,
-            @RequestPart PropertyDetails propertyDetails, @RequestPart List<MultipartFile> images,
-            @RequestPart List<MultipartFile> videos, @RequestPart List<ContactPerson> contactPersons)
+            @RequestPart PropertyDetails propertyDetails, @RequestPart(required = false) List<MultipartFile> images,
+            @RequestPart(required = false) List<MultipartFile> videos)
             throws IllegalStateException, IOException {
         Map response = new HashMap<>();
         propertyDetails.setIdProperty(idProperty);
@@ -127,6 +131,15 @@ public class PropertyController {
         }
         propertyRepository.deleteById(id);
         response.put("message", "Berhasil menghapus data");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Map> findByIdAndTipeProperty(@PathVariable Integer id, @RequestParam String tipeProperty) {
+        Map response = new HashMap<>();
+        response.put("property", propertyRepository.findById(id).get());
+        response.put("propertyDetails",
+                propertyDetailsRepository.findOneByIdDetailsPropertyAndTipeProperty(id, tipeProperty));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

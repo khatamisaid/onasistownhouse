@@ -301,7 +301,6 @@
                     $.magnificPopup.instance.close = function () {
                         // Do whatever else you need to do here
                         $("#videoPopUp").get(0).pause();
-
                         // Call the original close method to close the popup
                         $.magnificPopup.proto.close.call(this);
                     };

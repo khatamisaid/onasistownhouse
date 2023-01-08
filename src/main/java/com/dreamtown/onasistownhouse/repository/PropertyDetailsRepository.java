@@ -11,4 +11,6 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     @Modifying
     @Query("delete from PropertyDetails pd where pd.idProperty=:idProperty")
     void deleteWhereIdProperty(@Param("idProperty") Integer idProperty);
+    
+    PropertyDetails findOneByIdDetailsPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty); 
 }

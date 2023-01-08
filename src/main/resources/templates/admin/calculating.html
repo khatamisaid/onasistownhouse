@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Onasis Town House | CMS</title>
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/style6.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .dataTables_wrapper label select {
+            width: 160px;
+            max-width: 100%;
+            height: 35px;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Sidebar Section -->
+    <a href="#" class="js-cappa-nav-toggle cappa-nav-toggle"><i></i></a>
+    <div th:replace="admin/fragments/aside :: sidebar"></div>
+    <!-- Main -->
+    <div id="cappa-main">
+        <section class="section-padding">
+            <div class="container">
+                <div style="background-color: white; border-color: #aa8453;" class="card">
+                    <div class="card-header">
+                        <h3 id="headerFormulir" style="color: #aa8453;">Formulir Pemesanan Rumah</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="tanggal">Tanggal: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input th:value="${tanggal}" type="text" class="form-control-sm" name="tanggal"
+                                    id="tanggal" readonly="" />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-2">
+                                <label for="property">Property: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="property" id="property" class="custom-select">
+                                    <option value="" selected disabled>-- Pilih Property --</option>
+                                    <option th:each="property: ${listProperty}" th:value="${property.idProperty}"
+                                        th:text="${property.propertyName}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-2">
+                                <label for="tipeProperty">Tipe Property: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="tipeProperty" id="tipeProperty" class="custom-select">
+                                    <option value="" selected disabled>-- Pilih Tipe --</option>
+                                    <option th:each="tipeProperty: ${listTipeProperty}" th:value="${tipeProperty}"
+                                        th:text="${tipeProperty}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="sectionLbLt" class="row" style="display: none;">
+                            <div class="col-md-2">
+                                <label for="luasBangunan">Luas Bangunan: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="color: black;" id="luasBangunan"></p>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="luasTanah">Luas Tanah: </label>
+                            </div>
+                            <div class="col-md-3">
+                                <p style="color: black;" id="luasTanah"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="namaPembeli">Nama Pembeli: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input placeholder="masukan nama pembeli" type="text" name="namaPembeli"
+                                    id="namaPembeli" class="form-control-sm" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="nomorKtp">No KTP: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input placeholder="masukan nomor KTP" type="text" name="nomorKtp" id="nomorKtp"
+                                    class="form-control-sm" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="alamatLengkap">Alamat Lengkap: </label>
+                            </div>
+                            <div class="col-md-6">
+                                <textarea style="color: black;" name="alamatLengkap" id="alamatLengkap" cols="30"
+                                    rows="2"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="nomerTelpon">Nomor Telepon</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">+62</span>
+                                    </div>
+                                    <input type="text" class="form-control p-2" placeholder="masukan nomor telepon"
+                                        id="nomerTelpon" name="nomerTelpon">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sectionPembayaran" style="display: none;">
+                            <div class="row mb-2">
+                                <div class="col-md-2">
+                                    <label for="caraBayar">Cara Bayar: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select name="caraBayar" id="caraBayar" class="custom-select">
+                                        <option value="" selected disabled>-- Pilih cara bayar --</option>
+                                        <option value="1">Tunai</option>
+                                        <option value="2">Tunai Bertahap</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="hargaJual">Harga: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p style="color:black" id="hargaJual">Rp. 1.500.000.000</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="discount">Discount: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="discount" id="discount"
+                                        placeholder="masukan discount harga" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label style="font-size: 18px;" for="totalHarga"> = </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <p style="color:black" id="totalHarga">Rp. 0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="bookingFee">Booking Fee: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control-sm" type="text" name="bookingFee" id="bookingFee"
+                                        placeholder="masukan booking fee" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="tanggalBooking">Tanggal: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control" type="date" name="tanggalBooking" id="tanggalBooking"
+                                        placeholder="masukan booking fee" />
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-2">
+                                    <label for="dpBayar">DP: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="custom-select" name="dpBayar" id="dpBayar">
+                                        <option value="">-- Uang Muka / DP --</option>
+                                        <option value="1">10%</option>
+                                        <option value="2">20%</option>
+                                        <option value="3">30%</option>
+                                        <option value="4">40%</option>
+                                        <option value="5">50%</option>
+                                        <option value="6">60%</option>
+                                        <option value="7">70%</option>
+                                        <option value="8">80%</option>
+                                        <option value="9">90%</option>
+                                        <option value="10">100%</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label style="font-size: 18px;" for="totalDp"> = </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <p style="color:black" id="totalDp">Rp. 0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="totalkeseluruhanHarga">Total Harga</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <p style="color:black" id="totalkeseluruhanHarga">Rp. 0</p>
+                                </div>
+                            </div>
+                            <div style="display: none;" id="sectionTunaiBertahap">
+                                <div class="row mb-2">
+                                    <div class="col-md-2">
+                                        <label for="periodeCicilan">
+                                            Periode Cicilan:
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="custom-select" name="periodeCicilan" id="periodeCicilan">
+                                            <option value="">-- Pilih Periode Cicilan --</option>
+                                            <option value="1">1 bulan</option>
+                                            <option value="2">2 bulan</option>
+                                            <option value="3">3 bulan</option>
+                                            <option value="4">4 bulan</option>
+                                            <option value="5">5 bulan</option>
+                                            <option value="6">6 bulan</option>
+                                            <option value="7">7 bulan</option>
+                                            <option value="8">8 bulan</option>
+                                            <option value="9">9 bulan</option>
+                                            <option value="10">10 bulan</option>
+                                            <option value="11">11 bulan</option>
+                                            <option value="12">12 bulan</option>
+                                            <option value="13">13 bulan</option>
+                                            <option value="14">14 bulan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="hargaCicilan">Cicilan: </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p style="color:black" id="hargaCicilan">Rp. 0 / Bulan</p>
+                                    </div>
+                                </div>
+                                <div class="row" id="sectionBiayaAdmin" style="display: none;">
+                                    <div class="col-md-2">
+                                        <label for="biayaAdmin">Biaya Admin: </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p style="color:black" id="biayaAdmin">Rp. 6.000.000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary"><i class="fa fa-print"></i> PRINT</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="section-padding">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="section-subtitle">Onasis Town House</div>
+                    <div class="section-title">Property</div>
+                </div>
+            </div>
+        </section> -->
+    </div>
+    <!-- jQuery -->
+    <div th:replace="assets/js :: js"></div>
+    <script th:inline="javascript">
+        var hargaSetelahDP = 0;
+        $("#property").on('change', function () {
+            if (this.value == '' || $("#tipeProperty option:selected").val() == '') {
+                return;
+            }
+            $.get(`/property/${this.value}?tipeProperty=${$("#tipeProperty option:selected").val()}`, function (res) {
+                console.log(res);
+                if (res.propertyDetails != null) {
+                    $("#sectionLbLt").show();
+                    $("#sectionPembayaran").show();
+                    $("#luasBangunan").text(`${res.propertyDetails.luasBangunan} (m²)`);
+                    $("#luasTanah").text(`${res.propertyDetails.luasTanah} (m²)`);
+                    $("#hargaJual").text(`${formatRupiah(res.property.harga.toString(), 'Rp. ')}`);
+                    $("#headerFormulir").text(`Formulir Pemesanan Rumah ${res.property.propertyName}`);
+                    return;
+                }
+                $("#sectionPembayaran").hide();
+                $("#sectionLbLt").hide();
+                return;
+            });
+        });
+        $("#tipeProperty").on('change', function () {
+            if (this.value == '' || $("#property option:selected").val() == '') {
+                return;
+            }
+            $.get(`/property/${$("#property option:selected").val()}?tipeProperty=${this.value}`, function (res) {
+                console.log(res);
+                if (res.propertyDetails != null) {
+                    $("#sectionLbLt").show();
+                    $("#sectionPembayaran").show();
+                    $("#luasBangunan").text(`${res.propertyDetails.luasBangunan} (m²)`);
+                    $("#luasTanah").text(`${res.propertyDetails.luasTanah} (m²)`);
+                    $("#hargaJual").text(`${formatRupiah(res.property.harga.toString(), 'Rp. ')}`);
+                    $("#headerFormulir").text(`Formulir Pemesanan Rumah ${res.property.propertyName}`);
+                    return;
+                }
+                $("#sectionPembayaran").hide();
+                $("#sectionLbLt").hide();
+                return;
+            })
+        });
+        /* Fungsi */
+        function formatRupiah(angka, prefix) {
+            if (angka.startsWith('0')) {
+                return "";
+            }
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
+        function formatRupiahPerBulan(angka, prefix) {
+            if (angka.startsWith('0')) {
+                return "";
+            }
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah + ' / Bulan' : '');
+        }
+        $('#discount').on('keyup', function (e) {
+            this.value = formatRupiah(this.value, 'Rp. ');
+        });
+
+        $('#bookingFee').on('keyup', function (e) {
+            this.value = formatRupiah(this.value, 'Rp. ');
+        });
+
+        $("#discount").on('change', function () {
+            var hargaJual = $("#hargaJual").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var hargaDiscount = this.value.trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            $("#totalHarga").text(formatRupiah((hargaJual - hargaDiscount).toString(), 'Rp. '));
+        });
+        $("#dpBayar").on('change', function () {
+            var dpBayar = $(this).find("option:selected").text().replace("%", "");
+            var totalHarga = $("#totalHarga").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var bookingFee = $("#bookingFee").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var totalHargaMinBookingFee = (totalHarga - bookingFee);
+            var hargaSetelahBookingFee = totalHargaMinBookingFee * (dpBayar / 100);
+            var totalDp = totalHargaMinBookingFee - hargaSetelahBookingFee;
+            $("#totalDp").text(formatRupiah(hargaSetelahBookingFee.toString(), 'Rp. '));
+            $("#totalkeseluruhanHarga").text(formatRupiah(totalDp.toString(), 'Rp. '))
+        });
+        $("#periodeCicilan").on('change', function () {
+            var totalkeseluruhanHarga = $("#totalkeseluruhanHarga").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var cicilanPerBulan = totalkeseluruhanHarga / this.value;
+            $("#hargaCicilan").text(formatRupiahPerBulan(Math.ceil(cicilanPerBulan).toString(), 'Rp. '));
+            if (this.value <= 12) {
+                $("#sectionBiayaAdmin").hide();
+                return;
+            }
+            $("#sectionBiayaAdmin").show();
+            return;
+        });
+        $("#caraBayar").on('change',function(){
+            if(this.value == 1){
+                $("#sectionTunaiBertahap").hide();
+            }else if(this.value == 2){
+                $("#sectionTunaiBertahap").show();
+            }
+        });
+    </script>
+</body>
+
+</html>
