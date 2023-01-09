@@ -44,7 +44,7 @@
     <div id="cappa-main">
         <section class="section-padding">
             <div class="container">
-                <div style="background-color: white; border-color: #aa8453;" class="card">
+                <div id="printData" style="background-color: white; border-color: #aa8453;" class="card">
                     <div class="card-header">
                         <h3 id="headerFormulir" style="color: #aa8453;">Formulir Pemesanan Rumah</h3>
                     </div>
@@ -77,8 +77,6 @@
                             <div class="col-md-6">
                                 <select name="tipeProperty" id="tipeProperty" class="custom-select">
                                     <option value="" selected disabled>-- Pilih Tipe --</option>
-                                    <option th:each="tipeProperty: ${listTipeProperty}" th:value="${tipeProperty}"
-                                        th:text="${tipeProperty}"></option>
                                 </select>
                             </div>
                         </div>
@@ -155,7 +153,7 @@
                                     <label for="hargaJual">Harga: </label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p style="color:black" id="hargaJual">Rp. 1.500.000.000</p>
+                                    <p style="color:black" id="hargaJual">Rp. 0</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -270,7 +268,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary"><i class="fa fa-print"></i> PRINT</button>
+                        <button id="btnPrint" class="btn btn-primary"><i class="fa fa-print"></i> PRINT</button>
                     </div>
                 </div>
             </div>
@@ -287,21 +285,24 @@
     </div>
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
+    <script th:src="@{/js/moment.min.js}"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script th:inline="javascript">
         var hargaSetelahDP = 0;
         $("#property").on('change', function () {
-            if (this.value == '' || $("#tipeProperty option:selected").val() == '') {
+            $("#tipeProperty").empty();
+            var option = `<option value="" selected disabled>-- Pilih Tipe --</option>`;
+            $("#tipeProperty").append(option);
+            if (this.value == '') {
                 return;
             }
-            $.get(`/property/${this.value}?tipeProperty=${$("#tipeProperty option:selected").val()}`, function (res) {
-                console.log(res);
-                if (res.propertyDetails != null) {
-                    $("#sectionLbLt").show();
-                    $("#sectionPembayaran").show();
-                    $("#luasBangunan").text(`${res.propertyDetails.luasBangunan} (m²)`);
-                    $("#luasTanah").text(`${res.propertyDetails.luasTanah} (m²)`);
-                    $("#hargaJual").text(`${formatRupiah(res.property.harga.toString(), 'Rp. ')}`);
-                    $("#headerFormulir").text(`Formulir Pemesanan Rumah ${res.property.propertyName}`);
+            $.get(`/property/getTipeById?id=${this.value}`, function (res) {
+                if (res.listTipeProperty.length > 0) {
+                    res.listTipeProperty.forEach(function (value) {
+                        option = `<option value="${value}"> ${value} </option>`;
+                        $("#tipeProperty").append(option);
+                    });
                     return;
                 }
                 $("#sectionPembayaran").hide();
@@ -314,7 +315,6 @@
                 return;
             }
             $.get(`/property/${$("#property option:selected").val()}?tipeProperty=${this.value}`, function (res) {
-                console.log(res);
                 if (res.propertyDetails != null) {
                     $("#sectionLbLt").show();
                     $("#sectionPembayaran").show();
@@ -331,9 +331,9 @@
         });
         /* Fungsi */
         function formatRupiah(angka, prefix) {
-            if (angka.startsWith('0')) {
-                return "";
-            }
+            // if (angka.startsWith('0')) {
+            //     return "";
+            // }
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
@@ -350,9 +350,9 @@
         }
 
         function formatRupiahPerBulan(angka, prefix) {
-            if (angka.startsWith('0')) {
-                return "";
-            }
+            // if (angka.startsWith('0')) {
+            //     return "";
+            // }
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
@@ -378,7 +378,7 @@
         $("#discount").on('change', function () {
             var hargaJual = $("#hargaJual").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
             var hargaDiscount = this.value.trim().replaceAll("Rp. ", "").replaceAll(".", "");
-            $("#totalHarga").text(formatRupiah((hargaJual - hargaDiscount).toString(), 'Rp. '));
+            $("#totalHarga").text(formatRupiah(Math.ceil((hargaJual - hargaDiscount)).toString(), 'Rp. '));
         });
         $("#dpBayar").on('change', function () {
             var dpBayar = $(this).find("option:selected").text().replace("%", "");
@@ -387,8 +387,8 @@
             var totalHargaMinBookingFee = (totalHarga - bookingFee);
             var hargaSetelahBookingFee = totalHargaMinBookingFee * (dpBayar / 100);
             var totalDp = totalHargaMinBookingFee - hargaSetelahBookingFee;
-            $("#totalDp").text(formatRupiah(hargaSetelahBookingFee.toString(), 'Rp. '));
-            $("#totalkeseluruhanHarga").text(formatRupiah(totalDp.toString(), 'Rp. '))
+            $("#totalDp").text(formatRupiah(Math.ceil(hargaSetelahBookingFee).toString(), 'Rp. '));
+            $("#totalkeseluruhanHarga").text(formatRupiah(Math.ceil(totalDp).toString(), 'Rp. '));
         });
         $("#periodeCicilan").on('change', function () {
             var totalkeseluruhanHarga = $("#totalkeseluruhanHarga").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
@@ -401,13 +401,118 @@
             $("#sectionBiayaAdmin").show();
             return;
         });
-        $("#caraBayar").on('change',function(){
-            if(this.value == 1){
+        $("#caraBayar").on('change', function () {
+            if (this.value == 1) {
                 $("#sectionTunaiBertahap").hide();
-            }else if(this.value == 2){
+            } else if (this.value == 2) {
                 $("#sectionTunaiBertahap").show();
             }
         });
+        $("#btnPrint").on('click', function () {
+            // var jsonData = {
+            //     "tanggal": "09 January 2023",
+            //     "namaProperty": "Smart Home Jalan Pemuda",
+            //     "tipeProperty": " A ",
+            //     "luasBangunan": "42 (m²)",
+            //     "luasTanah": "52 (m²)",
+            //     "namaPembeli": "asd",
+            //     "noKtpPembeli": "142131",
+            //     "alamatLengkap": "sdasd",
+            //     "noTelepon": "+62812364217128",
+            //     "caraBayar": "Tunai Bertahap",
+            //     "hargaProperty": "Rp. 1.400.000.000",
+            //     "discount": "Rp. 25.000.000",
+            //     "hargaSetelahDiscount": "Rp. 1.375.000.000",
+            //     "bookingFee": "Rp. 25.000.000",
+            //     "tanggalBooking": "09 January 2023",
+            //     "dp": "20%",
+            //     "hargaDp": "Rp. 270.000.000",
+            //     "totalHarga": "Rp. 1.080.000.000",
+            //     "periodeCicilanIsTrue": true,
+            //     "periodeCicilan": "14 bulan",
+            //     "cicilan": "Rp. 77.142.858 / Bulan",
+            //     "kenaAdmin": true,
+            //     "biayaAdmin": "Rp. 6.000.000"
+            // }
+
+            var jsonDataTest = {
+                "tanggal": "09 January 2023",
+                "namaProperty": "Smart Home Jalan Pemuda",
+                "tipeProperty": " A ",
+                "luasBangunan": "42 (m²)",
+                "luasTanah": "52 (m²)",
+                "namaPembeli": "Said",
+                "noKtpPembeli": "127417218",
+                "alamatLengkap": "Jl Raya Pelabuhan",
+                "noTelepon": "+6281310894329",
+                "caraBayar": "Tunai Bertahap",
+                "hargaProperty": "Rp. 1.400.000.000",
+                "discount": "Rp. 2.500.000",
+                "hargaSetelahDiscount": "Rp. 1.397.500.000",
+                "bookingFee": "Rp. 2.500.000",
+                "tanggalBooking": "10 January 2023",
+                "dp": "20%",
+                "hargaDp": "Rp. 279.000.000",
+                "totalHarga": "Rp. 1.116.000.000",
+                "periodeCicilanIsTrue": true,
+                "periodeCicilan": "13 bulan",
+                "cicilan": "Rp. 85.846.154 / Bulan",
+                "kenaAdmin": true,
+                "biayaAdmin": "Rp. 6.000.000"
+            }
+
+            var jsonData = {
+                "tanggal": moment().format("DD MMMM YYYY"),
+                "namaProperty": $("#property option:selected").text(),
+                "tipeProperty": $("#tipeProperty option:selected").text(),
+                "luasBangunan": $("#luasBangunan").text(),
+                "luasTanah": $("#luasTanah").text(),
+                "namaPembeli": $("#namaPembeli").val(),
+                "noKtpPembeli": $("#nomorKtp").val(),
+                "alamatLengkap": $("#alamatLengkap").val(),
+                "noTelepon": `+62${$("#nomerTelpon").val()}`,
+                "caraBayar": $("#caraBayar option:selected").text(),
+                "hargaProperty": $("#hargaJual").text(),
+                "discount": $("#discount").val(),
+                "hargaSetelahDiscount": $("#totalHarga").text(),
+                "bookingFee": $("#bookingFee").val(),
+                "tanggalBooking": moment($("#tanggalBooking").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
+                "dp": $("#dpBayar option:selected").text(),
+                "hargaDp": $("#totalDp").text(),
+                "totalHarga": $("#totalkeseluruhanHarga").text(),
+                "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2,
+                "periodeCicilan": $("#periodeCicilan option:selected").text(),
+                "cicilan": $("#hargaCicilan").text(),
+                "kenaAdmin": $("#periodeCicilan option:selected").val() > 12,
+                "biayaAdmin": $("#biayaAdmin").text()
+            }
+            console.log(jsonData);
+            var urlHit = `/property/cetakFormulirPemesanan`;
+            $.ajax({
+                method: "POST",
+                url: `${urlHit}`,
+                data: JSON.stringify(jsonDataTest),
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (data, textStatus, jqXHR) {
+                    var base64 = `data:application/pdf;base64,${data.file}`;
+                    window.open(base64, "_blank");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
+        });
+        function getBase64(file) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                console.log(reader.result);
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
     </script>
 </body>
 

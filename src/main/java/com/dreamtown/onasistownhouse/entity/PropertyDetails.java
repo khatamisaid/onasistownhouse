@@ -59,7 +59,7 @@ public class PropertyDetails extends DateAudit {
     @Column(name = "deskripsi", columnDefinition = "TEXT")
     private String deskripsi;
 
-    @Column(name = "tipeProperty")
+    @Column(name = "tipe_property")
     private String tipeProperty;
 
     @JoinColumn(name = "id_property_status", referencedColumnName = "id_property_status", insertable = true, updatable = true)

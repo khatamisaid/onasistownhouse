@@ -1,7 +1,11 @@
 package com.dreamtown.onasistownhouse.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
@@ -28,7 +33,11 @@ import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
+import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananRumah;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
+import com.dreamtown.onasistownhouse.viewmodel.ViewModelCetakFormulirPemesananRumah;
+import static org.springframework.http.MediaType.*;
+import org.springframework.http.HttpHeaders;
 
 @Controller
 @RequestMapping(value = "/property")
@@ -141,5 +150,54 @@ public class PropertyController {
         response.put("propertyDetails",
                 propertyDetailsRepository.findOneByIdDetailsPropertyAndTipeProperty(id, tipeProperty));
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getTipeById", method = RequestMethod.GET)
+    public ResponseEntity<Map> getTipeById(@RequestParam Integer id) {
+        Map response = new HashMap<>();
+        response.put("listTipeProperty", propertyDetailsRepository.findTipePropertyByIdDetailsProperty(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cetakFormulirPemesananTest", produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity cetakFormulirPemesananWithRequestBody(
+            @RequestPart ViewModelCetakFormulirPemesananRumah vmCetakRumah)
+            throws MalformedURLException, IOException {
+        if (vmCetakRumah.getNamaProperty().equalsIgnoreCase("")) {
+            Map response = new HashMap();
+            response.put("message", "File Not Found");
+            ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
+            return respEntity;
+        }
+        String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
+        String path = "./laporan/test.pdf";
+        new CetakFormulirPemesananRumah(vmCetakRumah, path).writePdf();
+        InputStream inputStream = new FileInputStream(path);
+        String type = new File(path).toURL().openConnection().guessContentTypeFromName(path);
+        byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("content-disposition", "attachment; filename=" + filename);
+        responseHeaders.add("Content-Type", type);
+        return new ResponseEntity(out, responseHeaders, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cetakFormulirPemesanan", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Map> cetakFormulirPemesanan(
+            @RequestBody ViewModelCetakFormulirPemesananRumah vmCetakRumah) throws IOException {
+        if (vmCetakRumah.getNamaProperty().equalsIgnoreCase("")) {
+            Map response = new HashMap();
+            response.put("message", "File Not Found");
+            ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
+            return respEntity;
+        }
+        Map response = new HashMap();
+        String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
+        String path = "./laporan/test.pdf";
+        new CetakFormulirPemesananRumah(vmCetakRumah, path).writePdf();
+        InputStream inputStream = new FileInputStream(path);
+        byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
+        response.put("file", out);
+        response.put("filename", filename);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }
