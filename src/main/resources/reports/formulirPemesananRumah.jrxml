@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulirPemesananRumah" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34a2a38d-8817-4180-8b7a-56ff996fe4ee">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="onasistownhouse"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -129,13 +129,13 @@
 		</band>
 	</title>
 	<detail>
-		<band height="512" splitType="Stretch">
+		<band height="563" splitType="Stretch">
 			<staticText>
 				<reportElement x="67" y="36" width="100" height="20" uuid="b8491cec-119a-4afc-aeb8-ef4a4362dde2"/>
 				<text><![CDATA[Property]]></text>
 			</staticText>
 			<image>
-				<reportElement key="" mode="Transparent" x="0" y="14" width="555" height="484" uuid="42b4670e-b73e-43bd-baea-b8b8e08d07af"/>
+				<reportElement key="" mode="Transparent" x="0" y="39" width="555" height="484" uuid="42b4670e-b73e-43bd-baea-b8b8e08d07af"/>
 				<imageExpression><![CDATA[$P{watermark}]]></imageExpression>
 			</image>
 			<staticText>
@@ -167,7 +167,7 @@
 				<text><![CDATA[Luas Tanah]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="67" y="426" width="100" height="20" uuid="0b1d2af5-2a3c-4420-b093-674e297be2f3">
+				<reportElement x="67" y="466" width="100" height="20" uuid="0b1d2af5-2a3c-4420-b093-674e297be2f3">
 					<printWhenExpression><![CDATA[$F{periodeCicilanIsTrue} == true]]></printWhenExpression>
 				</reportElement>
 				<text><![CDATA[Periode Cicilan]]></text>
@@ -181,19 +181,19 @@
 				<text><![CDATA[Cara Bayar]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="67" y="398" width="100" height="20" uuid="8227b4a3-146b-4621-bcc0-5c9c354f452e"/>
+				<reportElement x="67" y="441" width="100" height="20" uuid="8227b4a3-146b-4621-bcc0-5c9c354f452e"/>
 				<text><![CDATA[Total Harga]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="68" y="339" width="100" height="20" uuid="3de68e3a-ef40-4c8b-9abb-89ba42597e6a"/>
+				<reportElement x="68" y="360" width="100" height="20" uuid="3de68e3a-ef40-4c8b-9abb-89ba42597e6a"/>
 				<text><![CDATA[Booking Fee]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="67" y="368" width="100" height="20" uuid="f60dc99d-bffc-4dda-ac7e-27e315de4425"/>
+				<reportElement x="67" y="389" width="100" height="20" uuid="f60dc99d-bffc-4dda-ac7e-27e315de4425"/>
 				<text><![CDATA[DP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="67" y="454" width="100" height="20" uuid="1a5f7882-da55-490e-a50c-957f698aebd1">
+				<reportElement x="67" y="515" width="100" height="20" uuid="1a5f7882-da55-490e-a50c-957f698aebd1">
 					<printWhenExpression><![CDATA[$F{periodeCicilanIsTrue} == true]]></printWhenExpression>
 				</reportElement>
 				<text><![CDATA[Cicilan]]></text>
@@ -215,7 +215,7 @@
 				<textFieldExpression><![CDATA[$F{luasBangunan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="405" y="86" width="140" height="20" uuid="702e21ed-2df3-466b-addd-58d8a4ddba56"/>
+				<reportElement x="400" y="86" width="145" height="20" uuid="702e21ed-2df3-466b-addd-58d8a4ddba56"/>
 				<textFieldExpression><![CDATA[$F{luasTanah}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -247,25 +247,25 @@
 				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="339" width="140" height="20" uuid="e609a26e-d1cf-4c6a-a576-dac47e0f8535"/>
+				<reportElement x="190" y="360" width="140" height="20" uuid="e609a26e-d1cf-4c6a-a576-dac47e0f8535"/>
 				<textFieldExpression><![CDATA[$F{bookingFee}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="368" width="140" height="20" uuid="f6e589c5-568b-49b6-a57b-1c897024c56a"/>
+				<reportElement x="190" y="389" width="140" height="20" uuid="f6e589c5-568b-49b6-a57b-1c897024c56a"/>
 				<textFieldExpression><![CDATA[$F{dp}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="398" width="140" height="20" uuid="fa9967f0-7f5f-41ed-a8e2-77d3e114b10c"/>
+				<reportElement x="190" y="441" width="140" height="20" uuid="fa9967f0-7f5f-41ed-a8e2-77d3e114b10c"/>
 				<textFieldExpression><![CDATA[$F{totalHarga}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="426" width="140" height="20" uuid="9e3fb2bc-e55f-4126-81b0-5cf2a39d11b7">
+				<reportElement x="190" y="466" width="140" height="20" uuid="9e3fb2bc-e55f-4126-81b0-5cf2a39d11b7">
 					<printWhenExpression><![CDATA[$F{periodeCicilanIsTrue} == true]]></printWhenExpression>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{periodeCicilan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="190" y="454" width="140" height="20" uuid="5c72bda4-8e42-4532-b33d-0a5c330d1d1a">
+				<reportElement x="190" y="515" width="140" height="20" uuid="5c72bda4-8e42-4532-b33d-0a5c330d1d1a">
 					<printWhenExpression><![CDATA[$F{periodeCicilanIsTrue} == true]]></printWhenExpression>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cicilan}]]></textFieldExpression>
@@ -275,47 +275,45 @@
 				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="433" y="0" width="116" height="20" uuid="c8487076-d5d2-4a46-9a73-8d01b2083bf1"/>
+				<reportElement x="425" y="0" width="124" height="20" uuid="c8487076-d5d2-4a46-9a73-8d01b2083bf1"/>
 				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="340" y="310" width="20" height="20" uuid="6a1ae60f-f7e5-4f95-b70a-34aeb9871926"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[=]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="370" y="310" width="175" height="20" uuid="2bf934cb-c62a-474e-9681-105fa8021232"/>
+				<reportElement x="190" y="335" width="140" height="20" uuid="2bf934cb-c62a-474e-9681-105fa8021232"/>
 				<textFieldExpression><![CDATA[$F{hargaSetelahDiscount}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="425" y="340" width="120" height="20" uuid="8cf4ed3f-ff52-49e1-82a7-6a6f78a35898"/>
+				<reportElement x="419" y="361" width="126" height="20" uuid="8cf4ed3f-ff52-49e1-82a7-6a6f78a35898"/>
 				<textFieldExpression><![CDATA[$F{tanggalBooking}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="340" y="340" width="79" height="20" uuid="da467363-589c-4d51-a670-f8f4f78b6698"/>
+				<reportElement x="340" y="361" width="79" height="20" uuid="da467363-589c-4d51-a670-f8f4f78b6698"/>
 				<textElement verticalAlignment="Top"/>
 				<text><![CDATA[Tanggal Booking]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="370" y="368" width="175" height="20" uuid="2d314b8e-d528-477d-ad0d-47bf2a8ffc28"/>
+				<reportElement x="190" y="415" width="140" height="20" uuid="2d314b8e-d528-477d-ad0d-47bf2a8ffc28"/>
 				<textFieldExpression><![CDATA[$F{hargaDp}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="340" y="368" width="20" height="20" uuid="1f1b9238-4da8-4405-81f5-585442cdfcbf"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[=]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="190" y="480" width="140" height="20" uuid="c62ce479-fbff-42f5-b8be-b87df7d86f1d">
+				<reportElement x="190" y="490" width="140" height="20" uuid="c62ce479-fbff-42f5-b8be-b87df7d86f1d">
 					<printWhenExpression><![CDATA[$F{kenaAdmin} == true]]></printWhenExpression>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{biayaAdmin}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="67" y="480" width="100" height="20" uuid="0bd3ff3a-9d04-4d0b-8d00-ea10e2e46630">
+				<reportElement x="67" y="490" width="100" height="20" uuid="0bd3ff3a-9d04-4d0b-8d00-ea10e2e46630">
 					<printWhenExpression><![CDATA[$F{kenaAdmin} == true]]></printWhenExpression>
 				</reportElement>
 				<text><![CDATA[Biaya Admin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="335" width="100" height="20" uuid="f00fade0-17f9-40a4-92bf-ff60f77b79e8"/>
+				<text><![CDATA[Total Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="415" width="100" height="20" uuid="35df0502-1b28-44ed-8fa2-17a839415df5"/>
+				<text><![CDATA[Total DP]]></text>
 			</staticText>
 		</band>
 	</detail>

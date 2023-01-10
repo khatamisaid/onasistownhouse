@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
     <style>
         .dataTables_wrapper label select {
             width: 160px;
@@ -164,8 +165,10 @@
                                     <input type="text" name="discount" id="discount"
                                         placeholder="masukan discount harga" />
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-2">
-                                    <label style="font-size: 18px;" for="totalHarga"> = </label>
+                                    <label for="totalHarga">Harga Discount:</label>
                                 </div>
                                 <div class="col-md-4">
                                     <p style="color:black" id="totalHarga">Rp. 0</p>
@@ -207,7 +210,16 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <label style="font-size: 18px;" for="totalDp"> = </label>
+                                    <label for="tanggalDp">Tanggal: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input class="form-control" type="date" name="tanggalDp" id="tanggalDp"
+                                        placeholder="masukan tanggal dp" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="totalDp">Total DP</label>
                                 </div>
                                 <div class="col-md-4">
                                     <p style="color:black" id="totalDp">Rp. 0</p>
@@ -248,14 +260,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label for="hargaCicilan">Cicilan: </label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p style="color:black" id="hargaCicilan">Rp. 0 / Bulan</p>
-                                    </div>
-                                </div>
                                 <div class="row" id="sectionBiayaAdmin" style="display: none;">
                                     <div class="col-md-2">
                                         <label for="biayaAdmin">Biaya Admin: </label>
@@ -264,10 +268,33 @@
                                         <p style="color:black" id="biayaAdmin">Rp. 6.000.000</p>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="hargaCicilan">Cicilan: </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p style="color:black" id="hargaCicilan">Rp. 0 / Bulan</p>
+                                    </div>
+                                </div>
+                                <div class="row p-2 m-2" id="sectionCicilan">
+                                    <table id="tableCicilan" class="table table-striped table-bordered"
+                                        style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="color:#aa8453">Cicilan</th>
+                                                <th style="color:#aa8453">Nominal</th>
+                                                <th style="color:#aa8453">Tanggal Cicilan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
+                        <button id="btnCekArray" class="btn btn-primary"><i class="fa fa-print"></i> CEK ARRAY</button>
                         <button id="btnPrint" class="btn btn-primary"><i class="fa fa-print"></i> PRINT</button>
                     </div>
                 </div>
@@ -285,10 +312,10 @@
     </div>
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
-    <script th:src="@{/js/moment.min.js}"
-        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script th:src="@{/js/moment.min.js}"></script>
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script th:inline="javascript">
+        var tableCicilan;
         var hargaSetelahDP = 0;
         $("#property").on('change', function () {
             $("#tipeProperty").empty();
@@ -399,6 +426,17 @@
                 return;
             }
             $("#sectionBiayaAdmin").show();
+            $("#tableCicilan").find('tbody').empty();
+            for (let i = 1; i <= this.value; i++) {
+                $("#tableCicilan").find('tbody').append(
+                    `<tr><td style="color:#aa8453">Cicilan ${i}</td>
+                                            <td style="color:#aa8453">${$("#hargaCicilan").text().replace(" / Bulan", "")}</td>
+                                            <td>
+                                                <input class="form-control" type="date" name="tglCicilan[]" id="tglCicilan${i}"
+                                                    placeholder="masukan tanggal cicilan" />
+                                            </td></tr>`
+                );
+            }
             return;
         });
         $("#caraBayar").on('change', function () {
@@ -435,31 +473,31 @@
             //     "biayaAdmin": "Rp. 6.000.000"
             // }
 
-            var jsonDataTest = {
-                "tanggal": "09 January 2023",
-                "namaProperty": "Smart Home Jalan Pemuda",
-                "tipeProperty": " A ",
-                "luasBangunan": "42 (m²)",
-                "luasTanah": "52 (m²)",
-                "namaPembeli": "Said",
-                "noKtpPembeli": "127417218",
-                "alamatLengkap": "Jl Raya Pelabuhan",
-                "noTelepon": "+6281310894329",
-                "caraBayar": "Tunai Bertahap",
-                "hargaProperty": "Rp. 1.400.000.000",
-                "discount": "Rp. 2.500.000",
-                "hargaSetelahDiscount": "Rp. 1.397.500.000",
-                "bookingFee": "Rp. 2.500.000",
-                "tanggalBooking": "10 January 2023",
-                "dp": "20%",
-                "hargaDp": "Rp. 279.000.000",
-                "totalHarga": "Rp. 1.116.000.000",
-                "periodeCicilanIsTrue": true,
-                "periodeCicilan": "13 bulan",
-                "cicilan": "Rp. 85.846.154 / Bulan",
-                "kenaAdmin": true,
-                "biayaAdmin": "Rp. 6.000.000"
-            }
+            // var jsonDataTest = {
+            //     "tanggal": "09 January 2023",
+            //     "namaProperty": "Smart Home Jalan Pemuda",
+            //     "tipeProperty": " A ",
+            //     "luasBangunan": "42 (m²)",
+            //     "luasTanah": "52 (m²)",
+            //     "namaPembeli": "Said",
+            //     "noKtpPembeli": "127417218",
+            //     "alamatLengkap": "Jl Raya Pelabuhan",
+            //     "noTelepon": "+6281310894329",
+            //     "caraBayar": "Tunai Bertahap",
+            //     "hargaProperty": "Rp. 1.400.000.000",
+            //     "discount": "Rp. 2.500.000",
+            //     "hargaSetelahDiscount": "Rp. 1.397.500.000",
+            //     "bookingFee": "Rp. 2.500.000",
+            //     "tanggalBooking": "10 January 2023",
+            //     "dp": "20%",
+            //     "hargaDp": "Rp. 279.000.000",
+            //     "totalHarga": "Rp. 1.116.000.000",
+            //     "periodeCicilanIsTrue": true,
+            //     "periodeCicilan": "13 bulan",
+            //     "cicilan": "Rp. 85.846.154 / Bulan",
+            //     "kenaAdmin": true,
+            //     "biayaAdmin": "Rp. 6.000.000"
+            // }
 
             var jsonData = {
                 "tanggal": moment().format("DD MMMM YYYY"),
@@ -491,7 +529,7 @@
             $.ajax({
                 method: "POST",
                 url: `${urlHit}`,
-                data: JSON.stringify(jsonDataTest),
+                data: JSON.stringify(jsonData),
                 processData: false,
                 contentType: "application/json; charset=utf-8",
                 success: function (data, textStatus, jqXHR) {
@@ -513,6 +551,12 @@
                 console.log('Error: ', error);
             };
         }
+        $("#btnCekArray").on('click', function () {
+            var listTanggalCicilan = [];
+            for (let i = 1; i < $("#periodeCicilan option:selected").val(); i++) {
+                listTanggalCicilan.push();
+            }
+        });
     </script>
 </body>
 
