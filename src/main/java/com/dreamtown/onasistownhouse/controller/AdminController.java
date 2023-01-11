@@ -38,6 +38,7 @@ import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Role;
 import com.dreamtown.onasistownhouse.entity.User;
 import com.dreamtown.onasistownhouse.entity.Video;
+import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PhotoRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
@@ -80,12 +81,16 @@ public class AdminController {
     private PropertyStatusRepository propertyStatusRepository;
 
     @Autowired
+    private MWilayahRepository mWilayahRepository;
+
+    @Autowired
     private Environment env;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
         return "admin/index";
     }
 
@@ -231,14 +236,14 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/calculating", method = RequestMethod.GET)
-    public String calculatingView(Model model) {
+    @RequestMapping(value = "/formulir_pemesanan", method = RequestMethod.GET)
+    public String formulirPemesanan(Model model) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
         model.addAttribute("tanggal", sdf.format(new Date()));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listProperty", propertyRepository.findAll());
         model.addAttribute("listTipeProperty", tipeProperty.getListTipeProperty());
-        return "admin/calculating";
+        return "admin/formulirPemesanan";
     }
 
 }

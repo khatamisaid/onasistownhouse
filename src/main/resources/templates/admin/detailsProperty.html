@@ -329,6 +329,8 @@
         function initData() {
             $("#tipeProperty").val(propertyDetails.tipeProperty);
             $("#statusProperty").val(propertyDetails.propertyStatus.idPropertyStatus);
+            $("#hargaProperty").val(harga);
+            $("#hargaProperty").trigger('keyup');
             $("#luasTanah").val(propertyDetails.luasTanah);
             $("#luasBangunan").val(propertyDetails.luasBangunan);
             $("#kamarTidur").val(propertyDetails.kamarTidur);
@@ -507,6 +509,7 @@
                 "idPropertyStatus": $("#statusProperty option:selected").val(),
                 "statusName": $("#statusProperty option:selected").text(),
             };
+            propertyDetails.harga = $("#hargaProperty").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
             propertyDetails.luasTanah = $("#luasTanah").val();
             propertyDetails.luasBangunan = $("#luasBangunan").val();
             propertyDetails.kamarTidur = $("#kamarTidur").val();

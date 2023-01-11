@@ -33,12 +33,14 @@
             <li style="cursor: pointer;" class='cappa-sub'><a href='#'>Property</a>
                 <ul>
                     <li><a onclick="openModalTambahProperty()"><i class="ti-plus"></i> Tambah Property</a></li>
+                    <li><a onclick="openModalTambahWilayah()"><i class="ti-plus"></i> Tambah Wilayah</a></li>
                     <li th:classappend="${#httpServletRequest.getRequestURI()} == ${menu.url} ? 'active':''"
                         th:each="menu:${menus}"><a th:href="@{${menu.url}}" th:text="${menu.text}"></a></li>
                 </ul>
             </li>
             <li><a href='about.html'>Website Title</a></li>
-            <li th:classappend="${#httpServletRequest.getRequestURI() == '/admin/calculating' ? 'active':''}"><a th:href='@{/admin/calculating}'>Calculating</a></li>
+            <li th:classappend="${#httpServletRequest.getRequestURI() == '/admin/formulir_pemesanan' ? 'active':''}"><a
+                    th:href='@{/admin/formulir_pemesanan}'>Formulir Pemesanan</a></li>
         </ul>
     </nav>
     <!-- Sidebar Footer -->
@@ -60,7 +62,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 style="color:#aa8453;" class="modal-title" id="exampleModalLabel">Tambah Property</h4>
-                    <button type="button" class="close" onclick="closeModalTambahProperty('modalTambahProperty')"
+                    <button type="button" class="close" onclick="closeModal('modalTambahProperty')"
                         aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -73,9 +75,11 @@
                                 id="namaProperty" name="namaProperty" />
                         </div>
                         <div class="form-group">
-                            <label for="hargaProperty">Harga Property</label>
-                            <input placeholder="masukan harga property" type="text" id="hargaProperty"
-                                name="hargaProperty" class="form-control-sm" />
+                            <label for="wilayahProperty">Wilayah Property</label>
+                            <select name="wilayahProperty" id="wilayahProperty" class="custom-select">
+                                <option value="">-- Pilih Wilayah Property--</option>
+                                <option th:each="wilayah: ${listWilayah}" th:text="${wilayah.namaWilayah}" th:value="${wilayah.idWilayah}"></option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="bannerProperty">Tambahkan untuk banner Property</label>
@@ -86,7 +90,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                        onclick="closeModalTambahProperty('modalTambahProperty')">Tutup</button>
+                        onclick="closeModal('modalTambahProperty')">Tutup</button>
                     <button id="btnTambahProperty" style="background-color: #aa8453; color: white;" type="button"
                         class="btn">Tambah
                         Property</button>
@@ -94,37 +98,62 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="modalTambahWilayah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="color:#aa8453;" class="modal-title" id="exampleModalLabel">Tambah Wilayah</h4>
+                    <button type="button" class="close" onclick="closeModal('modalTambahWilayah')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" id="formTambahWilayah">
+                        <div class="form-group">
+                            <label for="namaProperty">Nama Wilayah</label>
+                            <input placeholder="masukan nama property" type="text" class="form-control-sm"
+                                id="namaWilayah" name="namaWilayah" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('modalTambahWilayah')">Tutup</button>
+                    <button id="btnTambahWilayah" style="background-color: #aa8453; color: white;" type="button"
+                        class="btn">Tambah
+                        Wilayah</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
     <script th:inline="javascript">
-        /* Dengan Rupiah */
-        $('#hargaProperty').on('keyup', function (e) {
-            this.value = formatRupiah(this.value, 'Rp. ');
+        $("#btnTambahWilayah").on('click', function () {
+            var url = `/wilayah?namaWilayah=${$("#namaWilayah").val()}`;
+            $.post(url, function (data) {
+                console.log(data);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Berhasil menambahkan wilayah',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function () {
+                    window.location.reload();
+                });
+            });
         });
-
-        /* Fungsi */
-        function formatRupiah(angka, prefix) {
-            if (angka.startsWith('0')) {
-                return "";
-            }
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-        }
         $("#btnTambahProperty").on('click', function () {
             var property = {
                 "propertyName": $("#namaProperty").val(),
-                "harga" : $("#hargaProperty").val().trim().replaceAll("Rp. ", "").replaceAll(".", "")
+                "wilayah": {
+                    "idWilayah": $("#wilayahProperty option:selected").val(),
+                    "namaWilayah": $("#wilayahProperty option:selected").text(),
+                }
             }
+            console.log(property);
             var jsonData = JSON.stringify(property);
             var blobData = new Blob([jsonData], {
                 type: 'application/json'
@@ -167,7 +196,10 @@
         function openModalTambahProperty() {
             $("#modalTambahProperty").toggle('modal');
         }
-        function closeModalTambahProperty(id) {
+        function openModalTambahWilayah() {
+            $("#modalTambahWilayah").toggle('modal');
+        }
+        function closeModal(id) {
             $(`#${id}`).toggle('modal');
         }
     </script>

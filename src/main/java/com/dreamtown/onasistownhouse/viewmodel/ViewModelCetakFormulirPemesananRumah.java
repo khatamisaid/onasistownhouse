@@ -27,6 +27,7 @@ public class ViewModelCetakFormulirPemesananRumah {
     private String hargaSetelahDiscount;
     private String bookingFee;
     private String tanggalBooking;
+    private String tanggalDp;
     private String dp;
     private String hargaDp;
     private String totalHarga;

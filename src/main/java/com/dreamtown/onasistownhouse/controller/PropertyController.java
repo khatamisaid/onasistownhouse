@@ -33,9 +33,12 @@ import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
+import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananCicilan;
 import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananRumah;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
 import com.dreamtown.onasistownhouse.viewmodel.ViewModelCetakFormulirPemesananRumah;
+import com.dreamtown.onasistownhouse.viewmodel.ViewModelPemesananCicilan;
+
 import static org.springframework.http.MediaType.*;
 import org.springframework.http.HttpHeaders;
 
@@ -194,6 +197,26 @@ public class PropertyController {
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
         String path = "./laporan/test.pdf";
         new CetakFormulirPemesananRumah(vmCetakRumah, path).writePdf();
+        InputStream inputStream = new FileInputStream(path);
+        byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
+        response.put("file", out);
+        response.put("filename", filename);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cetakFormulirPemesananCicilan", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Map> cetakFormulirPemesananCicilan(@RequestParam String propertyName,
+            @RequestBody List<ViewModelPemesananCicilan> vmCetakRumah) throws IOException {
+        if (propertyName.equalsIgnoreCase("")) {
+            Map response = new HashMap();
+            response.put("message", "File Not Found");
+            ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
+            return respEntity;
+        }
+        Map response = new HashMap();
+        String filename = "Formulir_Pemesanan_Rumah_" + propertyName + ".pdf";
+        String path = "./laporan/test.pdf";
+        new CetakFormulirPemesananCicilan(vmCetakRumah, path, propertyName).writePdf();
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
         response.put("file", out);

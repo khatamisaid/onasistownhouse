@@ -516,6 +516,7 @@
                 "bookingFee": $("#bookingFee").val(),
                 "tanggalBooking": moment($("#tanggalBooking").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
                 "dp": $("#dpBayar option:selected").text(),
+                "tanggalDp": moment($("#tanggalDp").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
                 "hargaDp": $("#totalDp").text(),
                 "totalHarga": $("#totalkeseluruhanHarga").text(),
                 "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2,
@@ -552,10 +553,30 @@
             };
         }
         $("#btnCekArray").on('click', function () {
-            var listTanggalCicilan = [];
-            for (let i = 1; i < $("#periodeCicilan option:selected").val(); i++) {
-                listTanggalCicilan.push();
+            var vmCetakRumah = [];
+            for (let i = 1; i <= $("#periodeCicilan option:selected").val(); i++) {
+                var obj = {
+                    "txtCicilan":`Cicilan ${i}`,
+                    "nominalCicilan":$("#hargaCicilan").text().replace(" / Bulan", ""),
+                    "tanggalCicilan":moment($(`#tglCicilan${i}`).val(), 'YYYY-MM-DD').format("DD MMMM YYYY")
+                }
+                vmCetakRumah.push(obj);
             }
+            var urlHit = `/property/cetakFormulirPemesananCicilan?propertyName=${$('#property option:selected').text()}`;
+            $.ajax({
+                method: "POST",
+                url: `${urlHit}`,
+                data: JSON.stringify(vmCetakRumah),
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (data, textStatus, jqXHR) {
+                    var base64 = `data:application/pdf;base64,${data.file}`;
+                    window.open(base64, "_blank");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
         });
     </script>
 </body>

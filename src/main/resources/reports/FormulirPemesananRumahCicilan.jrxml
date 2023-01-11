@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormulirPemesananRumahCicilan" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="719f869d-b9cf-4391-acb1-926339140fd8">
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="propertyName" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="txtCicilan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="txtCicilan"/>
+		<property name="com.jaspersoft.studio.field.label" value="txtCicilan"/>
+	</field>
+	<field name="nominalCicilan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nominalCicilan"/>
+		<property name="com.jaspersoft.studio.field.label" value="nominalCicilan"/>
+	</field>
+	<field name="tanggalCicilan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tanggalCicilan"/>
+		<property name="com.jaspersoft.studio.field.label" value="tanggalCicilan"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="22" width="361" height="20" uuid="62c2fcb6-4416-489c-9404-7b1c7e76d731"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMULIR PEMESANAN RUMAH]]></text>
+			</staticText>
+			<line>
+				<reportElement x="9" y="85" width="540" height="1" uuid="6db1eee3-babd-47c1-91ad-59df1bfa844f"/>
+			</line>
+			<image>
+				<reportElement mode="Transparent" x="20" y="10" width="60" height="61" uuid="c9f9781a-bb91-47a3-8b6b-a8d3a847c6ae"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="101" y="40" width="361" height="18" uuid="c3851194-2e6f-4f28-a5fb-d1ea4709317f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{propertyName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="477" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="120" y="62" width="90" height="59" uuid="b5b75e46-fb6a-4abf-a011-e2093fca64af">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1f16c71-cb5b-4494-9ac0-f87abe5a3fae"/>
+				</reportElement>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{txtCicilan}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="23" width="90" height="40" uuid="24e6a139-9288-4c6f-a0d9-5045a58c16c5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1f16c71-cb5b-4494-9ac0-f87abe5a3fae"/>
+				</reportElement>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cicilan]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="310" y="62" width="80" height="59" uuid="fc408c05-1c9b-4037-9b69-c8e2e28296ac">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52004434-dd64-46ae-972c-07159485a29a"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tanggalCicilan}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="62" width="100" height="59" uuid="8709da9c-54d2-44ce-be7d-896cef58b5bf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52004434-dd64-46ae-972c-07159485a29a"/>
+				</reportElement>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nominalCicilan}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="210" y="23" width="100" height="40" uuid="29e2099c-745f-4f9a-9f98-175337d06c09">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52004434-dd64-46ae-972c-07159485a29a"/>
+				</reportElement>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nominal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="23" width="80" height="40" uuid="a6c65105-3e88-4401-9dfe-7e84c2c004cc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5df83c33-df06-4134-a164-c19a2098a859"/>
+				</reportElement>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
