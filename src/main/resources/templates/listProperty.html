@@ -20,7 +20,7 @@
                 $("#content").empty();
                 res.propertyPage.content.forEach(function (property, index) {
                     $("#content").append(`<div class="col-md-3">
-            <div style="cursor:pointer;" class="card mt-2">
+            <div onclick="window.location.href = '/p/${property.propertyName}?sortBy=${$("#sortBy option:selected").val()}'" style="cursor:pointer;" class="card mt-2">
                 <img style="object-fit: cover;"
                     src="/loadfile/${property.propertyBanner}" alt="">
                 <div class="d-flex flex-column">
@@ -30,22 +30,25 @@
             </div>`);
                 });
                 $("#pagination").empty();
-                $("#pagination").append(`<div id="paginationContent" class="d-flex flex-row" style="margin-left: auto;"></div>`);
-                if (page > 1) {
-                    $("#paginationContent").append(`
+                if (res.propertyPage.totalPages > 1) {
+                    $("#pagination").append(`<div id="paginationContent" class="d-flex flex-row" style="margin-left: auto;"></div>`);
+                    if (page > 1) {
+                        $("#paginationContent").append(`
             <div class="p-2 m-2"><i style="cursor:pointer;font-size: 28px;" class="fa fa-angle-left" onclick="clickLeft()"></i>
             </div>`);
-                }
-                res.pageNumbers.forEach(function (number) {
-                    $("#paginationContent").append(`
+                    }
+                    res.pageNumbers.forEach(function (number) {
+                        $("#paginationContent").append(`
             <div onclick="gotoPage(${number})" class="${number == res.propertyPage.number + 1 ? 'p-2 m-2' : 'p-2 m-2'}"
                 style="${number == res.propertyPage.number + 1 ? 'cursor:pointer;font-weight:600; background-color: white; border: 2px solid #666; border-radius: 8px;' : 'cursor:pointer;'}">${number}
             </div>
             `)
-                });
-                if (page < res.propertyPage.totalPages)
-                    $("#paginationContent").append(`<div class="p-2 m-2"><i style="cursor:pointer;font-size: 22px;" class="fa fa-angle-right"
+                    });
+                    if (page < res.propertyPage.totalPages) {
+                        $("#paginationContent").append(`<div class="p-2 m-2"><i style="cursor:pointer;font-size: 22px;" class="fa fa-angle-right"
                     onclick="clickRight()"></i></div>`);
+                    }
+                }
             });
         }
         function scrollTo(id) {

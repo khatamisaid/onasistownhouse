@@ -43,8 +43,8 @@ public class User extends DateAudit{
     @Column(name = "real_password")
     private String realPassword;
 
-    @Column(name = "email")
-    private String email;
+    // @Column(name = "email")
+    // private String email;
 
     @JoinColumn(name = "id_role", referencedColumnName = "id_role", insertable = true, updatable = true)
     @ManyToOne

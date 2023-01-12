@@ -26,4 +26,8 @@ public class PropertyService {
         int e = Math.min((s + pageable.getPageSize()), listProperty.size());
         return new PageImpl<>(listProperty.subList(s, e), pageable, listProperty.size());
     }
+
+    public Property getPropertyByName(String propertyName){
+        return propertyRepository.findOneByPropertyName(propertyName);
+    }
 }

@@ -18,7 +18,11 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     
     PropertyDetails findOneByIdDetailsPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty); 
 
+    @Query(value = "SELECT * from property_details where id_property = ?1 order by harga ASC", nativeQuery = true)
+    List<PropertyDetails> findDetailsPropertyByIdOrderByHargaAsc(Integer id);
 
+    @Query(value = "SELECT * from property_details where id_property = ?1 order by harga DESC", nativeQuery = true)
+    List<PropertyDetails> findDetailsPropertyByIdOrderByHargaDesc(Integer id);
 
     @Query(value = "SELECT DISTINCT tipe_property from property_details where id_details_property = ?1 order by tipe_property ASC", nativeQuery = true)
     List<String> findTipePropertyByIdDetailsProperty(Integer idDetailsProperty);

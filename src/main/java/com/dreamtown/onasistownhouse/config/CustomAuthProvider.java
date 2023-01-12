@@ -48,7 +48,6 @@ public class CustomAuthProvider implements AuthenticationProvider {
         if (encoder.matches(password, user.getPassword())) {
             httpSession.setAttribute("id", user.getIdUser());
             httpSession.setAttribute("username", user.getUsername());
-            httpSession.setAttribute("email", user.getEmail());
             httpSession.setAttribute("role", user.getRole().getRoleName());
         } else {
             throw new BadCredentialsException("Username/Password Salah");

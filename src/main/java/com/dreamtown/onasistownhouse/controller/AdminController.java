@@ -27,16 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import com.dreamtown.onasistownhouse.entity.Photo;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
-import com.dreamtown.onasistownhouse.entity.Role;
-import com.dreamtown.onasistownhouse.entity.User;
 import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PhotoRepository;
@@ -98,6 +92,7 @@ public class AdminController {
     public String tambahUser(Model model) {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
         return "admin/managementUser";
     }
 
@@ -106,6 +101,7 @@ public class AdminController {
         Property property = propertyRepository.findOneByPropertyName(propertyName);
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
         model.addAttribute("property", property);
         return "admin/property";
     }
@@ -120,6 +116,7 @@ public class AdminController {
         model.addAttribute("propertyStatus", propertyStatusRepository.findAll());
         model.addAttribute("tipeProperty", tipeProperty.getListTipeProperty());
         model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
         return "admin/detailsProperty";
     }
 
@@ -131,19 +128,8 @@ public class AdminController {
         model.addAttribute("propertyStatus", propertyStatusRepository.findAll());
         model.addAttribute("tipeProperty", tipeProperty.getListTipeProperty());
         model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
         return "admin/addDetailsProperty";
-    }
-
-    @RequestMapping(value = "/getUser/all", method = RequestMethod.GET)
-    public ResponseEntity<Map> getUserAll(@RequestParam(defaultValue = "0") Integer start,
-            @RequestParam(defaultValue = "5") Integer length) {
-        Pageable pageable = PageRequest.of(start, length, Sort.by("createdAt").descending());
-        Role roleTemp = new Role();
-        roleTemp.setIdRole(1);
-        Page<User> pageUser = userRepository.findByRoleNot(roleTemp, pageable);
-        Map res = new HashMap<>();
-        res.put("data", pageUser);
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/property/{id}", method = RequestMethod.GET)

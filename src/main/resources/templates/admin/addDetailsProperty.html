@@ -73,7 +73,6 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <label for="hargaProperty">Harga Property</label>
                                                 <input placeholder="masukan harga property" type="text"
                                                     id="hargaProperty" name="hargaProperty" class="form-control-sm" />
                                             </div>
@@ -244,7 +243,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="nomerTelpon">Nomor Telepon</label>
+                                    <label for="nomorTelpon">Nomor Telepon</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="input-group mb-3">
@@ -252,7 +251,7 @@
                                             <span class="input-group-text" id="basic-addon1">+62</span>
                                         </div>
                                         <input type="text" class="form-control p-2" placeholder="masukan nomor telepon"
-                                            id="nomerTelpon" name="nomerTelpon">
+                                            id="nomorTelpon" name="nomorTelpon">
                                     </div>
                                 </div>
                             </div>
@@ -341,7 +340,7 @@
 
         function tambahContact() {
             var contactPerson = {
-                "nomerTelpon": $("#nomerTelpon").val(),
+                "nomorTelpon": $("#nomorTelpon").val(),
                 "namaContact": $("#namaContact").val()
             }
             listContact.push(contactPerson);
@@ -390,7 +389,7 @@
                                             <i onclick="deleteContact(${i})"
                                                 style="border-radius:4px; margin-right: 4px; margin-top: 2px; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
                                                 class="fa fa-times p-1"></i>
-                                            <div onclick="clickContact(${value.nomerTelpon})" class="row p-2" style="cursor: pointer; ">
+                                            <div onclick="clickContact(${value.nomorTelpon})" class="row p-2" style="cursor: pointer; ">
                                                 <img style="width: 52px;" src="/images/whatsapp-logo.png" alt="">
                                                 <p
                                                     style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">

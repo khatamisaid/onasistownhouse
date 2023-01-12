@@ -55,15 +55,12 @@ public class CmdRunner implements CommandLineRunner {
                 roleRepository.save(marketingRole);
                 UserRepository
                                 .save(new User(1, "superadmin", encoder.encode("123456"), "123456",
-                                                "superadmin@onasistownhouse.com",
                                                 superAdminRole));
                 UserRepository
                                 .save(new User(2, "admin", encoder.encode("onasisadmin123"), "onasisadmin123",
-                                                "admin@onasistownhouse.com",
                                                 adminRole));
                 UserRepository.save(
                                 new User(3, "marketing", encoder.encode("onasismarketing321"), "onasismarketing321",
-                                                "marketing@onasistownhouse.com",
                                                 marketingRole));
                 logger.info("User and Role Has been created");
 

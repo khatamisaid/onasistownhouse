@@ -67,6 +67,17 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label for="hargaProperty">Harga Property</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input placeholder="masukan harga property" type="text"
+                                                    id="hargaProperty" name="hargaProperty" class="form-control-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div style="margin-bottom: 12px;" class="row">
                                         <div class="col-md-2">
                                             <label for="tipeProperty">Status Property</label>
@@ -306,6 +317,32 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script th:inline="javascript">
         var propertyDetails = /*[[${propertyDetails}]]*/null;
+        console.log(propertyDetails);
+        /* Dengan Rupiah */
+        $('#hargaProperty').on('keyup', function (e) {
+            this.value = formatRupiah(this.value, 'Rp. ');
+        });
+
+        /* Fungsi */
+        function formatRupiah(angka, prefix) {
+            if (angka.startsWith('0')) {
+                return "";
+            }
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
         $(document).ready(function () {
             initData();
 
@@ -329,7 +366,7 @@
         function initData() {
             $("#tipeProperty").val(propertyDetails.tipeProperty);
             $("#statusProperty").val(propertyDetails.propertyStatus.idPropertyStatus);
-            $("#hargaProperty").val(harga);
+            $("#hargaProperty").val(propertyDetails.harga);
             $("#hargaProperty").trigger('keyup');
             $("#luasTanah").val(propertyDetails.luasTanah);
             $("#luasBangunan").val(propertyDetails.luasBangunan);

@@ -22,9 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
+import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
 import com.dreamtown.onasistownhouse.service.VideoStreamService;
-import com.dreamtown.onasistownhouse.utils.FileManager;
 
 import reactor.core.publisher.Mono;
 
@@ -53,6 +53,9 @@ public class MainController {
 
     @Autowired
     private PropertyService propertyService;
+
+    @Autowired
+    private PropertyDetailsService propertyDetailsService;
 
     @Autowired
     private MWilayahRepository mWilayahRepository;
@@ -137,4 +140,11 @@ public class MainController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/p/{namaProperty}", method = RequestMethod.GET)
+    public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty,
+            @RequestParam Optional<Integer> sortBy) {
+        model.addAttribute("property", propertyDetailsService.getPropertyDetails(
+                propertyService.getPropertyByName(namaProperty.get()).getIdProperty(), sortBy.orElse(1)));
+        return "property";
+    }
 }

@@ -109,8 +109,7 @@
                             <option th:each="wilayah: ${listWilayah}" th:value="${wilayah.idWilayah}" th:text="${wilayah.namaWilayah}"></option>
                         </select>
                         <select class="custom-select mr-2" name="sortBy" id="sortBy">
-                            <option value="" selected disabled>Urutkan Berdasarkan</option>
-                            <option value="1">Termurah</option>
+                            <option value="1" selected>Termurah</option>
                             <option value="2">Termahal</option>
                         </select>
                         <button onclick="getListProperty()" style="background-color: #aa8453; color: white;" class="btn">Cari</button>
