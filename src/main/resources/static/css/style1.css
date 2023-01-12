@@ -806,7 +806,7 @@ color: #aa8453;
 
 /* ======= Navbar style ======= */
 .navbar {
-    position: absolute;
+    /* position: absolute; */
     left: 0;
     top: 0;
     width: 100%;
@@ -814,8 +814,8 @@ color: #aa8453;
     z-index: 99;
     padding-right: 0;
     padding-left: 0;
-    padding-top: 30px;
-    padding-bottom: 0;
+    /* padding-top: 30px; */
+    /* padding-bottom: 0; */
     height: 90px;
 }
 .navbar .icon-bar {
@@ -827,7 +827,7 @@ color: #aa8453;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 3px;
-    color: #fff;
+    color: #000;
     margin: 3px;
     -webkit-transition: all .4s;
     transition: all .4s;

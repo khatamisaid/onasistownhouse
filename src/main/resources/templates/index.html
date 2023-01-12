@@ -100,50 +100,30 @@
                 </div>
             </div>
         </div>
-    </header>
-    <!-- Rekomendasi -->
-    <section class="rooms1 section-padding bg-cream" data-scroll-index="1" id="rekomendasi">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- <div class="section-subtitle">The Cappa Luxury Hotel</div> -->
-                    <div class="row">
-                        <h3>Rekomendasi Hunian </h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img
-                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
-                                alt=""> </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img
-                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
-                                alt=""> </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img
-                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
-                                alt=""> </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="item" style="cursor: pointer; border-radius: 8px;" onclick="onclickItem()">
-                        <div class="position-re o-hidden"> <img
-                                src="https://onasistownhouse.files.wordpress.com/2018/09/brosur-tahap-8-onasis.jpg"
-                                alt=""> </div>
+            <div style="z-index: 20; position: absolute; margin-top: -2.25rem;" class="card container">
+                <div class="card-body">
+                    <div class="d-flex flex-row">
+                        <select class="custom-select mr-2" name="area" id="area">
+                            <option value="" selected>Semua Area</option>
+                            <option th:each="wilayah: ${listWilayah}" th:value="${wilayah.idWilayah}" th:text="${wilayah.namaWilayah}"></option>
+                        </select>
+                        <select class="custom-select mr-2" name="sortBy" id="sortBy">
+                            <option value="" selected disabled>Urutkan Berdasarkan</option>
+                            <option value="1">Termurah</option>
+                            <option value="2">Termahal</option>
+                        </select>
+                        <button onclick="getListProperty()" style="background-color: #aa8453; color: white;" class="btn">Cari</button>
                     </div>
                 </div>
             </div>
         </div>
+    </header>
+    <!-- Property -->
+    <section class="news section-padding bg-cream" data-scroll-index="1" id="property">
+        <div th:replace="listProperty :: listProperty"></div>
     </section>
+    <!-- Rekomendasi -->
     <!-- Promo Video -->
     <section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="3"
         data-background="loadfile/transfer.jpg">
@@ -167,7 +147,7 @@
                     </a>
                 </div>
                 <div id="headerPopup" class="mfp-hide embed-responsive embed-responsive-21by9">
-                    <video id="videoPopUp" width="100%" autoplay="autoplay" controls muted>
+                    <video id="videoPopUp" width="100%" controls>
                         <source src="stream/mp4/transfer" type="video/mp4" />
                         Your browser does not support HTML video.
                     </video>
@@ -176,7 +156,7 @@
         </div>
     </section>
     <!-- News -->
-    <section class="news section-padding bg-black">
+    <!-- <section class="news section-padding bg-black">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -261,13 +241,11 @@
                                 <h5><a href="post.html">Benefits of Swimming for Your Health</a></h5>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Footer -->
     <div th:replace="fragments/footer :: footer"></div>
     <!-- jQuery -->

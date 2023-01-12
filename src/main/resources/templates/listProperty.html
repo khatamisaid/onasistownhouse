@@ -1,0 +1,101 @@
+<div class="container" th:fragment="listProperty">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <div class="section-subtitle">The Cappa Luxury Hotel</div> -->
+            <div class="row">
+                <h3>Property</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="content">
+    </div>
+    <div class="row" id="pagination">
+    </div>
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:inline="javascript">
+        var page = 1;
+        var size = 8;
+        function getListProperty() {
+            $.get(`/listProperty?page=${page}&size=${size}&wilayah=${$("#area option:selected").val()}`, function (res) {
+                $("#content").empty();
+                res.propertyPage.content.forEach(function (property, index) {
+                    $("#content").append(`<div class="col-md-3">
+            <div style="cursor:pointer;" class="card mt-2">
+                <img style="object-fit: cover;"
+                    src="/loadfile/${property.propertyBanner}" alt="">
+                <div class="d-flex flex-column">
+                    <p style="padding-top: 18px; padding-left: 18px; font-weight: 600;">${property.propertyName}</p>
+                </div>
+            </div>
+            </div>`);
+                });
+                $("#pagination").empty();
+                $("#pagination").append(`<div id="paginationContent" class="d-flex flex-row" style="margin-left: auto;"></div>`);
+                if (page > 1) {
+                    $("#paginationContent").append(`
+            <div class="p-2 m-2"><i style="cursor:pointer;font-size: 28px;" class="fa fa-angle-left" onclick="clickLeft()"></i>
+            </div>`);
+                }
+                res.pageNumbers.forEach(function (number) {
+                    $("#paginationContent").append(`
+            <div onclick="gotoPage(${number})" class="${number == res.propertyPage.number + 1 ? 'p-2 m-2' : 'p-2 m-2'}"
+                style="${number == res.propertyPage.number + 1 ? 'cursor:pointer;font-weight:600; background-color: white; border: 2px solid #666; border-radius: 8px;' : 'cursor:pointer;'}">${number}
+            </div>
+            `)
+                });
+                if (page < res.propertyPage.totalPages)
+                    $("#paginationContent").append(`<div class="p-2 m-2"><i style="cursor:pointer;font-size: 22px;" class="fa fa-angle-right"
+                    onclick="clickRight()"></i></div>`);
+            });
+        }
+        function scrollTo(id) {
+            $('html, body').animate({
+                scrollTop: $(`#${id}`).offset().top
+            }, 3000);
+        }
+        function gotoPage(i) {
+            page = i;
+            getListProperty();
+            scrollTo('property');
+        }
+        function clickRight() {
+            page++;
+            getListProperty();
+            scrollTo('property');
+        }
+        function clickLeft() {
+            page--;
+            getListProperty();
+            scrollTo('property');
+        }
+        $(document).ready(function () {
+            resizeScreenProperty();
+        });
+
+        function resizeScreenProperty() {
+            if (document.body.clientWidth < 768) {
+                console.log(1);
+                size = 3;
+                getListProperty();
+            } else if (document.body.clientWidth < 991) {
+                console.log(2);
+                size = 4;
+                getListProperty();
+            } else {
+                console.log(3);
+                size = 8;
+                getListProperty();
+            }
+        }
+        function debounce(func) {
+            var timer;
+            return function (event) {
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(func, 300, event);
+            };
+        }
+        window.addEventListener("resize", debounce(function (e) {
+            resizeScreenProperty();
+        }));
+    </script>
+</div>
