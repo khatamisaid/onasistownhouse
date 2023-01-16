@@ -53,6 +53,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Username/Password Salah");
         }
         List<GrantedAuthority> grantedAuthorities = new ArrayList();
+        System.out.println(httpSession.getAttribute("role").toString());
         grantedAuthorities.add(new SimpleGrantedAuthority((String) httpSession.getAttribute("role")));
         return new UsernamePasswordAuthenticationToken(username, password, grantedAuthorities);
     }

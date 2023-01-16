@@ -54,9 +54,11 @@
                         <div class="section-title"
                             th:utext="${#strings.containsIgnoreCase(property.propertyName, 'property') ? property.propertyName : property.propertyName + ' Property'}">
                         </div>
-                        <div><i title="edit" style="cursor: pointer;" class="p-2 ml-2 fa-solid fa-pencil"></i></div>
+                        <div th:if="${session.role == 'Super User' || session.role == 'Admin'}"><i
+                                onclick="hapusProperty()" title="hapus" style="cursor: pointer;"
+                                class="p-2 ml-2 fa-solid fa-trash"></i></div>
                     </div>
-                    <div class="col-md-12">
+                    <div th:if="${session.role == 'Super User' || session.role == 'Admin'}" class="col-md-12">
                         <div class="item">
                             <div style="cursor: pointer;"><a th:href="@{${property.propertyName} + '/add'}"><i
                                         class="ti-plus"></i> Tambahkan Tipe property</a> </div>
@@ -73,7 +75,10 @@
                                 style="cursor: pointer;" class="category"><i
                                     class="fa-solid fa-ellipsis-vertical"></i></span>
                             <div class="con">
-                                <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}" th:text="'Tipe '+${propertyDetails.tipeProperty}"></a> </h5>
+                                <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}"
+                                        th:text="'Tipe '+${propertyDetails.tipeProperty}"></a> </h5>
+                                <!-- <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}"
+                                        th:text="|formatRupiah('${propertyDetails.harga}', 'Rp. ')|"></a> </h5> -->
                                 <div class="line"></div>
                                 <div class="row facilities">
                                     <div class="col col-md-7">
@@ -137,6 +142,7 @@
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
+        var property = /*[[${property}]]*/null;
         function dismiss(id) {
             $(`#${id}`).toggle('modal');
         }
@@ -150,6 +156,62 @@
         $("#btnHapusOption").on('click', function () {
             console.log($("#detailPropertyId").val());
         });
+
+        function testing(param){
+            return param;
+        }
+
+        function hapusProperty() {
+            Swal.fire({
+                title: 'Yakin ingin menghapus Property?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hapus',
+                confirmButtonColor: '#c82333',
+                cancelButtonText: `Tidak`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/admin/property?namaProperty=${property.propertyName}`,
+                        method: 'DELETE',
+                        success: function (data, textStatus, jqXHR) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: `${data.message}`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                window.location.href = `/admin`;
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus);
+                        }
+                    });
+
+                }
+            })
+        }
+        function formatRupiah(angka, prefix) {
+            if (angka.startsWith('0')) {
+                return "";
+            }
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
     </script>
 </body>
 

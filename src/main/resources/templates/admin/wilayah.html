@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Onasis Town House | CMS</title>
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/style6.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .dataTables_wrapper label select {
+            width: 160px;
+            max-width: 100%;
+            height: 35px;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Sidebar Section -->
+    <a href="#" class="js-cappa-nav-toggle cappa-nav-toggle"><i></i></a>
+    <div th:replace="admin/fragments/aside :: sidebar"></div>
+    <!-- Main -->
+    <div id="cappa-main">
+        <section class="section-padding">
+            <div class="container">
+                <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <h2>Wilayah</h2>
+                        </div>
+                        <div class="container">
+                            <table class="table table-striped table-bordered" style="width:100%">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Wilayah</th>
+                                        <th th:if="${session.role == 'Super User'}">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="wilayah, iter:${listWilayah}">
+                                        <td th:text="${iter.index + 1}"></td>
+                                        <td th:text="${wilayah.namaWilayah}"></td>
+                                        <td th:if="${session.role == 'Super User'}"><button
+                                                class="btn btn-danger">Hapus</button></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot th:if="${session.role == 'Super User'}">
+                                    <tr>
+                                        <td colspan="3" class="text-right">
+                                            <button style="background-color: #aa8453; color: white;" type="button"
+                                                id="tambahWilayah" class="btn" onclick="openModalTambahWilayah()">+
+                                                Tambah Wilayah</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <section class="section-padding">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="section-subtitle">Onasis Town House</div>
+                    <div class="section-title">Property</div>
+                </div>
+            </div>
+        </section> -->
+    </div>
+    <!-- jQuery -->
+    <div th:replace="assets/js :: js"></div>
+    <script th:inline="javascript">
+    </script>
+</body>
+
+</html>

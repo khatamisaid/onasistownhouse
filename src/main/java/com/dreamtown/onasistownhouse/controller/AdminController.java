@@ -154,6 +154,14 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/property", method = RequestMethod.DELETE)
+    public ResponseEntity<Map> postProperty(@RequestParam String namaProperty) {
+        Map response = new HashMap<>();
+        propertyRepository.deleteById(propertyRepository.findOneByPropertyName(namaProperty).getIdProperty());
+        response.put("message", "Berhasil menghapus property");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/postPropertyDetails", method = RequestMethod.POST)
     public ResponseEntity<Map> postPropertyDetails(@RequestBody PropertyDetails propertyDetails) {
         Map response = new HashMap<>();
@@ -232,4 +240,11 @@ public class AdminController {
         return "admin/formulirPemesanan";
     }
 
+    @RequestMapping(value = "/wilayah", method = RequestMethod.GET)
+    public String wilayahView(Model model) {
+        model.addAttribute("username", httpSession.getAttribute("username"));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        return "admin/wilayah";
+    }
 }
