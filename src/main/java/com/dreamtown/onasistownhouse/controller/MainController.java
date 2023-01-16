@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.Property;
+import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
@@ -35,6 +36,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,8 +145,20 @@ public class MainController {
     @RequestMapping(value = "/p/{namaProperty}", method = RequestMethod.GET)
     public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty,
             @RequestParam Optional<Integer> sortBy) {
-        model.addAttribute("property", propertyDetailsService.getPropertyDetails(
-                propertyService.getPropertyByName(namaProperty.get()).getIdProperty(), sortBy.orElse(1)));
-        return "property";
+        PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(
+                propertyService.getPropertyByName(namaProperty.get()).getIdProperty(), sortBy.orElse(1));
+        model.addAttribute("property", propertyDetails);
+        String[] splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
+        String[] deskripsiArr1 = Arrays.copyOfRange(splitDeskripsi, 0, splitDeskripsi.length / 2);
+        String[] deskripsiArr2 = Arrays.copyOfRange(splitDeskripsi, splitDeskripsi.length / 2, splitDeskripsi.length);
+        model.addAttribute("deskripsiArr1", deskripsiArr1);
+        model.addAttribute("deskripsiArr2", deskripsiArr2);
+        model.addAttribute("namaProperty", namaProperty.get());
+        if (propertyDetails.getListPhoto().size() > 5) {
+            model.addAttribute("sizePhotoLainnya", "+" +(propertyDetails.getListPhoto().size() - 5) + " Lainnya");
+        }
+
+        model.addAttribute("lineSeparator", System.lineSeparator());
+        return "propertyDetails";
     }
 }

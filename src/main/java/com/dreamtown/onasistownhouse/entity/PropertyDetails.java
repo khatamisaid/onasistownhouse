@@ -50,6 +50,9 @@ public class PropertyDetails extends DateAudit {
     @Column(name = "kamar_tidur")
     private Integer kamarTidur;
 
+    @Column(name = "kamar_mandi")
+    private Integer kamarMandi;
+
     @Column(name = "car_port")
     private Integer carPort;
 

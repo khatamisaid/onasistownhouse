@@ -1,12 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Onasis Town House</title>
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/style1.css}" />
 </head>
+
 <body>
-    
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Navbar -->
+    <div th:replace="fragments/navbardetailproperty :: navbar"></div>
+    <!-- Search Bar -->
+    <!-- Pricing -->
+    <section class="pricing" style="padding: 12px 0px 48px 0px;">
+        <div class="container">
+            <h2 th:text="${namaProperty}"></h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="d-flex flex-column">
+                        <div class="row">
+                            <div th:each="photo, iter : ${property.listPhoto}"
+                                th:style="${iter.index &lt; 5 ? 'display:block;':'display:none;'}"
+                                th:class="${iter.index &lt; 3} ? 'col-md-4 gallery-item' : 'col-md-6 gallery-item'">
+                                <a th:href="@{'/loadfile/'+${photo.namaPhoto}}" title="" class="img-zoom">
+                                    <div class="gallery-box">
+                                        <div class="gallery-img"> <img th:src="@{'/loadfile/'+${photo.namaPhoto}}"
+                                                class="img-fluid mx-auto d-block" alt="work-img"> </div>
+                                    </div>
+                                    <div
+                                        th:style="${iter.index  == 4 ? 'background-color: rgba(45, 45, 33, 0.7);position: absolute;top: 0;left: 0;width: 100%;height: 100%;':''}">
+                                        <span th:if="${iter.index == 4}"
+                                            style="color: white; position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"
+                                            class="my-auto mx-auto" th:text="${sizePhotoLainnya}"></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="overflow: scroll; height: 459px;">
+                    <div class="section-subtitle"><span>Whatsapp</span></div>
+                    <div th:each="contact : ${property.listContactPerson}" class="reservations mb-30">
+                        <div class="icon"><img style="width: 35px; height: 36px;" th:src="@{/images/whatsapp-logo.png}"
+                                alt=""></div>
+                        <div class="text">
+                            <p>Info Lebih Lanjut</p> <a th:href="'https://wa.me/+62'+${contact.nomorTelpon}+'?text=asd123'"
+                                th:text="${contact.namaContact}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="d-flex flex-row mb-3" style="border-bottom: 2px solid #aa8453;">
+                        <span style="font-size: 22px;" class="flaticon-bed my-auto"></span>
+                        <p style="margin-left: 8px;" class="my-auto">Kamar Tidur</p>
+                        <p style="margin-left: auto;" class="my-auto mr-2" th:text="${property.kamarTidur}"></p>
+                    </div>
+                    <div class="d-flex flex-row mb-3" style="border-bottom: 2px solid #aa8453;">
+                        <span style="font-size: 22px;" class="flaticon-bath my-auto"></span>
+                        <p style="margin-left: 8px;" class="my-auto">Kamar Mandi</p>
+                        <p style="margin-left: auto;" class="my-auto mr-2" th:text="${property.kamarMandi}"></p>
+                    </div>
+                    <div class="d-flex flex-row mb-3" style="border-bottom: 2px solid #aa8453;">
+                        <span style="font-size: 22px;" class="flaticon-car my-auto"></span>
+                        <p style="margin-left: 8px;" class="my-auto">Car Port</p>
+                        <p style="margin-left: auto;" class="my-auto mr-2" th:text="${property.carPort}"></p>
+                    </div>
+                    <div class="d-flex flex-row mb-3" style="border-bottom: 2px solid #aa8453;">
+                        <span style="font-size: 22px;" class="fa-solid fa-expand my-auto"></span>
+                        <p style="margin-left: 8px;" class="my-auto">Luas Tanah</p>
+                        <p style="margin-left: auto;" class="my-auto mr-2" th:text="${property.luasTanah} + ' m²'"></p>
+                    </div>
+                    <div class="d-flex flex-row mb-3" style="border-bottom: 2px solid #aa8453;">
+                        <span style="font-size: 22px;" class="fa-regular fa-building my-auto"></span>
+                        <p style="margin-left: 8px;" class="my-auto">Luas Bangunan</p>
+                        <p style="margin-left: auto;" class="my-auto mr-2" th:text="${property.luasBangunan} + ' m²'">
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p th:each="deskripsi1: ${deskripsiArr1}" style="white-space: pre; margin-bottom: 0px;"
+                        th:text="${deskripsi1}">
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p th:each="deskripsi2: ${deskripsiArr2}" style="white-space: pre; margin-bottom: 0px;"
+                        th:text="${deskripsi2}">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div th:replace="fragments/footer :: footer"></div>
+    <!-- jQuery -->
+
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-3.0.0.min.js}"></script>
+    <script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
+    <script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/js/jquery.isotope.v3.0.2.js}"></script>
+    <script th:src="@{/js/pace.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scrollIt.min.js}"></script>
+    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/js/YouTubePopUp.js}"></script>
+    <script th:src="@{/js/select2.js}"></script>
+    <script th:src="@{/js/datepicker.js}"></script>
+    <script th:src="@{/js/smooth-scroll.min.js}"></script>
+    <script th:src="@{/js/custom1.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function zoomImage(url) {
+            $.magnificPopup.open({
+                items: {
+                    src: `${url}`
+                },
+                type: "image",
+                closeOnContentClick: !0,
+                mainClass: "mfp-fade",
+                gallery: {
+                    enabled: !0,
+                    navigateByImgClick: !0,
+                    preload: [0, 1]
+                }
+            });
+        }
+        /*]]>*/
+    </script>
 </body>
+
 </html>

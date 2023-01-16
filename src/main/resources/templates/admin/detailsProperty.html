@@ -120,6 +120,15 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-2">
+                                            <label for="kamarMandi">Jumlah Kamar Mandi</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input placeholder="masukan jumlah kamar Mandi" type="text" id="kamarMandi"
+                                                name="kamarMandi" class="form-control-sm" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
                                             <label for="carPort">Car Port</label>
                                         </div>
                                         <div class="col-md-8">
@@ -371,6 +380,7 @@
             $("#luasTanah").val(propertyDetails.luasTanah);
             $("#luasBangunan").val(propertyDetails.luasBangunan);
             $("#kamarTidur").val(propertyDetails.kamarTidur);
+            $("#kamarMandi").val(propertyDetails.kamarMandi);
             $("#carPort").val(propertyDetails.carPort);
             $("#lokasi").val(propertyDetails.lokasi);
             $("#deskripsi").val(propertyDetails.deskripsi);
@@ -550,6 +560,7 @@
             propertyDetails.luasTanah = $("#luasTanah").val();
             propertyDetails.luasBangunan = $("#luasBangunan").val();
             propertyDetails.kamarTidur = $("#kamarTidur").val();
+            propertyDetails.kamarMandi = $("#kamarMandi").val();
             propertyDetails.carPort = $("#carPort").val();
             propertyDetails.lokasi = $("#lokasi").val();
             propertyDetails.deskripsi = $("#deskripsi").val();
