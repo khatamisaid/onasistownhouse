@@ -40,7 +40,19 @@
                         th:each="menu:${menus}"><a th:href="@{${menu.url}}" th:text="${menu.text}"></a></li>
                 </ul>
             </li>
-            <li th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a href='about.html'>Website Title</a></li>
+            <li th:if="${session.role == 'Super User'}" style="cursor: pointer;" class='cappa-sub'><a href='#'>Pengaturan Website</a>
+                <ul>
+                    <li style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/judul_website' ? 'active':''}">
+                        <a th:href='@{/admin/judul_website}'>Judul Website</a>
+                    </li>
+                    <li  style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/photo_background' ? 'active':''}">
+                        <a th:href='@{/admin/photo_background}'>Photo Background</a>
+                    </li>
+                    <li style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/video_animasi' ? 'active':''}">
+                        <a th:href='@{/admin/video_animasi}'>Video Animasi</a>
+                    </li>
+                </ul>
+            </li>
             <li th:classappend="${#httpServletRequest.getRequestURI() == '/admin/formulir_pemesanan' ? 'active':''}"><a
                     th:href='@{/admin/formulir_pemesanan}'>Formulir Pemesanan</a></li>
         </ul>

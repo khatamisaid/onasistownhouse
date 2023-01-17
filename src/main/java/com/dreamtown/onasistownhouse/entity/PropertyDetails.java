@@ -68,6 +68,9 @@ public class PropertyDetails extends DateAudit {
     @Column(name = "harga")
     private Double harga;
 
+    @Column(name = "harga_text")
+    private String hargaText;
+
     @JoinColumn(name = "id_property_status", referencedColumnName = "id_property_status", insertable = true, updatable = true)
     @ManyToOne
     private PropertyStatus propertyStatus;

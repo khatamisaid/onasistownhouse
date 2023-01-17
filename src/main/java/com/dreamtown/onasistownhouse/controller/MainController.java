@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
+import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
 import com.dreamtown.onasistownhouse.service.VideoStreamService;
@@ -62,9 +63,13 @@ public class MainController {
     @Autowired
     private MWilayahRepository mWilayahRepository;
 
+    @Autowired
+    private WebsiteRepository websiteRepository;
+
     @GetMapping(value = "/")
     public String index(Model model) {
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("website", websiteRepository.findAll().get(0));
         return "index";
     }
 

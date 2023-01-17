@@ -3,7 +3,6 @@ package com.dreamtown.onasistownhouse.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +31,7 @@ import com.dreamtown.onasistownhouse.entity.Photo;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Video;
+import com.dreamtown.onasistownhouse.entity.Website;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PhotoRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
@@ -39,6 +39,7 @@ import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
 import com.dreamtown.onasistownhouse.repository.VideoRepository;
+import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.utils.Menu;
 import com.dreamtown.onasistownhouse.utils.TipeProperty;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
@@ -78,10 +79,14 @@ public class AdminController {
     private MWilayahRepository mWilayahRepository;
 
     @Autowired
+    private WebsiteRepository websiteRepository;
+
+    @Autowired
     private Environment env;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
+        model.addAttribute("website", websiteRepository.findAll().get(0));
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
@@ -246,5 +251,37 @@ public class AdminController {
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
         return "admin/wilayah";
+    }
+
+    @RequestMapping(value = "/judul_website", method = RequestMethod.GET)
+    public String judulWebsiteView(Model model) {
+        model.addAttribute("username", httpSession.getAttribute("username"));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        return "admin/judulWebsite";
+    }
+
+    @RequestMapping(value = "/judul_website", method = RequestMethod.POST)
+    public ResponseEntity<String> gantiJudulWebsite(@PathVariable Integer idWebsite, @RequestParam String namaWebsite) {
+        Website web = websiteRepository.findById(idWebsite).get();
+        web.setWebsiteName(namaWebsite);
+        websiteRepository.save(web);
+        return new ResponseEntity<>("Berhasil mengubah nama website", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/photo_background", method = RequestMethod.GET)
+    public String backgroundPhotoView(Model model) {
+        model.addAttribute("username", httpSession.getAttribute("username"));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        return "admin/backgroundPhoto";
+    }
+
+    @RequestMapping(value = "/video_animasi", method = RequestMethod.GET)
+    public String videoAnimasiView(Model model) {
+        model.addAttribute("username", httpSession.getAttribute("username"));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        return "admin/videoAnimasi";
     }
 }

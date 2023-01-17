@@ -16,11 +16,14 @@ import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.PropertyStatus;
 import com.dreamtown.onasistownhouse.entity.Role;
 import com.dreamtown.onasistownhouse.entity.User;
+import com.dreamtown.onasistownhouse.entity.Website;
+import com.dreamtown.onasistownhouse.entity.WebsitePhoto;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
 import com.dreamtown.onasistownhouse.repository.RoleRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
+import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 
 @Component
 public class CmdRunner implements CommandLineRunner {
@@ -34,10 +37,7 @@ public class CmdRunner implements CommandLineRunner {
         private UserRepository UserRepository;
 
         @Autowired
-        private PropertyRepository propertyRepository;
-
-        @Autowired
-        private PropertyDetailsRepository propertyDetailsRepository;
+        private WebsiteRepository websiteRepository;
 
         @Autowired
         private PropertyStatusRepository propertyStatusRepository;
@@ -73,6 +73,16 @@ public class CmdRunner implements CommandLineRunner {
                 listPropertyStatus.add(new PropertyStatus(3, "Sold"));
                 propertyStatusRepository.saveAll(listPropertyStatus);
                 logger.info("Property Status Has been created");
+
+                //add Website title 
+                List<WebsitePhoto> listWebsitePhoto = new ArrayList<>();
+                listWebsitePhoto.add(new WebsitePhoto(1, "12.png", null));
+                listWebsitePhoto.add(new WebsitePhoto(2, "14.png", null));
+                listWebsitePhoto.add(new WebsitePhoto(3, "15.png", null));
+                websiteRepository.save(new Website(1, "Onasis Town House", "video3.mp4", listWebsitePhoto));
+
+                logger.info("website tittle has been created");
+
                 // Double harga = 1200000000.0;
                 // PropertyDetails propertyDetails1 = new PropertyDetails(1, 1, 35, 40, 2, 1,
                 // "Jalan Pemuda", "", "A",

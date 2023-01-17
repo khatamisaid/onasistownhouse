@@ -484,6 +484,14 @@
                 "idPropertyStatus": $("#statusProperty option:selected").val(),
                 "statusName": $("#statusProperty option:selected").text(),
             };
+            var tempHarga = $("#hargaProperty").val().trim().replaceAll("Rp. ", "");
+            if(tempHarga.length < 14){
+                tempHarga = tempHarga.substring(0,2) + ' miliar'
+            }else if(tempHarga.length < 12){
+                tempHarga = tempHarga.substring(0,3) + ' juta'
+            }
+            console.log(tempHarga.length);
+            console.log(tempHarga);
             propertyDetails.harga = $("#hargaProperty").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
             propertyDetails.luasTanah = $("#luasTanah").val();
             propertyDetails.luasBangunan = $("#luasBangunan").val();
@@ -505,33 +513,33 @@
                 type: 'application/json'
             });
             formData.append("propertyDetails", blobData);
-            $.ajax({
-                method: "POST",
-                url: `/property/post/${propertyDetails.idProperty}`,
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data, textStatus, jqXHR) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Berhasil menambahkan detail property',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function () {
-                        window.location.reload();
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: 'Gagal menambahkan detail property',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            });
+            // $.ajax({
+            //     method: "POST",
+            //     url: `/property/post/${propertyDetails.idProperty}`,
+            //     data: formData,
+            //     processData: false,
+            //     contentType: false,
+            //     success: function (data, textStatus, jqXHR) {
+            //         Swal.fire({
+            //             position: 'center',
+            //             icon: 'success',
+            //             title: 'Berhasil menambahkan detail property',
+            //             showConfirmButton: false,
+            //             timer: 1500
+            //         }).then(function () {
+            //             window.location.reload();
+            //         });
+            //     },
+            //     error: function (jqXHR, textStatus, errorThrown) {
+            //         Swal.fire({
+            //             position: 'center',
+            //             icon: 'error',
+            //             title: 'Gagal menambahkan detail property',
+            //             showConfirmButton: false,
+            //             timer: 1500
+            //         })
+            //     }
+            // });
         }
         function validate(evt) {
             var theEvent = evt || window.event;

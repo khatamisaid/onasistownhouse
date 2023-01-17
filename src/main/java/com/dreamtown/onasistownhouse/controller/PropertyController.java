@@ -92,11 +92,13 @@ public class PropertyController {
             for (MultipartFile file : images) {
                 String[] splitFileName = file.getOriginalFilename().split("\\.");
                 String extension = splitFileName[splitFileName.length - 1];
-                String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
+                String fileName = UUIDGenerator.generateType4UUID().toString() + "." +
+                        extension;
                 File fileTemp = new File(env.getProperty("storage.images") + fileName);
                 try {
                     file.transferTo(fileTemp);
-                    Photo photo = new Photo(null, fileName, propertyDetails.getIdDetailsProperty());
+                    Photo photo = new Photo(null, fileName,
+                            propertyDetails.getIdDetailsProperty());
                     listPhoto.add(photo);
                 } catch (IOException e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -109,11 +111,13 @@ public class PropertyController {
             for (MultipartFile file : videos) {
                 String[] splitFileName = file.getOriginalFilename().split("\\.");
                 String extension = splitFileName[splitFileName.length - 1];
-                String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
+                String fileName = UUIDGenerator.generateType4UUID().toString() + "." +
+                        extension;
                 File fileTemp = new File(env.getProperty("storage.videos") + fileName);
                 try {
                     file.transferTo(fileTemp);
-                    Video photo = new Video(null, fileName, propertyDetails.getIdDetailsProperty());
+                    Video photo = new Video(null, fileName,
+                            propertyDetails.getIdDetailsProperty());
                     listVideo.add(photo);
                 } catch (IOException e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

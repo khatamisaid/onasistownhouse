@@ -97,13 +97,15 @@
                     <div class="d-flex flex-row">
                         <select class="custom-select mr-2" name="area" id="area">
                             <option value="" selected>Semua Area</option>
-                            <option th:each="wilayah: ${listWilayah}" th:value="${wilayah.idWilayah}" th:text="${wilayah.namaWilayah}"></option>
+                            <option th:each="wilayah: ${listWilayah}" th:value="${wilayah.idWilayah}"
+                                th:text="${wilayah.namaWilayah}"></option>
                         </select>
                         <select class="custom-select mr-2" name="sortBy" id="sortBy">
                             <option value="1" selected>Termurah</option>
                             <option value="2">Termahal</option>
                         </select>
-                        <button onclick="getListProperty()" style="background-color: #aa8453; color: white;" class="btn">Cari</button>
+                        <button onclick="getListProperty()" style="background-color: #aa8453; color: white;"
+                            class="btn">Cari</button>
                     </div>
                 </div>
             </div>
@@ -116,14 +118,14 @@
     <!-- Rekomendasi -->
     <!-- Promo Video -->
     <section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="3"
-        data-background="loadfile/transfer.jpg">
+        data-background="img/slider/2.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2 text-center">
                     <!-- <span><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i
                             class="star-rating"></i><i class="star-rating"></i></span> -->
                     <!-- <div class="section-subtitle"><span>The Cappa Luxury Hotel</span></div> -->
-                    <div class="section-title"><span>Onasis Town House</span></div>
+                    <div class="section-title"><span th:text="${website.websiteName}"></span></div>
                 </div>
             </div>
             <div class="row">
