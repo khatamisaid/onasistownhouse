@@ -59,7 +59,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td style="font-size: 24px; color: white; font-weight: 600;">Onasis Town House
+                                        <td th:text="${website.websiteName}"
+                                            style="font-size: 24px; color: white; font-weight: 600;">
                                         </td>
                                         <td th:if="${session.role == 'Super User'}"><button
                                                 onclick="openModalWebsiteTitle()" class="btn btn-primary"
@@ -76,7 +77,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 style="color:#aa8453;" class="modal-title" id="exampleModalLabel">Tambah Wilayah
+                                <h4 style="color:#aa8453;" class="modal-title" id="exampleModalLabel">Ubah Website Title
                                 </h4>
                                 <button type="button" class="close" onclick="closeModal('modalEditWebsiteTitle')"
                                     aria-label="Close">
@@ -96,7 +97,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"
                                     onclick="closeModal('modalEditWebsiteTitle')">Tutup</button>
-                                <button id="btnTambahWilayah" style="background-color: #aa8453; color: white;"
+                                <button id="btnUbahWebsiteTitle" style="background-color: #aa8453; color: white;"
                                     type="button" class="btn">Submit</button>
                             </div>
                         </div>
@@ -117,9 +118,29 @@
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
+        var website = /*[[${website}]]*/null;
         function openModalWebsiteTitle() {
+            $("#websiteTitle").val(website.websiteName);
             $("#modalEditWebsiteTitle").toggle('modal');
         }
+        $("#btnUbahWebsiteTitle").on('click', function () {
+            var webTitle = $("#websiteTitle").val();
+            if ($("#websiteTitle").val().length === 0) {
+                return;
+            }
+            $.post(`/admin/judul_website/${website.idWebsite}?namaWebsite=${$("#websiteTitle").val()}`, function (res) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: `${res}`,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function () {
+                    window.location.reload();
+                });
+            });
+            return;
+        });
     </script>
 </body>
 

@@ -22,11 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
+import com.dreamtown.onasistownhouse.entity.Website;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
 import com.dreamtown.onasistownhouse.service.VideoStreamService;
+import com.dreamtown.onasistownhouse.service.WebsiteService;
 
 import reactor.core.publisher.Mono;
 
@@ -66,10 +68,17 @@ public class MainController {
     @Autowired
     private WebsiteRepository websiteRepository;
 
+    @Autowired
+    private WebsiteService websiteService;
+
     @GetMapping(value = "/")
     public String index(Model model) {
+        Website web = websiteRepository.findAll().get(0);
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
-        model.addAttribute("website", websiteRepository.findAll().get(0));
+        model.addAttribute("website", web);
+        String namafile = web.getWebsiteVideo().split("\\.")[0];
+        model.addAttribute("websiteName", websiteService.websiteName());
+        model.addAttribute("websiteVideo", "/stream/mp4/" + namafile);
         return "index";
     }
 
@@ -160,7 +169,7 @@ public class MainController {
         model.addAttribute("deskripsiArr2", deskripsiArr2);
         model.addAttribute("namaProperty", namaProperty.get());
         if (propertyDetails.getListPhoto().size() > 5) {
-            model.addAttribute("sizePhotoLainnya", "+" +(propertyDetails.getListPhoto().size() - 5) + " Lainnya");
+            model.addAttribute("sizePhotoLainnya", "+" + (propertyDetails.getListPhoto().size() - 5) + " Lainnya");
         }
 
         model.addAttribute("lineSeparator", System.lineSeparator());

@@ -32,6 +32,7 @@ import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.entity.Website;
+import com.dreamtown.onasistownhouse.entity.WebsitePhoto;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PhotoRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
@@ -39,7 +40,9 @@ import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
 import com.dreamtown.onasistownhouse.repository.UserRepository;
 import com.dreamtown.onasistownhouse.repository.VideoRepository;
+import com.dreamtown.onasistownhouse.repository.WebsitePhotoRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
+import com.dreamtown.onasistownhouse.service.WebsiteService;
 import com.dreamtown.onasistownhouse.utils.Menu;
 import com.dreamtown.onasistownhouse.utils.TipeProperty;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
@@ -82,6 +85,12 @@ public class AdminController {
     private WebsiteRepository websiteRepository;
 
     @Autowired
+    private WebsiteService websiteService;
+
+    @Autowired
+    private WebsitePhotoRepository websitePhotoRepository;
+
+    @Autowired
     private Environment env;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -90,6 +99,7 @@ public class AdminController {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/index";
     }
 
@@ -98,6 +108,7 @@ public class AdminController {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/managementUser";
     }
 
@@ -108,6 +119,7 @@ public class AdminController {
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
         model.addAttribute("property", property);
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/property";
     }
 
@@ -122,6 +134,7 @@ public class AdminController {
         model.addAttribute("tipeProperty", tipeProperty.getListTipeProperty());
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/detailsProperty";
     }
 
@@ -134,6 +147,7 @@ public class AdminController {
         model.addAttribute("tipeProperty", tipeProperty.getListTipeProperty());
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/addDetailsProperty";
     }
 
@@ -242,6 +256,7 @@ public class AdminController {
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listProperty", propertyRepository.findAll());
         model.addAttribute("listTipeProperty", tipeProperty.getListTipeProperty());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/formulirPemesanan";
     }
 
@@ -250,6 +265,7 @@ public class AdminController {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/wilayah";
     }
 
@@ -258,10 +274,12 @@ public class AdminController {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("website", websiteService.website());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/judulWebsite";
     }
 
-    @RequestMapping(value = "/judul_website", method = RequestMethod.POST)
+    @RequestMapping(value = "/judul_website/{idWebsite}", method = RequestMethod.POST)
     public ResponseEntity<String> gantiJudulWebsite(@PathVariable Integer idWebsite, @RequestParam String namaWebsite) {
         Website web = websiteRepository.findById(idWebsite).get();
         web.setWebsiteName(namaWebsite);
@@ -274,7 +292,23 @@ public class AdminController {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("website", websiteService.website());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/backgroundPhoto";
+    }
+
+    @RequestMapping(value = "/photo_background/{idWebsite}", method = RequestMethod.POST)
+    public ResponseEntity<String> gantiPhotoBackground(@PathVariable Integer idWebsite,
+            @RequestPart MultipartFile photo) throws IllegalStateException, IOException {
+        WebsitePhoto webPhoto = websitePhotoRepository.findById(idWebsite).get();
+        String[] splitFileName = photo.getOriginalFilename().split("\\.");
+        String extension = splitFileName[splitFileName.length - 1];
+        String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
+        File fileTemp = new File(env.getProperty("storage.images") + fileName);
+        webPhoto.setNamaPhoto(fileName);
+        websitePhotoRepository.save(webPhoto);
+        photo.transferTo(fileTemp);
+        return new ResponseEntity<>("Berhasil mengubah photo background website", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/video_animasi", method = RequestMethod.GET)
@@ -282,6 +316,7 @@ public class AdminController {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/videoAnimasi";
     }
 }

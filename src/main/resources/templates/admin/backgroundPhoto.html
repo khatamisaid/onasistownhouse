@@ -49,6 +49,38 @@
                         <div class="d-flex justify-content-center">
                             <h2 style="color: #aa8453;">Background Photo</h2>
                         </div>
+                        <div class="container">
+                            <table class="table table-striped table-bordered" style="width:100%">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>No. </th>
+                                        <th>Photo</th>
+                                        <th th:if="${session.role == 'Super User'}">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="photo, iter : ${website.listWebsitePhoto}">
+                                        <td th:text="${iter.index + 1}" style="color:black;"></td>
+                                        <td>
+                                            <center>
+                                                <img style="width: 400px ; height: 200px;"
+                                                    th:src="'/loadfile/'+${photo.namaPhoto}" alt="" />
+                                            </center>
+
+                                        </td>
+                                        <td>
+                                            <label
+                                                style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                th:for="'foto'+${photo.idWebsitePhoto}">Ganti Photo</label>
+                                            <input style="display: none;" type="file" name="foto"
+                                                th:attr="onchange=|changePhoto('${photo.idWebsitePhoto}')|"
+                                                th:id="'foto'+${photo.idWebsitePhoto}" class="custom-file-input"
+                                                accept="image/jpeg, image/png">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,6 +98,38 @@
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
+        function changePhoto(id) {
+            var formData = new FormData();
+            formData.append("photo", $(`#foto${id}`).prop('files')[0]);
+
+            $.ajax({
+                method: "POST",
+                url: `/admin/photo_background/${id}`,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data, textStatus, jqXHR) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `${data}`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function () {
+                        window.location.reload();
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Gagal mengubah background photo',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
+        }
     </script>
 </body>
 

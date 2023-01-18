@@ -36,43 +36,7 @@
     <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
     <header class="header slider-fade" id="header">
         <div class="owl-carousel owl-theme">
-            <div class="text-center item bg-img" data-overlay-dark="2" data-background="img/slider/12.png">
-                <div class="v-middle caption">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-10 offset-md-1">
-                                <span>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                </span>
-                                <h1>Enjoy The Best Moments of Life</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center item bg-img" data-overlay-dark="2" data-background="img/slider/14.png">
-                <div class="v-middle caption">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-10 offset-md-1">
-                                <span>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                    <i class="star-rating"></i>
-                                </span>
-                                <h1>Enjoy The Best Moments of Life</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center item bg-img" data-overlay-dark="3" data-background="img/slider/15.png">
+            <div th:each="photo : ${website.listWebsitePhoto}" class="text-center item bg-img" data-overlay-dark="2" th:attr="data-background='/loadfile/'+${photo.namaPhoto}">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row">
@@ -140,7 +104,7 @@
                 </div>
                 <div id="headerPopup" class="mfp-hide embed-responsive embed-responsive-21by9">
                     <video id="videoPopUp" width="100%" controls>
-                        <source src="stream/mp4/transfer" type="video/mp4" />
+                        <source th:src="${websiteVideo}" type="video/mp4" />
                         Your browser does not support HTML video.
                     </video>
                 </div>
