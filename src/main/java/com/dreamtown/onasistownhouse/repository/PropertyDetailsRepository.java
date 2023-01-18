@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
+import com.dreamtown.onasistownhouse.entity.PropertyStatus;
 
 public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails, Integer> {
-
 
     @Modifying
     @Query("delete from PropertyDetails pd where pd.idProperty=:idProperty")
@@ -26,4 +26,6 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
 
     @Query(value = "SELECT DISTINCT tipe_property from property_details where id_details_property = ?1 order by tipe_property ASC", nativeQuery = true)
     List<String> findTipePropertyByIdDetailsProperty(Integer idDetailsProperty);
+
+    PropertyDetails findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(Integer idProperty, PropertyStatus status);
 }

@@ -101,7 +101,6 @@
         function changePhoto(id) {
             var formData = new FormData();
             formData.append("photo", $(`#foto${id}`).prop('files')[0]);
-
             $.ajax({
                 method: "POST",
                 url: `/admin/photo_background/${id}`,

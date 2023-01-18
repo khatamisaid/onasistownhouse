@@ -76,8 +76,8 @@ public class MainController {
         Website web = websiteRepository.findAll().get(0);
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
         model.addAttribute("website", web);
-        String namafile = web.getWebsiteVideo().split("\\.")[0];
         model.addAttribute("websiteName", websiteService.websiteName());
+        String namafile = web.getWebsiteVideo().split("\\.")[0];
         model.addAttribute("websiteVideo", "/stream/mp4/" + namafile);
         return "index";
     }
@@ -174,5 +174,24 @@ public class MainController {
 
         model.addAttribute("lineSeparator", System.lineSeparator());
         return "propertyDetails";
+    }
+
+    @RequestMapping(value = "/listRekomendasi")
+    public ResponseEntity<Map> listRekomendasi(@RequestParam(name = "page", defaultValue = "1") Optional<Integer> page,
+            @RequestParam(name = "size", defaultValue = "4") Optional<Integer> size) {
+        Map res = new HashMap<>();
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(4);
+        Page<Property> propertyPage = propertyService.listRekomendasi(PageRequest.of(currentPage - 1, pageSize));
+
+        res.put("propertyPage", propertyPage);
+        int totalPages = propertyPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            res.put("pageNumbers", pageNumbers);
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

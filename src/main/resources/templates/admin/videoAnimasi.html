@@ -49,6 +49,45 @@
                         <div class="d-flex justify-content-center">
                             <h2 style="color: #aa8453;">Video Animasi</h2>
                         </div>
+                        <div class="d-flex flex-row justify-content-end mb-2">
+                            <label
+                                style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                for="video">Ganti Photo</label>
+                            <input style="display: none;" type="file" name="foto"
+                                th:attr="onchange=|changeVideo('${website.idWebsite}')|" id="video"
+                                class="custom-file-input" accept="video/mp4">
+                        </div>
+                        <section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="3"
+                            data-background="/img/slider/2.jpg" style="background-image: url('/img/slider/2.jpg');">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-8 offset-md-2 text-center">
+                                        <!-- <span><i class="star-rating"></i><i class="star-rating"></i><i
+                                                class="star-rating"></i><i class="star-rating"></i><i
+                                                class="star-rating"></i></span> -->
+                                        <div class="section-title"><span th:text="${website.websiteName}"></span></div>
+                                        <!-- <div class="section-title"><span>Promotional Video</span></div> -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-center col-md-12">
+                                        <a href="#headerPopup" id="headerVideoLink" target="_blank" class="vid">
+                                            <div class="vid-butn">
+                                                <span class="icon">
+                                                    <i class="ti-control-play"></i>
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="headerPopup" class="mfp-hide embed-responsive embed-responsive-21by9">
+                                        <video id="videoPopUp" width="100%" controls>
+                                            <source th:src="${websiteVideo}" type="video/mp4" />
+                                            Your browser does not support HTML video.
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -66,6 +105,51 @@
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
+        $('#headerVideoLink').magnificPopup({
+            type: 'inline',
+            midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+            callbacks: {
+                open: function () {
+                    $.magnificPopup.instance.close = function () {
+                        // Do whatever else you need to do here
+                        $("#videoPopUp").get(0).pause();
+                        // Call the original close method to close the popup
+                        $.magnificPopup.proto.close.call(this);
+                    };
+                }
+            }
+        });
+        function changeVideo(id) {
+            var formData = new FormData();
+            formData.append("video", $(`#video`).prop('files')[0]);
+            $.ajax({
+                method: "POST",
+                url: `/admin/video_animasi/${id}`,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data, textStatus, jqXHR) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `${data}`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function () {
+                        window.location.reload();
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Gagal mengubah video animasi',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
+        }
     </script>
 </body>
 

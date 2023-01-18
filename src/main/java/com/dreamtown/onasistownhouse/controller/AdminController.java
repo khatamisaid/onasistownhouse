@@ -316,7 +316,25 @@ public class AdminController {
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        Website web = websiteService.website();
+        model.addAttribute("website", web);
+        String namafile = web.getWebsiteVideo().split("\\.")[0];
+        model.addAttribute("websiteVideo", "/stream/mp4/" + namafile);
         model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/videoAnimasi";
+    }
+
+    @RequestMapping(value = "/video_animasi/{idWebsite}", method = RequestMethod.POST)
+    public ResponseEntity<String> gantiAnimasiVideo(@PathVariable Integer idWebsite,
+            @RequestPart MultipartFile video) throws IllegalStateException, IOException {
+        Website website = websiteRepository.findById(idWebsite).get();
+        String[] splitFileName = video.getOriginalFilename().split("\\.");
+        String extension = splitFileName[splitFileName.length - 1];
+        String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
+        File fileTemp = new File(env.getProperty("storage.videos") + fileName);
+        website.setWebsiteVideo(fileName);
+        websiteRepository.save(website);
+        video.transferTo(fileTemp);
+        return new ResponseEntity<>("Berhasil mengubah video animasi", HttpStatus.OK);
     }
 }
