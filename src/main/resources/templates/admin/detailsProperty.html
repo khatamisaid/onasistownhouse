@@ -462,20 +462,32 @@
             $("#phoneSection").empty();
             if (listContact.length > 0) {
                 listContact.forEach(function (value, i) {
-                    $("#phoneSection").append(`<div class="col-md-12">
-                        <div style="background-color: #aa8453; border-radius: 12px;"
-                                            class="col-md-2 m-2">
+                    $("#phoneSection").append(`<div style="background-color: #aa8453; border-radius: 12px;"
+                                            class="col-md-3 m-2">
                                             <i onclick="deleteContact(${i})"
                                                 style="border-radius:4px; margin-right: 4px; margin-top: 2px; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
                                                 class="fa fa-times p-1"></i>
                                             <div onclick="clickContact(${value.nomorTelpon})" class="row p-2" style="cursor: pointer; ">
-                                                <img style="width: 42px;" src="/images/whatsapp-logo.png" alt="">
+                                                <img style="width: 52px;" src="/images/whatsapp-logo.png" alt="">
                                                 <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: 8px; margin-left: 4px;">
+                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
                                                     ${value.namaContact}</p>
                                             </div>
-                                        </div>
-                        </div>`);
+                                        </div>`);
+                    // $("#phoneSection").append(`<div class="col-md-12">
+                    //     <div style="background-color: #aa8453; border-radius: 12px;"
+                    //                         class="col-md-2 m-2">
+                    //                         <i onclick="deleteContact(${i})"
+                    //                             style="border-radius:4px; margin-right: 4px; margin-top: 2px; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
+                    //                             class="fa fa-times p-1"></i>
+                    //                         <div onclick="clickContact(${value.nomorTelpon})" class="row p-2" style="cursor: pointer; ">
+                    //                             <img style="width: 42px;" src="/images/whatsapp-logo.png" alt="">
+                    //                             <p
+                    //                                 style="color: white; font-size: 12px; font-weight: 600; margin-top: 8px; margin-left: 4px;">
+                    //                                 ${value.namaContact}</p>
+                    //                         </div>
+                    //                     </div>
+                    //     </div>`);
                 });
             }
         }
