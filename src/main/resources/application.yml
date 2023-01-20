@@ -77,5 +77,5 @@ server:
       enabled: false
     path: /error
 storage: 
-  images: /home/onasistownhouse.com/images/
-  videos: /home/onasistownhouse.com/videos/
+  images: /home/onasistownhouse.com/storage/images/
+  videos: /home/onasistownhouse.com/storage/videos/
