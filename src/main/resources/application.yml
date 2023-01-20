@@ -79,3 +79,8 @@ server:
 storage: 
   images: /home/onasistownhouse.com/storage/images/
   videos: /home/onasistownhouse.com/storage/videos/
+logging:
+  pattern: 
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: /home/onasistownhouse.com/logs/onasistownhouse.com.jar_log

@@ -484,14 +484,6 @@
                 "idPropertyStatus": $("#statusProperty option:selected").val(),
                 "statusName": $("#statusProperty option:selected").text(),
             };
-            var tempHarga = $("#hargaProperty").val().trim().replaceAll("Rp. ", "");
-            if(tempHarga.length < 14){
-                tempHarga = tempHarga.substring(0,2) + ' miliar'
-            }else if(tempHarga.length < 12){
-                tempHarga = tempHarga.substring(0,3) + ' juta'
-            }
-            console.log(tempHarga.length);
-            console.log(tempHarga);
             propertyDetails.harga = $("#hargaProperty").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
             propertyDetails.luasTanah = $("#luasTanah").val();
             propertyDetails.luasBangunan = $("#luasBangunan").val();
@@ -502,12 +494,16 @@
             propertyDetails.deskripsi = $("#deskripsi").val();
             propertyDetails.listContactPerson = listContact;
             var formData = new FormData();
-            listFoto.forEach(foto => {
-                formData.append("images", foto);
-            });
-            listVideo.forEach(video => {
-                formData.append("videos", video);
-            });
+            if (listFoto.length > 0) {
+                listFoto.forEach(foto => {
+                    formData.append("images", foto);
+                });
+            }
+            if (listVideo.length > 0) {
+                listVideo.forEach(video => {
+                    formData.append("videos", video);
+                });
+            }
             var jsonData = JSON.stringify(propertyDetails);
             var blobData = new Blob([jsonData], {
                 type: 'application/json'
