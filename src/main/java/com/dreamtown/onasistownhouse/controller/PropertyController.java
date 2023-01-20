@@ -87,7 +87,7 @@ public class PropertyController {
             throws IllegalStateException, IOException {
         Map response = new HashMap<>();
         propertyDetails.setIdProperty(idProperty);
-        if (!images.isEmpty()) {
+        if (images != null && !images.isEmpty()) {
             List<Photo> listPhoto = new ArrayList<>();
             for (MultipartFile file : images) {
                 String[] splitFileName = file.getOriginalFilename().split("\\.");
@@ -106,7 +106,7 @@ public class PropertyController {
             }
             propertyDetails.setListPhoto(listPhoto);
         }
-        if (!videos.isEmpty()) {
+        if (videos != null && !videos.isEmpty()) {
             List<Video> listVideo = new ArrayList<>();
             for (MultipartFile file : videos) {
                 String[] splitFileName = file.getOriginalFilename().split("\\.");
