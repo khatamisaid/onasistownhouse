@@ -1,118 +1,6 @@
 spring:
    profiles:
-      active: local
----
-spring:
-  config:
-    activate:
-      on-profile: production
-  application:
-    name: OnasisTownHouse
-  datasource:
-      url: jdbc:mysql://192.168.100.90/onasistownhouse
-      username: amaeschiffer
-      password: ImNumber4#@4
-      driverClassName: com.mysql.cj.jdbc.Driver
-  jpa: 
-      database: default
-      hibernate: 
-         dialect: org.hibernate.dialect.MariaDB104Dialect
-         ddl-auto: none
-  thymeleaf:
-    cache: false
-    mode: HTML
-    encoding: UTF-8
-    prefix: file:src/main/resources/templates/
-  web:
-    resources:
-      static-locations: file:src/main/resources/static/
-      cache:
-        period: 0
-server:
-  port: 8082
-  error:
-    whitelabel:
-      enabled: false
-    path: /error
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-  application:
-    name: OnasisTownHouse
-  datasource:
-      url: jdbc:mysql://localhost:3306/onas_townhouse
-      username: onas_dreamtown
-      password: Lu4oEs#o!dzotl1d
-      driverClassName: com.mysql.cj.jdbc.Driver
-  jpa: 
-      database: default
-      hibernate: 
-         dialect: org.hibernate.dialect.MariaDB104Dialect
-         ddl-auto: update
-  thymeleaf:
-    cache: false
-    mode: HTML
-    encoding: UTF-8
-    prefix: classpath:/templates/
-  resources:
-    static-locations: classpath:/static/
-    cache:
-      period: 0
-  servlet:
-    multipart:
-      max-file-size: -1
-      max-request-size: -1
-server:
-  use-forward-headers: true
-  port: 8082
-  error:
-    whitelabel:
-      enabled: false
-    path: /error 
-storage: /home/onasistownhouse.com/storage/
-logging:
-  pattern: 
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  file: /home/onasistownhouse.com/logs/onasistownhouse.com.run_log
----
-spring:
-  config:
-    activate:
-      on-profile: testing
-  application:
-    name: OnasisTownHouse
-  datasource:
-      url: jdbc:mysql://localhost:3306/onasistownhouse
-      username: root
-      password: 
-      driverClassName: com.mysql.cj.jdbc.Driver
-  jpa: 
-      database: default
-      hibernate: 
-         dialect: org.hibernate.dialect.MariaDB104Dialect
-         ddl-auto: update
-  thymeleaf:
-    cache: false
-    mode: HTML
-    encoding: UTF-8
-    prefix: classpath:/templates/
-  resources:
-    static-locations: classpath:/static/
-    cache:
-      period: 0
-  servlet:
-    multipart:
-      max-file-size: -1
-      max-request-size: -1
-server:
-  port: 8082
-  error:
-    whitelabel:
-      enabled: false
-    path: /error
+      active: production
 ---
 spring:
   config:
@@ -152,3 +40,42 @@ server:
 storage: 
   images: C:\\filetemp\\images\\
   videos: C:\\filetemp\\videos\\
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+  application:
+    name: OnasisTownHouse
+  datasource:
+      url: jdbc:mysql://181.215.79.190:3306/onasistownhouse
+      username: amaeschiffer
+      password: ImNumber4#@4
+      driverClassName: com.mysql.cj.jdbc.Driver
+  jpa: 
+      database: default
+      hibernate: 
+         dialect: org.hibernate.dialect.MariaDB104Dialect
+         ddl-auto: update
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: classpath:/templates/
+  resources:
+    static-locations: classpath:/static/
+    cache:
+      period: 0
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+server:
+  port: 8082
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
+storage: 
+  images: /home/onasistownhouse.com/images/
+  videos: /home/onasistownhouse.com/videos/
