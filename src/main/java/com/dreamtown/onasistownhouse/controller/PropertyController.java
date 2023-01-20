@@ -162,7 +162,7 @@ public class PropertyController {
     @RequestMapping(value = "/getTipeById", method = RequestMethod.GET)
     public ResponseEntity<Map> getTipeById(@RequestParam Integer id) {
         Map response = new HashMap<>();
-        response.put("listTipeProperty", propertyDetailsRepository.findTipePropertyByIdDetailsProperty(id));
+        response.put("listTipeProperty", propertyDetailsRepository.findDistinctTipePropertyByIdProperty(id));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
