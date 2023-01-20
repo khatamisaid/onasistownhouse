@@ -58,6 +58,15 @@
                 </div>
                 <div class="col">
                   <form th:action="@{/login}" method="POST">
+                    <div class="alert alert-warning fade show" th:if="${param.error != null or errorMsg != null}"
+                      id="errMessage">
+                      <button type="button" class="close" onclick="$('#errMessage').hide();" aria-hidden="true"
+                        aria-label="Close">
+                        ×
+                      </button>
+                      <th:block th:if="${param.error}"
+                        th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" th:text="${errorMsg}" />
+                    </div>
                     <div class="form-group">
                       <input type="text" class="form-control-sm" name="username" id="username"
                         placeholder="Masukan username">
