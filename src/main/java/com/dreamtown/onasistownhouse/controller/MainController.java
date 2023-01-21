@@ -156,11 +156,10 @@ public class MainController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/p/{namaProperty}", method = RequestMethod.GET)
-    public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty,
-            @RequestParam Optional<Integer> sortBy) {
-        PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(
-                propertyService.getPropertyByName(namaProperty.get()).getIdProperty(), sortBy.orElse(1));
+    @RequestMapping(value = "/p/{namaProperty}/{tipeProperty}", method = RequestMethod.GET)
+    public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty, @PathVariable Optional<String> tipeProperty) {
+        Property property = propertyService.getPropertyByName(namaProperty.get());
+        PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(), tipeProperty.get());
         model.addAttribute("property", propertyDetails);
         String[] splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
         String[] deskripsiArr1 = Arrays.copyOfRange(splitDeskripsi, 0, splitDeskripsi.length / 2);
@@ -171,7 +170,6 @@ public class MainController {
         if (propertyDetails.getListPhoto().size() > 5) {
             model.addAttribute("sizePhotoLainnya", "+" + (propertyDetails.getListPhoto().size() - 5) + " Lainnya");
         }
-
         model.addAttribute("lineSeparator", System.lineSeparator());
         return "propertyDetails";
     }

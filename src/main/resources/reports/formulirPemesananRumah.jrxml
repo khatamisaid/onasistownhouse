@@ -72,6 +72,10 @@
 		<property name="com.jaspersoft.studio.field.name" value="dp"/>
 		<property name="com.jaspersoft.studio.field.label" value="dp"/>
 	</field>
+	<field name="tanggalDp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tanggalDp"/>
+		<property name="com.jaspersoft.studio.field.label" value="tanggalDp"/>
+	</field>
 	<field name="hargaDp" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="hargaDp"/>
 		<property name="com.jaspersoft.studio.field.label" value="hargaDp"/>

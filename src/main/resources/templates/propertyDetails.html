@@ -75,12 +75,12 @@
             <div class="row mt-5">
                 <div class="col-md-4">
                     <div class="d-flex flex-row" >
-                        <h3>Tipe A</h3>
+                        <h3 th:text="'Tipe '+${property.tipeProperty}"></h3>
                     </div>
                     <div class="d-flex flex-row" >
-                        <h3>IDR Rp. 1.500.000.000</h3>
+                        <h3 id="harga"></h3>
                     </div>
-                    <div class="d-flex flex-row mb-3" style="border-bottom: 2px solid #aa8453;">
+                    <div th:if="${property.kamarTidur != null}" class="d-flex flex-row mb-3" style="border-bottom: 2px solid #aa8453;">
                         <span style="font-size: 22px;" class="flaticon-bed my-auto"></span>
                         <p style="margin-left: 8px;" class="my-auto">Kamar Tidur</p>
                         <p style="margin-left: auto;" class="my-auto mr-2" th:text="${property.kamarTidur}"></p>
@@ -143,8 +143,16 @@
     <script th:src="@{/js/datepicker.js}"></script>
     <script th:src="@{/js/smooth-scroll.min.js}"></script>
     <script th:src="@{/js/custom1.js}"></script>
+    <script th:src="@{/js/torupiah.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
+        var property = /*[[${property}]]*/null;
+        $(document).ready(function(){
+            $("#harga").text(formatRupiah(property.harga.toString()))
+        });
+        function formatRupiah(angka) {
+            return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 });
+        }
         function zoomImage(url) {
             $.magnificPopup.open({
                 items: {

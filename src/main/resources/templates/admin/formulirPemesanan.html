@@ -294,7 +294,6 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button id="btnCekArray" class="btn btn-primary"><i class="fa fa-print"></i> CEK ARRAY</button>
                         <button id="btnPrint" class="btn btn-primary"><i class="fa fa-print"></i> PRINT</button>
                     </div>
                 </div>
@@ -314,9 +313,25 @@
     <div th:replace="assets/js :: js"></div>
     <script th:src="@{/js/moment.min.js}"></script>
     <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.2.146/pdf.min.js"
+        integrity="sha512-hA0/Bv8+ywjnycIbT0xuCWB1sRgOzPmksIv4Qfvqv0DOKP02jSor8oHuIKpweUCsxiWGIl+QaV0E82mPQ7/gyw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script th:inline="javascript">
         var tableCicilan;
         var hargaSetelahDP = 0;
+        var BASE64_MARKER = ';base64,';
+        function convertDataURIToBinary(dataURI) {
+            var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+            var base64 = dataURI.substring(base64Index);
+            var raw = window.atob(base64);
+            var rawLength = raw.length;
+            var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+            for (var i = 0; i < rawLength; i++) {
+                array[i] = raw.charCodeAt(i);
+            }
+            return array;
+        }
         $("#property").on('change', function () {
             $("#tipeProperty").empty();
             var option = `<option value="" selected disabled>-- Pilih Tipe --</option>`;
@@ -347,7 +362,7 @@
                     $("#sectionPembayaran").show();
                     $("#luasBangunan").text(`${res.propertyDetails.luasBangunan} (m²)`);
                     $("#luasTanah").text(`${res.propertyDetails.luasTanah} (m²)`);
-                    $("#hargaJual").text(`${formatRupiah(res.property.harga.toString(), 'Rp. ')}`);
+                    $("#hargaJual").text(`${formatRupiah(res.propertyDetails.harga.toString(), 'Rp. ')}`);
                     $("#headerFormulir").text(`Formulir Pemesanan Rumah ${res.property.propertyName}`);
                     return;
                 }
@@ -423,9 +438,9 @@
             $("#hargaCicilan").text(formatRupiahPerBulan(Math.ceil(cicilanPerBulan).toString(), 'Rp. '));
             if (this.value <= 12) {
                 $("#sectionBiayaAdmin").hide();
-                return;
+            } else {
+                $("#sectionBiayaAdmin").show();
             }
-            $("#sectionBiayaAdmin").show();
             $("#tableCicilan").find('tbody').empty();
             for (let i = 1; i <= this.value; i++) {
                 $("#tableCicilan").find('tbody').append(
@@ -447,6 +462,7 @@
             }
         });
         $("#btnPrint").on('click', function () {
+
             // var jsonData = {
             //     "tanggal": "09 January 2023",
             //     "namaProperty": "Smart Home Jalan Pemuda",
@@ -464,11 +480,12 @@
             //     "bookingFee": "Rp. 25.000.000",
             //     "tanggalBooking": "09 January 2023",
             //     "dp": "20%",
+            //     "tanggalDp": "09 January 2023",
             //     "hargaDp": "Rp. 270.000.000",
             //     "totalHarga": "Rp. 1.080.000.000",
             //     "periodeCicilanIsTrue": true,
             //     "periodeCicilan": "14 bulan",
-            //     "cicilan": "Rp. 77.142.858 / Bulan",
+            //     "cicilan": "Rp. 100.142.858 / Bulan",
             //     "kenaAdmin": true,
             //     "biayaAdmin": "Rp. 6.000.000"
             // }
@@ -498,7 +515,6 @@
             //     "kenaAdmin": true,
             //     "biayaAdmin": "Rp. 6.000.000"
             // }
-
             var jsonData = {
                 "tanggal": moment().format("DD MMMM YYYY"),
                 "namaProperty": $("#property option:selected").text(),
@@ -525,7 +541,6 @@
                 "kenaAdmin": $("#periodeCicilan option:selected").val() > 12,
                 "biayaAdmin": $("#biayaAdmin").text()
             }
-            console.log(jsonData);
             var urlHit = `/property/cetakFormulirPemesanan`;
             $.ajax({
                 method: "POST",
@@ -535,13 +550,85 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data, textStatus, jqXHR) {
                     var base64 = `data:application/pdf;base64,${data.file}`;
-                    window.open(base64, "_blank");
+                    var downloadLink = document.createElement("a");
+                    downloadLink.href = base64;
+                    downloadLink.download = data.filename;
+                    downloadLink.click();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(textStatus);
                 }
             });
+            if ($("#caraBayar option:selected").val() == 2) {
+                var vmCetakRumah = [];
+                for (let i = 1; i <= $("#periodeCicilan option:selected").val(); i++) {
+                    var obj = {
+                        "txtCicilan": `Cicilan ${i}`,
+                        "nominalCicilan": $("#hargaCicilan").text().replace(" / Bulan", ""),
+                        "tanggalCicilan": moment($(`#tglCicilan${i}`).val(), 'YYYY-MM-DD').format("DD MMMM YYYY")
+                    }
+                    vmCetakRumah.push(obj);
+                }
+                var urlHit = `/property/cetakFormulirPemesananCicilan?propertyName=${$('#property option:selected').text()}`;
+                $.ajax({
+                    method: "POST",
+                    url: `${urlHit}`,
+                    data: JSON.stringify(vmCetakRumah),
+                    processData: false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data, textStatus, jqXHR) {
+                        var base64 = `data:application/pdf;base64,${data.file}`;
+                        var downloadLink = document.createElement("a");
+                        downloadLink.href = base64;
+                        downloadLink.download = data.filename;
+                        downloadLink.click();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus);
+                    }
+                });
+            }
         });
+        function printPDF(pdfData) {
+            var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+            // The workerSrc property shall be specified.
+            pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+            // Using DocumentInitParameters object to load binary data.
+            var loadingTask = pdfjsLib.getDocument({ data: pdfData });
+            loadingTask.promise.then(function (pdf) {
+                console.log('PDF loaded');
+
+                // Fetch the first page
+                var pageNumber = 1;
+                pdf.getPage(pageNumber).then(function (page) {
+                    console.log('Page loaded');
+
+                    var scale = 1.5;
+                    var viewport = page.getViewport({ scale: scale });
+
+                    // Prepare canvas using PDF page dimensions
+                    var canvas = document.getElementById('the-canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    // Render PDF page into canvas context
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    var renderTask = page.render(renderContext);
+                    renderTask.promise.then(function () {
+                        console.log('Page rendered');
+                    });
+                });
+            }, function (reason) {
+                // PDF loading error
+                console.error(reason);
+            });
+        }
         function getBase64(file) {
             var reader = new FileReader();
             reader.readAsDataURL(file);
@@ -552,32 +639,6 @@
                 console.log('Error: ', error);
             };
         }
-        $("#btnCekArray").on('click', function () {
-            var vmCetakRumah = [];
-            for (let i = 1; i <= $("#periodeCicilan option:selected").val(); i++) {
-                var obj = {
-                    "txtCicilan":`Cicilan ${i}`,
-                    "nominalCicilan":$("#hargaCicilan").text().replace(" / Bulan", ""),
-                    "tanggalCicilan":moment($(`#tglCicilan${i}`).val(), 'YYYY-MM-DD').format("DD MMMM YYYY")
-                }
-                vmCetakRumah.push(obj);
-            }
-            var urlHit = `/property/cetakFormulirPemesananCicilan?propertyName=${$('#property option:selected').text()}`;
-            $.ajax({
-                method: "POST",
-                url: `${urlHit}`,
-                data: JSON.stringify(vmCetakRumah),
-                processData: false,
-                contentType: "application/json; charset=utf-8",
-                success: function (data, textStatus, jqXHR) {
-                    var base64 = `data:application/pdf;base64,${data.file}`;
-                    window.open(base64, "_blank");
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus);
-                }
-            });
-        });
     </script>
 </body>
 

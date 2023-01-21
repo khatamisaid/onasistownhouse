@@ -16,7 +16,7 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     @Query("delete from PropertyDetails pd where pd.idProperty=:idProperty")
     void deleteWhereIdProperty(@Param("idProperty") Integer idProperty);
     
-    PropertyDetails findOneByIdDetailsPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty); 
+    PropertyDetails findOneByIdPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty); 
 
     @Query(value = "SELECT * from property_details where id_property = ?1 order by harga ASC", nativeQuery = true)
     List<PropertyDetails> findDetailsPropertyByIdOrderByHargaAsc(Integer id);
@@ -28,4 +28,6 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     List<String> findDistinctTipePropertyByIdProperty(Integer idProperty);
 
     PropertyDetails findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(Integer idProperty, PropertyStatus status);
+
+    PropertyDetails findFirstByIdPropertyAndTipeProperty(Integer idProperty, String tipeProperty);
 }

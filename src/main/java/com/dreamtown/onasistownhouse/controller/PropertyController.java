@@ -155,7 +155,7 @@ public class PropertyController {
         Map response = new HashMap<>();
         response.put("property", propertyRepository.findById(id).get());
         response.put("propertyDetails",
-                propertyDetailsRepository.findOneByIdDetailsPropertyAndTipeProperty(id, tipeProperty));
+                propertyDetailsRepository.findOneByIdPropertyAndTipeProperty(id, tipeProperty));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -218,8 +218,8 @@ public class PropertyController {
             return respEntity;
         }
         Map response = new HashMap();
-        String filename = "Formulir_Pemesanan_Rumah_" + propertyName + ".pdf";
-        String path = "./laporan/test.pdf";
+        String filename = "Formulir_Pemesanan_Rumah_Bertahap_" + propertyName + ".pdf";
+        String path = "./laporan/test2.pdf";
         new CetakFormulirPemesananCicilan(vmCetakRumah, path, propertyName).writePdf();
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);

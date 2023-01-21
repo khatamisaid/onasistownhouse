@@ -25,6 +25,10 @@
             background: rgba(255, 255, 255, .8);
             backdrop-filter: blur(2px);
         }
+
+        .rooms1 .item:hover .con {
+            /* bottom: 0; */
+        }
     </style>
 </head>
 
@@ -65,39 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div th:each="propertyDetails : ${property.listPropertyDetails}" class="col-md-4">
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img
-                                    th:src="@{${property.propertyBanner == '' ? '/img/rooms/1.jpg' : '/loadfile/'+property.propertyBanner}}"
-                                    alt="Gada Foto"> </div>
-                            <span th:attr="onclick=|onOptionPropertyClicked('${propertyDetails.idDetailsProperty}')|"
-                                style="cursor: pointer;" class="category"><i
-                                    class="fa-solid fa-ellipsis-vertical"></i></span>
-                            <div class="con">
-                                <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}"
-                                        th:text="'Tipe '+${propertyDetails.tipeProperty}"></a> </h5>
-                                <!-- <h5><a th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}"
-                                        th:text="|formatRupiah('${propertyDetails.harga}', 'Rp. ')|"></a> </h5> -->
-                                <div class="line"></div>
-                                <div class="row facilities">
-                                    <div class="col col-md-7">
-                                        <ul>
-                                            <li><i class="flaticon-bed"></i></li>
-                                            <li><i class="flaticon-bath"></i></li>
-                                            <li><i class="flaticon-breakfast"></i></li>
-                                            <li><i class="flaticon-towel"></i></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col col-md-5 text-right">
-                                        <div class="permalink"><a
-                                                th:href="@{${property.propertyName}+'/'+${propertyDetails.idDetailsProperty}}">Details
-                                                <i class="ti-arrow-right"></i></a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="listDetailProperty">
                 </div>
             </div>
         </section>
@@ -141,8 +113,14 @@
     </div>
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
+    <script th:src="@{/js/torupiah.js}"></script>
     <script th:inline="javascript">
         var property = /*[[${property}]]*/null;
+
+        $(document).ready(function () {
+            printListPropertyDetails();
+        });
+
         function dismiss(id) {
             $(`#${id}`).toggle('modal');
         }
@@ -157,7 +135,7 @@
             console.log($("#detailPropertyId").val());
         });
 
-        function testing(param){
+        function testing(param) {
             return param;
         }
 
@@ -194,23 +172,50 @@
                 }
             })
         }
-        function formatRupiah(angka, prefix) {
-            if (angka.startsWith('0')) {
-                return "";
-            }
-            var number_string = angka.replace(/[^,\d]/g, '').toString(),
-                split = number_string.split(','),
-                sisa = split[0].length % 3,
-                rupiah = split[0].substr(0, sisa),
-                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-            if (ribuan) {
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
+        var role = /*[[${session.role}]]*/null;
 
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        function printListPropertyDetails() {
+            $("#listDetailProperty").empty();
+            property.listPropertyDetails.forEach(function (propertyDetails, index) {
+                $("#listDetailProperty").append(
+                    `<div class="col-md-4">
+                        <div class="item">
+                            <div class="position-re o-hidden"> <img style="height: 390px;"
+                                    src="${property.propertyBanner == '' ? '/img/rooms/1.jpg' : '/loadfile/' + property.propertyBanner}"
+                                    alt="Gada Foto"> </div>
+                                    ${role != 'Marketing' ? `<span onclick="onOptionPropertyClicked(${propertyDetails.idDetailsProperty})"
+                        style="cursor: pointer;" class="category"><i
+                            class="fa-solid fa-ellipsis-vertical"></i></span>` : null}
+                            
+                            <div class="con">
+                                <h5><a href="${property.propertyName}/${propertyDetails.idDetailsProperty}">Tipe ${propertyDetails.tipeProperty}</a> </h5>
+                                <h5><a href="${property.propertyName}/${propertyDetails.idDetailsProperty}">${formatRupiah(propertyDetails.harga.toString(), 'IDR ')}</a> </h5>
+                                <div class="line"></div>
+                                <div class="row facilities">
+                                    <div class="col col-md-7">
+                                        <ul>
+                                            <li><i class="flaticon-bed"></i></li>
+                                            <li><i class="flaticon-bath"></i></li>
+                                            <li><i class="flaticon-breakfast"></i></li>
+                                            <li><i class="flaticon-towel"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col col-md-5 text-right">
+                                        <div class="permalink"><a
+                                                href="${property.propertyName}/${propertyDetails.idDetailsProperty}">Details
+                                                <i class="ti-arrow-right"></i></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>`
+                );
+            });
+        }
+
+        function formatRupiah(angka) {
+            return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 });
         }
     </script>
 </body>

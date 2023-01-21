@@ -39,9 +39,7 @@ public class UserController {
     public ResponseEntity<Map> getUserAll(@RequestParam(defaultValue = "0") Integer start,
             @RequestParam(defaultValue = "5") Integer length) {
         Pageable pageable = PageRequest.of(start, length, Sort.by("createdAt").descending());
-        Role roleTemp = new Role();
-        roleTemp.setIdRole(1);
-        Page<User> pageUser = userRepository.findByRoleNot(roleTemp, pageable);
+        Page<User> pageUser = userRepository.findAll(pageable);
         Map res = new HashMap<>();
         res.put("data", pageUser);
         return new ResponseEntity<>(res, HttpStatus.OK);

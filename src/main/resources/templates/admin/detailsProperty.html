@@ -60,7 +60,8 @@
                                             <label for="tipeProperty">Tipe Property</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <select name="tipeProperty" id="tipeProperty" class="custom-select">
+                                            <select name="tipeProperty" id="tipeProperty" class="custom-select"
+                                                disabled="true">
                                                 <option value="" selected disabled>-- Pilih Tipe Property --</option>
                                                 <option th:each="tipe : ${tipeProperty}" th:value="${tipe}"
                                                     th:text="${tipe}"></option>
@@ -74,7 +75,8 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <input placeholder="masukan harga property" type="text"
-                                                    id="hargaProperty" name="hargaProperty" class="form-control-sm" />
+                                                    id="hargaProperty" name="hargaProperty" class="form-control-sm"
+                                                    th:attr="readOnly=${session.role == 'Marketing'}" />
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +85,8 @@
                                             <label for="tipeProperty">Status Property</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <select name="statusProperty" id="statusProperty" class="custom-select">
+                                            <select name="statusProperty" id="statusProperty" class="custom-select"
+                                                th:attr="disabled=${session.role == 'Admin' || session.role == 'Marketing'}">
                                                 <option value="" selected disabled>-- Pilih Status Property --</option>
                                                 <option th:each="statusProperty : ${propertyStatus}"
                                                     th:value="${statusProperty.idPropertyStatus}"
@@ -97,7 +100,8 @@
                                         </div>
                                         <div class="col-md-8">
                                             <input onkeypress="validate(event)" placeholder="masukan luas tanah"
-                                                type="text" id="luasTanah" name="luasTanah" class="form-control-sm" />
+                                                type="text" id="luasTanah" name="luasTanah" class="form-control-sm"
+                                                th:attr="readOnly=${session.role == 'Marketing'}" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -106,7 +110,8 @@
                                         </div>
                                         <div class="col-md-8">
                                             <input placeholder="masukan luas bangunan" type="text" id="luasBangunan"
-                                                name="luasBangunan" class="form-control-sm" />
+                                                name="luasBangunan" class="form-control-sm"
+                                                th:attr="readOnly=${session.role == 'Marketing'}" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -115,7 +120,8 @@
                                         </div>
                                         <div class="col-md-8">
                                             <input placeholder="masukan jumlah kamar Tidur" type="text" id="kamarTidur"
-                                                name="kamarTidur" class="form-control-sm" />
+                                                name="kamarTidur" class="form-control-sm"
+                                                th:attr="readOnly=${session.role == 'Marketing'}" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -124,7 +130,8 @@
                                         </div>
                                         <div class="col-md-8">
                                             <input placeholder="masukan jumlah kamar Mandi" type="text" id="kamarMandi"
-                                                name="kamarMandi" class="form-control-sm" />
+                                                name="kamarMandi" class="form-control-sm"
+                                                th:attr="readOnly=${session.role == 'Marketing'}" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -133,7 +140,8 @@
                                         </div>
                                         <div class="col-md-8">
                                             <input placeholder="masukan jumlah car port" type="text" id="carPort"
-                                                name="carPort" class="form-control-sm" />
+                                                name="carPort" class="form-control-sm"
+                                                th:attr="readOnly=${session.role == 'Marketing'}" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -142,7 +150,8 @@
                                         </div>
                                         <div class="col-md-8">
                                             <textarea placeholder="masukan lokasi property" style="color: black;"
-                                                class="form-control-sm" name="lokasi" id="lokasi"></textarea>
+                                                class="form-control-sm" name="lokasi" id="lokasi"
+                                                th:attr="readOnly=${session.role == 'Marketing'}"></textarea>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -151,19 +160,20 @@
                                         </div>
                                         <div class="col-md-8">
                                             <textarea placeholder="masukan deskripsi property" style="color: black;"
-                                                class="form-control-sm" name="deskripsi" id="deskripsi"></textarea>
+                                                class="form-control-sm" name="deskripsi" id="deskripsi"
+                                                th:attr="readOnly=${session.role == 'Marketing'}"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="row">
+                                    <div class="row" th:if="${session.role == 'Super User' || session.role == 'Admin'}">
                                         <div class="col-md-6">
                                             <h3 style="color: #aa8453;">Tambahkan Foto</h3>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" th:if="${session.role == 'Super User' || session.role == 'Admin'}">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label
@@ -180,12 +190,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="row">
+                                    <div class="row" th:if="${session.role == 'Super User' || session.role == 'Admin'}">
                                         <div class="col-md-6">
                                             <h3 style="color: #aa8453;">Tambahkan Video</h3>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" th:if="${session.role == 'Super User' || session.role == 'Admin'}">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label
@@ -200,7 +210,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="d-flex flex-row">
+                                            <div class="d-flex flex-row" th:if="${session.role == 'Super User' || session.role == 'Admin'}">
                                                 <h3 style="color: #aa8453;">Tambahkan Kontak <i
                                                         onclick="showModalContact()"
                                                         style="cursor: pointer; background-color: #aa8453; color: white; border-radius: 12px;"
@@ -213,7 +223,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center" th:if="${session.role == 'Super User' || session.role == 'Admin'}">
                             <button style="background-color: #aa8453; color: white;" type="button" onclick="submit()"
                                 class="btn">Submit</button>
                         </div>
@@ -326,7 +336,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script th:inline="javascript">
         var propertyDetails = /*[[${propertyDetails}]]*/null;
-        console.log(propertyDetails);
+        var property = /*[[${property}]]*/null;
         /* Dengan Rupiah */
         $('#hargaProperty').on('keyup', function (e) {
             this.value = formatRupiah(this.value, 'Rp. ');
@@ -354,10 +364,6 @@
 
         $(document).ready(function () {
             initData();
-
-            // getFileFromURL('fc9f3fe5-3b03-4cbc-a8d0-797889f9bdac.jpg').then(function (value) {
-            //     console.log(value);
-            // });
         });
 
         var extFile = ['jpg', 'jpeg', 'png'];
@@ -474,20 +480,6 @@
                                                     ${value.namaContact}</p>
                                             </div>
                                         </div>`);
-                    // $("#phoneSection").append(`<div class="col-md-12">
-                    //     <div style="background-color: #aa8453; border-radius: 12px;"
-                    //                         class="col-md-2 m-2">
-                    //                         <i onclick="deleteContact(${i})"
-                    //                             style="border-radius:4px; margin-right: 4px; margin-top: 2px; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                    //                             class="fa fa-times p-1"></i>
-                    //                         <div onclick="clickContact(${value.nomorTelpon})" class="row p-2" style="cursor: pointer; ">
-                    //                             <img style="width: 42px;" src="/images/whatsapp-logo.png" alt="">
-                    //                             <p
-                    //                                 style="color: white; font-size: 12px; font-weight: 600; margin-top: 8px; margin-left: 4px;">
-                    //                                 ${value.namaContact}</p>
-                    //                         </div>
-                    //                     </div>
-                    //     </div>`);
                 });
             }
         }
@@ -607,7 +599,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function () {
-                        window.location.reload();
+                        window.location.href = `/admin/p/${property.propertyName}`;
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
