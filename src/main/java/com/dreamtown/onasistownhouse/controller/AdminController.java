@@ -138,6 +138,16 @@ public class AdminController {
         return "admin/detailsProperty";
     }
 
+    @RequestMapping(value = "/tambahProperty", method = RequestMethod.GET)
+    public String tambahProperty(Model model) {
+        model.addAttribute("website", websiteRepository.findAll().get(0));
+        model.addAttribute("username", httpSession.getAttribute("username"));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
+        return "admin/tambahProperty";
+    }
+
     @RequestMapping(value = "/p/{propertyName}/add", method = RequestMethod.GET)
     public String addPropertyDetails(Model model, @PathVariable String propertyName) {
         Property property = propertyRepository.findOneByPropertyName(propertyName);

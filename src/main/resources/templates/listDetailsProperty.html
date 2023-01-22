@@ -70,35 +70,99 @@
             </div>
         </div>
     </header>
+    <!-- Facilties -->
+    <section class="facilties section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="${property.propertyName}"></h1>
+                    <h3>Fasilitas</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div th:if="${universitas != null}" class="col-md-4">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <span class="fa-solid fa-graduation-cap"></span>
+                        <h5>Universitas</h5>
+                        <p th:each="tempU: ${universitas}" style="white-space: pre; margin-bottom: 0px;" th:text="${tempU}">
+                        </p>
+                        <div style="opacity: 0.04;" class="facility-shape"> <span
+                                class="fa-solid fa-graduation-cap"></span> </div>
+                    </div>
+                </div>
+                <div th:if="${sekolah != null}" class="col-md-4">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <span class="fa-solid fa-school"></span>
+                        <h5>Sekolah</h5>
+                        <p th:each="tempS: ${sekolah}" style="white-space: pre; margin-bottom: 0px;" th:text="${tempS}">
+                        </p>
+                        <div style="opacity: 0.04;" class="facility-shape"> <span class="fa-solid fa-school"></span>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${belanja != null}" class="col-md-4">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <span class="fa-solid fa-cart-shopping"></span>
+                        <h5>Pusat Perbelanjaan</h5>
+                        <p th:each="tempB: ${belanja}" style="white-space: pre; margin-bottom: 0px;" th:text="${tempB}">
+                        </p>
+                        <div style="opacity: 0.04;" class="facility-shape"> <span
+                                class="fa-solid fa-cart-shopping"></span> </div>
+                    </div>
+                </div>
+                <div th:if="${kuliner != null}" class="col-md-4">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <span class="fa-solid fa-utensils"></span>
+                        <h5>Wisata Kuliner</h5>
+                        <p th:each="tempK: ${kuliner}" style="white-space: pre; margin-bottom: 0px;" th:text="${tempK}">
+                        </p>
+                        <div style="opacity: 0.04;" class="facility-shape"> <span class="fa-solid fa-utensils"></span>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${rumahSakit != null}" class="col-md-4">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <span class="fa-solid fa-hospital"></span>
+                        <h5>Rumah Sakit</h5>
+                        <p th:each="tempRs: ${rumahSakit}" style="white-space: pre; margin-bottom: 0px;"
+                            th:text="${tempRs}">
+                        </p>
+                        <div style="opacity: 0.04;" class="facility-shape"> <span class="fa-solid fa-hospital"></span>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${lainnya != null}" class="col-md-4">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <span class="fa-solid fa-ellipsis"></span>
+                        <h5>Fasilitas Lainnya</h5>
+                        <p th:each="tempL: ${lainnya}" style="white-space: pre; margin-bottom: 0px;" th:text="${tempL}">
+                        </p>
+                        <div style="opacity: 0.04;" class="facility-shape"> <span class="fa-solid fa-ellipsis"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Pricing -->
     <section class="pricing section-padding bg-black">
         <div class="container">
             <div class="row" id="listContent">
-                <div class="col-md-4">
-                    <div class="section-title"><span th:text="${property.propertyName}"></span></div>
-                    <!-- <p class="color-2">The best prices for your relaxing vacation. The utanislen quam nestibulum ac
-                        quame odion elementum sceisue the aucan.</p>
-                    <p class="color-2">Orci varius natoque penatibus et magnis disney parturient monte nascete ridiculus
-                        mus nellen etesque habitant morbine.</p> -->
-                    <!-- <div class="reservations mb-30">
-                        <div class="icon"><span class="flaticon-call"></span></div>
-                        <div class="text">
-                            <p class="color-2">For information</p> <a href="tel:855-100-4444">855 100 4444</a>
-                        </div>
-                    </div> -->
-                </div>
                 <div class="col-md-8">
                     <div class="owl-carousel owl-theme">
-                        <div th:each="detailsProperty: ${property.listPropertyDetails}" class="pricing-card">
-                            <img style="height: 250px;" th:src="@{'/loadfile/'+${detailsProperty.listPhoto[0].namaPhoto}}" alt="">
+                        <div th:attr="onclick=|itemClicked('${detailsProperty.tipeProperty}')|" style="cursor: pointer;"
+                            th:each="detailsProperty: ${property.listPropertyDetails}" class="pricing-card">
+                            <img style="height: 250px;"
+                                th:src="@{'/loadfile/'+${detailsProperty.listPhoto[0].namaPhoto}}" alt="">
                             <div class="desc">
                                 <div class="name" th:text="'Tipe '+${detailsProperty.tipeProperty}"></div>
-                                <div class="amount">$50<span>/ month</span></div>
-                                <ul class="list-unstyled list">
+                                <div style="font-size: 28px; font-weight: 600;" class="amount"
+                                    th:id="'harga'+${detailsProperty.idDetailsProperty}"></div>
+                                <!-- <ul class="list-unstyled list">
                                     <li><i class="ti-check"></i> Hotel ut nisan the duru</li>
                                     <li><i class="ti-check"></i> Orci miss natoque vasa ince</li>
                                     <li><i class="ti-close unavailable"></i>Clean sorem ipsum morbin</li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                     </div>
@@ -128,10 +192,25 @@
     <script th:src="@{/js/datepicker.js}"></script>
     <script th:src="@{/js/smooth-scroll.min.js}"></script>
     <script th:src="@{/js/custom1.js}"></script>
+    <script th:src="@{/js/torupiah.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         var property = /*[[${property}]]*/null;
-        console.log(property);
+        var listDetailsProperty = /*[[${property.listPropertyDetails}]]*/null;
+        $(document).ready(function () {
+            listDetailsProperty.forEach(function (detailsProperty, index) {
+                setHarga(detailsProperty.idDetailsProperty, detailsProperty.harga);
+            })
+        });
+        function itemClicked(tipeProperty) {
+            window.location.href = `/p/${property.propertyName}/${tipeProperty}`;
+        }
+        function setHarga(id, harga) {
+            $(`#harga${id}`).text(formatRupiah(harga));
+        }
+        function formatRupiah(angka) {
+            return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 }).replace(".0 juta", " juta").replace(".0 miliar", " miliar");
+        }
         /*]]>*/
     </script>
 </body>

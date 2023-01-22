@@ -28,28 +28,35 @@
         <ul>
             <li style="cursor: pointer;"
                 th:classappend="${#httpServletRequest.getRequestURI() == '/admin/managementUser' ? 'active':''}"
-                th:if="${session.role == 'Super User'}"><a
-                    th:href='@{/admin/managementUser}'>User
+                th:if="${session.role == 'Super User'}"><a th:href='@{/admin/managementUser}'>User
                     Management</a></li>
             <li style="cursor: pointer;" class='cappa-sub'><a href='#'>Property</a>
                 <ul>
-                    <li th:if="${session.role == 'Super User' || session.role == 'Admin'}" style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/wilayah' ? 'active':''}">
+                    <li th:if="${session.role == 'Super User' || session.role == 'Admin'}" style="cursor: pointer;"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin/wilayah' ? 'active':''}">
                         <a th:href='@{/admin/wilayah}'>Wilayah</a>
                     </li>
-                    <li th:if="${session.role == 'Super User' || session.role == 'Admin'}"><a onclick="openModalTambahProperty()"><i class="ti-plus"></i> Tambah Property</a></li>
+                    <li th:if="${session.role == 'Super User' || session.role == 'Admin'}" style="cursor: pointer;"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin/tambahProperty' ? 'active':''}">
+                        <a th:href='@{/admin/tambahProperty}'><i class="ti-plus"></i> Tambah Property</a>
+                    </li>
                     <li th:classappend="${#httpServletRequest.getRequestURI()} == ${menu.url} ? 'active':''"
                         th:each="menu:${menus}"><a th:href="@{${menu.url}}" th:text="${menu.text}"></a></li>
                 </ul>
             </li>
-            <li th:if="${session.role == 'Super User'}" style="cursor: pointer;" class='cappa-sub'><a href='#'>Pengaturan Website</a>
+            <li th:if="${session.role == 'Super User'}" style="cursor: pointer;" class='cappa-sub'><a
+                    href='#'>Pengaturan Website</a>
                 <ul>
-                    <li style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/judul_website' ? 'active':''}">
+                    <li style="cursor: pointer;"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin/judul_website' ? 'active':''}">
                         <a th:href='@{/admin/judul_website}'>Judul Website</a>
                     </li>
-                    <li  style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/photo_background' ? 'active':''}">
+                    <li style="cursor: pointer;"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin/photo_background' ? 'active':''}">
                         <a th:href='@{/admin/photo_background}'>Photo Background</a>
                     </li>
-                    <li style="cursor: pointer;" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/video_animasi' ? 'active':''}">
+                    <li style="cursor: pointer;"
+                        th:classappend="${#httpServletRequest.getRequestURI() == '/admin/video_animasi' ? 'active':''}">
                         <a th:href='@{/admin/video_animasi}'>Video Animasi</a>
                     </li>
                 </ul>
@@ -71,9 +78,9 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="modalTambahProperty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- <div class="modal fade" id="modalTambahProperty" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 style="color:#aa8453;" class="modal-title" id="headerTambahProperty">Tambah Property</h4>
@@ -96,6 +103,29 @@
                                     th:value="${wilayah.idWilayah}"></option>
                             </select>
                         </div>
+                        <h5 style="color:#aa8453">Pilih Fasilitas Property</h5>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkBoxUniversitas">
+                                <label class="form-check-label" for="checkBoxUniversitas">Universitas</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="inputanUniversitas" style="display: none;">
+                            <label for="namaProperty">Masukan universitas terdekat</label>
+                            <textarea style="color: #1b1b1b;" placeholder="masukan universitas terdekat" type="text"
+                                class="form-control-sm" id="universitas" name="universitas"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="checkBoxSekolah">
+                                <label class="form-check-label" for="checkBoxSekolah">Sekolah</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="inputanSekolah" style="display: none;">
+                            <label for="namaProperty">Masukan sekolah terdekat</label>
+                            <textarea style="color: #1b1b1b;" placeholder="masukan sekolah terdekat" type="text"
+                                class="form-control-sm" id="sekolah" name="sekolah"></textarea>
+                        </div>
                         <div class="form-group">
                             <label for="bannerProperty">Tambahkan untuk banner Property</label>
                             <input placeholder="masukan banner property" type="file" class="form-control-sm"
@@ -112,7 +142,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="modal" id="modalTambahWilayah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -159,54 +189,9 @@
                 });
             });
         });
-        $("#btnTambahProperty").on('click', function () {
-            var property = {
-                "propertyName": $("#namaProperty").val(),
-                "wilayah": {
-                    "idWilayah": $("#wilayahProperty option:selected").val(),
-                    "namaWilayah": $("#wilayahProperty option:selected").text(),
-                }
-            }
-            var jsonData = JSON.stringify(property);
-            var blobData = new Blob([jsonData], {
-                type: 'application/json'
-            });
-            var formData = new FormData();
-            formData.append("property", blobData);
-            formData.append("file", $("#bannerProperty").prop('files')[0]);
-            $.ajax({
-                url: '/admin/property',
-                method: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data, textStatus, jqXHR) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Berhasil menambahkan property',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function () {
-                        window.location.reload();
-                    });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: 'Gagal menambahkan property',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                }
-            });
-        });
+        
         function logout() {
             window.location.href = "/logout";
-        }
-        function openModalTambahProperty() {
-            $("#modalTambahProperty").toggle('modal');
         }
         function openModalTambahWilayah() {
             $("#modalTambahWilayah").toggle('modal');
