@@ -11,7 +11,7 @@ import com.dreamtown.onasistownhouse.utils.XmlUrlSet;
 
 @Controller
 public class SitemapController {
-    private List<String> URLS = List.of("/");
+    private List<String> URLS = List.of("","/property");
     private String DOMAIN = "https://onasistownhouse.com";
 
     @GetMapping(value = "/sitemap.xml")
