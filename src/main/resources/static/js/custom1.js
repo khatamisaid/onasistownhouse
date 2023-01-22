@@ -235,7 +235,7 @@ $(function () {
     
     // Pricing owlCarousel *
     $('.pricing .owl-carousel').owlCarousel({
-        loop: true,
+        loop: false,
         margin: 30,
         mouseDrag: true,
         autoplay: false,

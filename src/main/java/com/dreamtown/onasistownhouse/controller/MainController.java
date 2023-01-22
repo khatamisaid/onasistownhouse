@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Website;
-import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
@@ -140,7 +139,6 @@ public class MainController {
         int pageSize = size.orElse(8);
         Page<Property> propertyPage = propertyService.findPaginated(PageRequest.of(currentPage - 1, pageSize),
                 wilayah.orElse(null));
-
         res.put("propertyPage", propertyPage);
         int totalPages = propertyPage.getTotalPages();
         if (totalPages > 0) {
@@ -153,9 +151,11 @@ public class MainController {
     }
 
     @RequestMapping(value = "/p/{namaProperty}/{tipeProperty}", method = RequestMethod.GET)
-    public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty, @PathVariable Optional<String> tipeProperty) {
+    public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty,
+            @PathVariable Optional<String> tipeProperty) {
         Property property = propertyService.getPropertyByName(namaProperty.get());
-        PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(), tipeProperty.get());
+        PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(),
+                tipeProperty.get());
         model.addAttribute("property", propertyDetails);
         model.addAttribute("websiteName", websiteService.websiteName());
         String[] splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
@@ -169,6 +169,16 @@ public class MainController {
         }
         model.addAttribute("lineSeparator", System.lineSeparator());
         return "propertyDetails";
+    }
+
+    @RequestMapping(value = "/p/{namaProperty}/details", method = RequestMethod.GET)
+    public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty) {
+        Property property = propertyService.getPropertyByName(namaProperty.get());
+        Website web = websiteRepository.findAll().get(0);
+        model.addAttribute("property", property);
+        model.addAttribute("website", web);
+        model.addAttribute("websiteName", websiteService.websiteName());
+        return "listDetailsProperty";
     }
 
     @RequestMapping(value = "/listRekomendasi")
@@ -190,5 +200,11 @@ public class MainController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-
+    @RequestMapping(value = "/tentangkami", method = RequestMethod.GET)
+    public String tentangkamiView(Model model) {
+        Website web = websiteRepository.findAll().get(0);
+        model.addAttribute("website", web);
+        model.addAttribute("websiteName", websiteService.websiteName());
+        return "tentangkami";
+    }
 }

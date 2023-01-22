@@ -90,7 +90,11 @@
         </div>
     </header>
     <!-- Rekomendasi -->
-    <section class="news section-padding bg-cream" data-scroll-index="1" id="property">
+    <section style="padding: 52px 0px 24px 0px;" class="news bg-cream" data-scroll-index="1" id="rekomendasi">
+        <div th:replace="listRekomendasi :: listRekomendasi"></div>
+    </section>
+    <!-- Daftar Hunian -->
+    <section style="padding-bottom: 24px;" class="news bg-cream" data-scroll-index="2" id="daftarHunian">
         <div th:replace="listProperty :: listProperty"></div>
     </section>
 
@@ -117,20 +121,6 @@
     <script th:src="@{/js/custom1.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        $('#headerVideoLink').magnificPopup({
-            type: 'inline',
-            midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
-            callbacks: {
-                open: function () {
-                    $.magnificPopup.instance.close = function () {
-                        // Do whatever else you need to do here
-                        $("#videoPopUp").get(0).pause();
-                        // Call the original close method to close the popup
-                        $.magnificPopup.proto.close.call(this);
-                    };
-                }
-            }
-        });
         /*]]>*/
     </script>
 </body>

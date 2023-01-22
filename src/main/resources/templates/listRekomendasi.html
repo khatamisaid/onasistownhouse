@@ -7,21 +7,21 @@
             </div>
         </div>
     </div>
-    <div class="row" id="content">
+    <div class="row" id="contentListRekomendasi">
     </div>
-    <div class="row" id="pagination">
+    <div class="row" id="paginationListRekomendasi">
     </div>
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
     <script th:src="@{/js/torupiah.js}"></script>
     <script th:inline="javascript">
         var page = 1;
         var size = 4;
-        function getListProperty() {
+        function getRekomendasiProperty() {
             $.get(`/listRekomendasi?page=${page}&size=${size}`, function (res) {
-                $("#content").empty();
+                $("#contentListRekomendasi").empty();
                 res.propertyPage.content.forEach(function (property, index) {
                     var propertyDetails = property.listPropertyDetails[0];
-                    $("#content").append(`<div class="col-md-3">
+                    $("#contentListRekomendasi").append(`<div class="col-md-3">
             <div onclick="window.location.href = '/p/${property.propertyName}/${propertyDetails.tipeProperty}'" style="cursor:pointer;" class="card mt-2">
                 <img style="object-fit: cover; height: 250px;"
                     src="/loadfile/${property.propertyBanner}" alt="Image Not Found">
@@ -32,9 +32,9 @@
             </div>
             </div>`);
                 });
-                $("#pagination").empty();
+                $("#paginationListRekomendasi").empty();
                 if (res.propertyPage.totalPages > 1) {
-                    $("#pagination").append(`<div id="paginationContent" class="d-flex flex-row" style="margin-left: auto;"></div>`);
+                    $("#paginationListRekomendasi").append(`<div id="paginationContent" class="d-flex flex-row" style="margin-left: auto;"></div>`);
                     if (page > 1) {
                         $("#paginationContent").append(`
             <div class="p-2 m-2"><i style="cursor:pointer;font-size: 28px;" class="fa fa-angle-left" onclick="clickLeft()"></i>
@@ -61,33 +61,33 @@
         }
         function gotoPage(i) {
             page = i;
-            getListProperty();
+            getRekomendasiProperty();
             scrollTo('property');
         }
         function clickRight() {
             page++;
-            getListProperty();
+            getRekomendasiProperty();
             scrollTo('property');
         }
         function clickLeft() {
             page--;
-            getListProperty();
+            getRekomendasiProperty();
             scrollTo('property');
         }
         $(document).ready(function () {
-            resizeScreenProperty();
+            resizeScreenRekomendasiProperty();
         });
 
-        function resizeScreenProperty() {
+        function resizeScreenRekomendasiProperty() {
             if (document.body.clientWidth < 768) {
                 size = 3;
-                getListProperty();
+                getRekomendasiProperty();
             } else if (document.body.clientWidth < 991) {
                 size = 4;
-                getListProperty();
+                getRekomendasiProperty();
             } else {
                 size = 8;
-                getListProperty();
+                getRekomendasiProperty();
             }
         }
         function debounce(func) {
