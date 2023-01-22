@@ -5,7 +5,7 @@
             <a th:href="@{/}">
                 <div class="row">
                     <div class="col">
-                        <img style="width: 48px;" src="img/favicon.png" class="logo-img" alt="Image Not Found">
+                        <img style="width: 48px;" th:src="@{/img/favicon.png}" class="logo-img" alt="Image Not Found">
                     </div>
                     <div class="col" style="margin-left: -1rem;">
                         <div class="logo" th:utext="${websiteName}">
@@ -23,9 +23,9 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown"> <a class="nav-link active" href="#header">Beranda</a>
+                <li class="nav-item dropdown"> <a th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}" class="nav-link" th:href="@{/}">Beranda</a>
                 </li>
-                <li class="nav-item dropdown"> <a class="nav-link" href="#property">Property</a>
+                <li class="nav-item dropdown"> <a th:classappend="${#httpServletRequest.getRequestURI() == '/property' ? 'active':''}" class="nav-link" th:href="@{/property}">Property</a>
                 </li>
                 <!-- <li class="nav-item"><a class="nav-link" href="#rekomendasi">Rekomendasi</a></li> -->
                 <!-- <li class="nav-item dropdown"> <span class="nav-link"> Rooms & Suites <i
@@ -47,7 +47,7 @@
                         <li class="dropdown-item"><a href="post.html">Single Post</a></li>
                     </ul>
                 </li> -->
-                <li class="nav-item"><a class="nav-link" href="#tentangkami">Tentang Kami</a></li>
+                <li class="nav-item"><a th:classappend="${#httpServletRequest.getRequestURI() == '/tentangkami' ? 'active':''}" class="nav-link" th:href="@{/tentangkami}">Tentang Kami</a></li>
                 <li style="cursor: pointer;"
                     th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"
                     class="nav-item"><a class="nav-link" onclick="window.location.href = '/admin'">Halaman Admin</a>
@@ -56,15 +56,15 @@
         </div>
     </div>
     <script th:inline="javascript">
-        document.querySelectorAll(".nav-link").forEach((ele) =>
-            ele.addEventListener("click", function (event) {
-                console.log(ele);
-                event.preventDefault();
-                document
-                    .querySelectorAll(".nav-link")
-                    .forEach((ele) => ele.classList.remove("active"));
-                this.classList.add("active")
-            })
-        );
+        // document.querySelectorAll(".nav-link").forEach((ele) =>
+        //     ele.addEventListener("click", function (event) {
+        //         console.log(ele);
+        //         event.preventDefault();
+        //         document
+        //             .querySelectorAll(".nav-link")
+        //             .forEach((ele) => ele.classList.remove("active"));
+        //         this.classList.add("active")
+        //     })
+        // );
     </script>
 </nav>

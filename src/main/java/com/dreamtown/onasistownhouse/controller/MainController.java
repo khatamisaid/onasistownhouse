@@ -63,9 +63,6 @@ public class MainController {
     private PropertyDetailsService propertyDetailsService;
 
     @Autowired
-    private MWilayahRepository mWilayahRepository;
-
-    @Autowired
     private WebsiteRepository websiteRepository;
 
     @Autowired
@@ -74,7 +71,6 @@ public class MainController {
     @GetMapping(value = "/")
     public String index(Model model) {
         Website web = websiteRepository.findAll().get(0);
-        model.addAttribute("listWilayah", mWilayahRepository.findAll());
         model.addAttribute("website", web);
         model.addAttribute("websiteName", websiteService.websiteName());
         String namafile = web.getWebsiteVideo().split("\\.")[0];
@@ -161,6 +157,7 @@ public class MainController {
         Property property = propertyService.getPropertyByName(namaProperty.get());
         PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(), tipeProperty.get());
         model.addAttribute("property", propertyDetails);
+        model.addAttribute("websiteName", websiteService.websiteName());
         String[] splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
         String[] deskripsiArr1 = Arrays.copyOfRange(splitDeskripsi, 0, splitDeskripsi.length / 2);
         String[] deskripsiArr2 = Arrays.copyOfRange(splitDeskripsi, splitDeskripsi.length / 2, splitDeskripsi.length);
@@ -192,4 +189,6 @@ public class MainController {
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+
 }

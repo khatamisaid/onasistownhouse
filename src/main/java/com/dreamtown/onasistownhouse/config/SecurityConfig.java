@@ -1,6 +1,5 @@
 package com.dreamtown.onasistownhouse.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionFixation().migrateSession()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .maximumSessions(1)
+                .maximumSessions(10)
                 .expiredUrl("/login?expired")
                 .and()
                 .invalidSessionUrl("/login");

@@ -80,15 +80,12 @@
 
         function resizeScreenProperty() {
             if (document.body.clientWidth < 768) {
-                console.log(1);
                 size = 3;
                 getListProperty();
             } else if (document.body.clientWidth < 991) {
-                console.log(2);
                 size = 4;
                 getListProperty();
             } else {
-                console.log(3);
                 size = 8;
                 getListProperty();
             }
@@ -104,7 +101,7 @@
             resizeScreenProperty();
         }));
         function formatRupiah(angka) {
-            return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 }).replace(".0 juta"," juta");
+            return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 }).replace(".0 juta"," juta").replace(".0 miliar", " miliar");
         }
     </script>
 </div>

@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,13 @@ import com.dreamtown.onasistownhouse.entity.Photo;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Video;
+import com.dreamtown.onasistownhouse.entity.Website;
+import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
+import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
+import com.dreamtown.onasistownhouse.service.WebsiteService;
 import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananCicilan;
 import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananRumah;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
@@ -54,12 +59,22 @@ public class PropertyController {
 
     @Autowired
     private Environment env;
+    
+    @Autowired
+    private MWilayahRepository mWilayahRepository;
 
     @Autowired
-    private PropertyStatusRepository propertyStatusRepository;
+    private WebsiteService websiteService;
 
+    @Autowired
+    private WebsiteRepository websiteRepository;
+    
     @RequestMapping(method = RequestMethod.GET)
-    public String property() {
+    public String property(Model model) {
+        Website web = websiteRepository.findAll().get(0);
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("website", web);
+        model.addAttribute("websiteName", websiteService.websiteName());
         return "property";
     }
 
