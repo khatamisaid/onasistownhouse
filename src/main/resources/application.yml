@@ -43,7 +43,7 @@ server:
 storage: 
   images: C:\\filetemp\\images\\
   videos: C:\\filetemp\\videos\\
-  file: ./laporan/test.pdf
+  file: ./laporan/
 ---
 spring:
   config:
