@@ -37,9 +37,13 @@ server:
     whitelabel:
       enabled: false
     path: /error
+  servlet:
+    session:
+      timeout: 30m
 storage: 
   images: C:\\filetemp\\images\\
   videos: C:\\filetemp\\videos\\
+  file: ./laporan/test.pdf
 ---
 spring:
   config:
@@ -79,9 +83,13 @@ server:
     whitelabel:
       enabled: false
     path: /error
+  servlet:
+    session:
+      timeout: 30m
 storage: 
   images: /home/onasistownhouse.com/storage/images/
   videos: /home/onasistownhouse.com/storage/videos/
+  file: /home/onasistownhouse.com/storage/file/
 logging:
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

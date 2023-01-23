@@ -192,7 +192,7 @@ public class PropertyController {
             return respEntity;
         }
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
-        String path = "./laporan/test.pdf";
+        String path = env.getProperty("storage.file");
         new CetakFormulirPemesananRumah(vmCetakRumah, path).writePdf();
         InputStream inputStream = new FileInputStream(path);
         String type = new File(path).toURL().openConnection().guessContentTypeFromName(path);
@@ -214,7 +214,7 @@ public class PropertyController {
         }
         Map response = new HashMap();
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
-        String path = "./laporan/test.pdf";
+        String path = env.getProperty("storage.file");
         new CetakFormulirPemesananRumah(vmCetakRumah, path).writePdf();
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
@@ -234,7 +234,7 @@ public class PropertyController {
         }
         Map response = new HashMap();
         String filename = "Formulir_Pemesanan_Rumah_Bertahap_" + propertyName + ".pdf";
-        String path = "./laporan/test2.pdf";
+        String path = env.getProperty("storage.file");
         new CetakFormulirPemesananCicilan(vmCetakRumah, path, propertyName).writePdf();
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);

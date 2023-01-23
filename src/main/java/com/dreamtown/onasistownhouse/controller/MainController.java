@@ -218,5 +218,4 @@ public class MainController {
         return "tentangkami";
     }
 
-    
 }
