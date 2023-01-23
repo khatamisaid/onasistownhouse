@@ -66,5 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredUrl("/login?expired")
                 .and()
                 .invalidSessionUrl("/login");
+        http.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
     }
 }

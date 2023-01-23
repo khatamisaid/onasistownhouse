@@ -175,7 +175,7 @@ public class MainController {
     public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty) {
         Property property = propertyService.getPropertyByName(namaProperty.get());
         Website web = websiteRepository.findAll().get(0);
-        String[] universitas = property.getUniversitas() == null ? null
+        String[] universitas = property.getUniversitas() == null || property.getUniversitas().equalsIgnoreCase("") ? null
                 : property.getUniversitas().contains("\n") ? property.getUniversitas().split("\n") : (property.getUniversitas() + System.lineSeparator()).split("\n");
         model.addAttribute("universitas", universitas);
         String[] sekolah = property.getSekolah() == null ? null : property.getSekolah().contains("\n") ? property.getSekolah().split("\n") : (property.getSekolah() + System.lineSeparator()).split("\n");
