@@ -82,7 +82,7 @@
             </div>
             <div class="container d-flex flex-row">
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card animate-box" data-animate-effect="fadeInUp">
                         <div class="card-body">
                             <div class="d-flex flex-column">
                                 <div class="d-flex flex-row items-center justify-content-center">
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card animate-box" data-animate-effect="fadeInUp">
                         <div class="card-body">
                             <div class="d-flex flex-column">
                                 <div class="d-flex flex-row items-center justify-content-center">
@@ -119,6 +119,60 @@
                                     <p>Kami menawarkan pembelian Rumah dengan cara cicilan bertahap TANPA BUNGA, tentu
                                         dengan harga yang masih ramah kantong dan juga ada diskon loh! Yuk hubungi kami
                                         untuk konsultasi lebih lanjut</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="text-center mb-5">
+                <h1 style="color: white;">Motto Kami</h1>
+            </div>
+            <div class="container d-flex flex-row">
+                <div class="col-md-4">
+                    <div class="card animate-box" data-animate-effect="fadeInUp" style="height: 226px;">
+                        <div class="card-body">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex flex-row items-center justify-content-center">
+                                    <img style="width: 90px;" th:src="@{/icons/marketing.png}" alt="Image Not Found"
+                                        srcset="">
+
+                                </div>
+                                <div class="mt-3 d-flex flex-row justify-content-center text-center mt-2">
+                                    <h4>Marketing Menyeluruh</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card animate-box" data-animate-effect="fadeInUp" style="height: 226px;">
+                        <div class="card-body">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex flex-row items-center justify-content-center">
+                                    <img style="width: 90px;" th:src="@{/icons/kualitas.png}" alt="Image Not Found"
+                                        srcset="">
+
+                                </div>
+                                <div class="mt-3 d-flex flex-row justify-content-center text-center mt-2">
+                                    <h4>Bangunan Berkualitas</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card animate-box" data-animate-effect="fadeInUp" style="height: 226px;">
+                        <div class="card-body">
+                            <div class="d-flex flex-column">
+                                <div class="d-flex flex-row items-center justify-content-center">
+                                    <img style="width: 90px;" th:src="@{/icons/cash.png}" alt="Image Not Found"
+                                        srcset="">
+                                </div>
+                                <div class="mt-3 d-flex flex-row justify-content-center text-center mt-2">
+                                    <h4>Good Communication Agent</h4>
                                 </div>
                             </div>
                         </div>
@@ -160,6 +214,63 @@
         </div>
     </section>
     <!-- News -->
+    <section class="facilties section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-center">
+                        <h2 th:text="'Kenapa Harus '+${website.websiteName}+' ?'"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <div class="d-flex justify-content-center">
+                            <img style="width: 70px; margin-bottom: 20px;" th:src="@{/icons/cash.png}"
+                                alt="Image Not Found" srcset="">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <h5>Tidak Ada Bunga</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <div class="d-flex justify-content-center">
+                            <img style="width: 90px; margin-bottom: 20px;" th:src="@{/icons/discount.png}"
+                                alt="Image Not Found" srcset="">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <h5>Pasti Ada Discount</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <div class="d-flex justify-content-center">
+                            <img style="width: 90px; margin-bottom: 20px;" th:src="@{/icons/pusatkota.png}"
+                                alt="Image Not Found" srcset="">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <h5>Lokasi Pusat Kota</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
+                        <div class="d-flex justify-content-center">
+                            <img style="width: 90px; margin-bottom: 20px;" th:src="@{/icons/hargamurah.png}"
+                                alt="Image Not Found" srcset="">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <h5>100% Harga Paling Murah</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- <section class="news section-padding bg-black">
         <div class="container">
             <div class="row">

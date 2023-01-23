@@ -1,6 +1,7 @@
 package com.dreamtown.onasistownhouse.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,7 +28,7 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     @Query(value = "SELECT DISTINCT tipe_property from property_details where id_property = ?1 order by tipe_property ASC", nativeQuery = true)
     List<String> findDistinctTipePropertyByIdProperty(Integer idProperty);
 
-    PropertyDetails findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(Integer idProperty, PropertyStatus status);
+    Optional<PropertyDetails> findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(Integer idProperty, PropertyStatus status);
 
     PropertyDetails findFirstByIdPropertyAndTipeProperty(Integer idProperty, String tipeProperty);
 }

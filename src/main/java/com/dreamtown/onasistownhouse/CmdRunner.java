@@ -10,9 +10,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.dreamtown.onasistownhouse.entity.Property;
-import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.PropertyStatus;
 import com.dreamtown.onasistownhouse.entity.Role;
 import com.dreamtown.onasistownhouse.entity.User;
@@ -75,11 +72,11 @@ public class CmdRunner implements CommandLineRunner {
                 logger.info("Property Status Has been created");
 
                 // add Website title 
-                List<WebsitePhoto> listWebsitePhoto = new ArrayList<>();
-                listWebsitePhoto.add(new WebsitePhoto(1, "12.png", 1));
-                listWebsitePhoto.add(new WebsitePhoto(2, "14.png", 1));
-                listWebsitePhoto.add(new WebsitePhoto(3, "15.png", 1));
-                websiteRepository.save(new Website(1, "Onasis Town House", "video3.mp4", listWebsitePhoto));
+                // List<WebsitePhoto> listWebsitePhoto = new ArrayList<>();
+                // listWebsitePhoto.add(new WebsitePhoto(1, "12.png", 1));
+                // listWebsitePhoto.add(new WebsitePhoto(2, "14.png", 1));
+                // listWebsitePhoto.add(new WebsitePhoto(3, "15.png", 1));
+                // websiteRepository.save(new Website(1, "Onasis Town House", "video3.mp4", listWebsitePhoto));
 
                 logger.info("website tittle has been created");
 

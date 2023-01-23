@@ -20,14 +20,12 @@
             $.get(`/listProperty?page=${page}&size=${size}&wilayah=${$("#area option:selected").val()}`, function (res) {
                 $("#contentListProperty").empty();
                 res.propertyPage.content.forEach(function (property, index) {
-                    var propertyDetails = property.listPropertyDetails[0];
                     $("#contentListProperty").append(`<div class="col-md-3">
             <div onclick="window.location.href = '/p/${property.propertyName}/details'" style="cursor:pointer;" class="card mt-2">
                 <img style="object-fit: cover;height: 250px;"
                     src="/loadfile/${property.propertyBanner}" alt="Image Not Found">
                 <div class="d-flex flex-column">
                     <p style="padding-top: 18px; padding-left: 18px; font-weight: 600;">${property.propertyName}</p>
-                    <p style="padding-left: 18px; font-weight: 600;">${formatRupiah(propertyDetails.harga)}</p>
                 </div>
             </div>
             </div>`);
@@ -86,7 +84,6 @@
                 size = 4;
                 getListProperty();
             } else {
-                console.log(3);
                 getListProperty();
             }
         }

@@ -28,6 +28,7 @@ import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
 import com.dreamtown.onasistownhouse.service.VideoStreamService;
 import com.dreamtown.onasistownhouse.service.WebsiteService;
+import com.dreamtown.onasistownhouse.utils.Utils;
 
 import reactor.core.publisher.Mono;
 
@@ -66,6 +67,9 @@ public class MainController {
 
     @Autowired
     private WebsiteService websiteService;
+
+    @Autowired
+    private Utils utils;
 
     @GetMapping(value = "/")
     public String index(Model model) {
@@ -175,19 +179,12 @@ public class MainController {
     public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty) {
         Property property = propertyService.getPropertyByName(namaProperty.get());
         Website web = websiteRepository.findAll().get(0);
-        String[] universitas = property.getUniversitas() == null || property.getUniversitas().equalsIgnoreCase("") ? null
-                : property.getUniversitas().contains("\n") ? property.getUniversitas().split("\n") : (property.getUniversitas() + System.lineSeparator()).split("\n");
-        model.addAttribute("universitas", universitas);
-        String[] sekolah = property.getSekolah() == null ? null : property.getSekolah().contains("\n") ? property.getSekolah().split("\n") : (property.getSekolah() + System.lineSeparator()).split("\n");
-        model.addAttribute("sekolah", sekolah);
-        String[] belanja = property.getBelanja() == null ? null : property.getBelanja().contains("\n") ? property.getBelanja().split("\n") : (property.getBelanja() + System.lineSeparator()).split("\n");
-        model.addAttribute("belanja", belanja);
-        String[] kuliner = property.getKuliner() == null ? null : property.getKuliner().contains("\n") ? property.getKuliner().split("\n") : (property.getKuliner() + System.lineSeparator()).split("\n");
-        model.addAttribute("kuliner", kuliner);
-        String[] rumahSakit = property.getRumahSakit() == null ? null : property.getRumahSakit().contains("\n") ? property.getRumahSakit().split("\n") : (property.getRumahSakit() + System.lineSeparator()).split("\n");
-        model.addAttribute("rumahSakit", rumahSakit);
-        String[] lainnya = property.getLainnya() == null ? null : property.getLainnya().contains("\n") ? property.getLainnya().split("\n") : (property.getLainnya() + System.lineSeparator()).split("\n");
-        model.addAttribute("lainnya", lainnya);
+        model.addAttribute("universitas", utils.checkNullOrEmptyString(property.getUniversitas()));
+        model.addAttribute("sekolah", utils.checkNullOrEmptyString(property.getSekolah()));
+        model.addAttribute("belanja", utils.checkNullOrEmptyString(property.getBelanja()));
+        model.addAttribute("transportasi", utils.checkNullOrEmptyString(property.getTransportasi()));
+        model.addAttribute("rumahSakit", utils.checkNullOrEmptyString(property.getRumahSakit()));
+        model.addAttribute("lainnya", utils.checkNullOrEmptyString(property.getLainnya()));
         model.addAttribute("property", property);
         model.addAttribute("website", web);
         model.addAttribute("websiteName", websiteService.websiteName());
@@ -220,4 +217,6 @@ public class MainController {
         model.addAttribute("websiteName", websiteService.websiteName());
         return "tentangkami";
     }
+
+    
 }

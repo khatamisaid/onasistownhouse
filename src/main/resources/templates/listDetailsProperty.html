@@ -15,6 +15,56 @@
         href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
     <link rel="stylesheet" th:href="@{/css/plugins.css}" />
     <link rel="stylesheet" th:href="@{/css/style1.css}" />
+    <style>
+        .owl-carousel .nav-btn {
+            height: 47px;
+            position: absolute;
+            width: 26px;
+            cursor: pointer;
+            padding: 8px 8px 8px 8px;
+        }
+
+        .owl-carousel .owl-prev.disabled,
+        .owl-carousel .owl-next.disabled {
+            pointer-events: none;
+            opacity: 0.2;
+        }
+
+        .owl-carousel .prev-slide {
+            background: url([[@{/icons/nav-icon.webp}]]) no-repeat scroll 0 0;
+            left: 0px;
+        }
+
+        .owl-carousel .next-slide {
+            background: url([[@{/icons/nav-icon.webp}]]) no-repeat scroll -24px 0px;
+            right: 0px;
+        }
+
+        .owl-carousel .prev-slide:hover {
+            background-position: 0px -53px;
+        }
+
+        .owl-carousel .next-slide:hover {
+            background-position: -24px -53px;
+        }
+
+        .news .owl-theme .owl-nav [class*=owl-] {
+            width: 40px;
+            height: 40px;
+            line-height: 34px;
+            background: black;
+            color: #fff;
+            font-size: 11px;
+            margin-right: 15px;
+            margin-left: 15px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .news .owl-theme .owl-nav [class*=owl-]:hover {
+            transform: scale(0.9) !important;
+        }
+    </style>
 </head>
 
 
@@ -84,7 +134,8 @@
                     <div class="single-facility animate-box" data-animate-effect="fadeInUp">
                         <span class="fa-solid fa-graduation-cap"></span>
                         <h5>Universitas</h5>
-                        <p th:each="tempU: ${universitas}" style="white-space: pre; margin-bottom: 0px;" th:text="${tempU}">
+                        <p th:each="tempU: ${universitas}" style="white-space: pre; margin-bottom: 0px;"
+                            th:text="${tempU}">
                         </p>
                         <div style="opacity: 0.04;" class="facility-shape"> <span
                                 class="fa-solid fa-graduation-cap"></span> </div>
@@ -110,11 +161,12 @@
                                 class="fa-solid fa-cart-shopping"></span> </div>
                     </div>
                 </div>
-                <div th:if="${kuliner != null}" class="col-md-4">
+                <div th:if="${transportasi != null}" class="col-md-4">
                     <div class="single-facility animate-box" data-animate-effect="fadeInUp">
                         <span class="fa-solid fa-utensils"></span>
-                        <h5>Wisata Kuliner</h5>
-                        <p th:each="tempK: ${kuliner}" style="white-space: pre; margin-bottom: 0px;" th:text="${tempK}">
+                        <h5>Transportasi</h5>
+                        <p th:each="tempT: ${transportasi}" style="white-space: pre; margin-bottom: 0px;"
+                            th:text="${tempT}">
                         </p>
                         <div style="opacity: 0.04;" class="facility-shape"> <span class="fa-solid fa-utensils"></span>
                         </div>
@@ -145,11 +197,11 @@
         </div>
     </section>
     <!-- Pricing -->
-    <section class="pricing section-padding bg-black">
+    <section class="news section-padding bg-black">
         <div class="container">
             <div class="row" id="listContent">
-                <div class="col-md-8">
-                    <div class="owl-carousel owl-theme">
+                <div class="col-md-12">
+                    <div id="listCarousel" class="owl-carousel owl-theme">
                         <div th:attr="onclick=|itemClicked('${detailsProperty.tipeProperty}')|" style="cursor: pointer;"
                             th:each="detailsProperty: ${property.listPropertyDetails}" class="pricing-card">
                             <img style="height: 250px;"
@@ -170,7 +222,7 @@
             </div>
         </div>
     </section>
-
+    <div id="tentangKami" th:replace="fragments/footerTop :: footerTop"></div>
     <div th:replace="fragments/footerBottom :: footerBottom"></div>
     <!-- jQuery -->
 
@@ -196,11 +248,14 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         var property = /*[[${property}]]*/null;
+        var transportasi = /*[[${transportasi}]]*/null;
         var listDetailsProperty = /*[[${property.listPropertyDetails}]]*/null;
         $(document).ready(function () {
-            listDetailsProperty.forEach(function (detailsProperty, index) {
-                setHarga(detailsProperty.idDetailsProperty, detailsProperty.harga);
-            })
+            if (property.listPropertyDetails != null || property.listPropertyDetails.length > 0) {
+                listDetailsProperty.forEach(function (detailsProperty, index) {
+                    setHarga(detailsProperty.idDetailsProperty, detailsProperty.harga);
+                });
+            }
         });
         function itemClicked(tipeProperty) {
             window.location.href = `/p/${property.propertyName}/${tipeProperty}`;
@@ -211,6 +266,33 @@
         function formatRupiah(angka) {
             return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 }).replace(".0 juta", " juta").replace(".0 miliar", " miliar");
         }
+
+        $('#listCarousel').owlCarousel({
+            loop: true,
+            margin: 30,
+            mouseDrag: true,
+            autoplay: true,
+            dots: true,
+            nav: true,
+            navText: ["<span class='fa-solid fa-chevron-left'></span>","<span class='fa-solid fa-chevron-right'></span>"],
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    dots: true,
+                    nav: false
+                },
+                600: {
+                    items: 2,
+                    dots: true,
+                    nav: false
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        });
+
         /*]]>*/
     </script>
 </body>

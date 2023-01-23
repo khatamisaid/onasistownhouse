@@ -98,7 +98,7 @@
             };
         }
         window.addEventListener("resize", debounce(function (e) {
-            resizeScreenProperty();
+            resizeScreenRekomendasiProperty();
         }));
         function formatRupiah(angka) {
             return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 }).replace(".0 juta"," juta").replace(".0 miliar", " miliar");

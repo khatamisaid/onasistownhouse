@@ -50,8 +50,8 @@ public class Property extends DateAudit {
     @Column(name = "belanja", columnDefinition = "TEXT")
     private String belanja;
 
-    @Column(name = "kuliner", columnDefinition = "TEXT")
-    private String kuliner;
+    @Column(name = "transportasi", columnDefinition = "TEXT")
+    private String transportasi;
 
     @Column(name = "rumah_sakit", columnDefinition = "TEXT")
     private String rumahSakit;

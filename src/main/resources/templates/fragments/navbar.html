@@ -47,7 +47,7 @@
                         <li class="dropdown-item"><a href="post.html">Single Post</a></li>
                     </ul>
                 </li> -->
-                <li class="nav-item"><a th:classappend="${#httpServletRequest.getRequestURI() == '/tentangkami' ? 'active':''}" class="nav-link" th:href="@{/tentangkami}">Tentang Kami</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tentangKami">Tentang Kami</a></li>
                 <li style="cursor: pointer;"
                     th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"
                     class="nav-item"><a class="nav-link" onclick="window.location.href = '/admin'">Halaman Admin</a>

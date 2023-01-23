@@ -2,6 +2,7 @@ package com.dreamtown.onasistownhouse.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class PropertyService {
     @Autowired
     private PropertyDetailsRepository propertyDetailsRepository;
 
-    public Page<Property> findPaginated(Pageable pageable, Integer idWilayah){
+    public Page<Property> findPaginated(Pageable pageable, Integer idWilayah) {
         Property p = new Property();
         p.setWilayah(new MWilayah(idWilayah, null));
         Example<Property> exampleProperty = Example.of(p);
@@ -33,22 +34,28 @@ public class PropertyService {
         return new PageImpl<>(listProperty.subList(s, e), pageable, listProperty.size());
     }
 
-    public Page<Property> listRekomendasi(Pageable pageable){
+    public Page<Property> listRekomendasi(Pageable pageable) {
         List<Property> tempListProperty = propertyRepository.findAll();
         List<Property> listProperty = new ArrayList<>();
-        for(Property p : tempListProperty){
+        for (Property p : tempListProperty) {
             p.getListPropertyDetails().clear();
             List<PropertyDetails> propertyDetails = new ArrayList<>();
-            propertyDetails.add(propertyDetailsRepository.findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(p.getIdProperty(), new PropertyStatus(1, "Available")));
-            p.setListPropertyDetails(propertyDetails);
-            listProperty.add(p);
+            Optional<PropertyDetails> tempDetails = propertyDetailsRepository
+                    .findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(p.getIdProperty(),
+                            new PropertyStatus(1, "Available"));
+            if (tempDetails.isPresent()) {
+                propertyDetails.add(tempDetails.get());
+                p.setListPropertyDetails(propertyDetails);
+                listProperty.add(p);
+            }
+
         }
         int s = (int) pageable.getOffset();
         int e = Math.min((s + pageable.getPageSize()), listProperty.size());
         return new PageImpl<>(listProperty.subList(s, e), pageable, listProperty.size());
     }
 
-    public Property getPropertyByName(String propertyName){
+    public Property getPropertyByName(String propertyName) {
         return propertyRepository.findOneByPropertyName(propertyName);
     }
 }

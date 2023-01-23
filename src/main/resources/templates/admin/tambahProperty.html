@@ -102,14 +102,14 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkBoxKuliner">
-                                    <label class="form-check-label" for="checkBoxKuliner">Wisata Kuliner</label>
+                                    <input type="checkbox" class="form-check-input" id="checkBoxTransportasi">
+                                    <label class="form-check-label" for="checkBoxTransportasi">Transportasi</label>
                                 </div>
                             </div>
-                            <div class="form-group" id="inputanKuliner" style="display: none;">
-                                <label for="kuliner">Masukan wisata kuliner terdekat</label>
-                                <textarea style="color: #1b1b1b;" placeholder="masukan wisata kuliner terdekat"
-                                    type="text" class="form-control-sm" id="kuliner" name="kuliner"></textarea>
+                            <div class="form-group" id="inputanTransportasi" style="display: none;">
+                                <label for="transportasi">Masukan moda trasnportasi terdekat</label>
+                                <textarea style="color: #1b1b1b;" placeholder="masukan moda trasnportasi terdekat"
+                                    type="text" class="form-control-sm" id="transportasi" name="transportasi"></textarea>
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
@@ -238,11 +238,11 @@
                 $("#inputanBelanja").hide();
             }
         });
-        $("#checkBoxKuliner").on('change', function () {
+        $("#checkBoxTransportasi").on('change', function () {
             if ($(this).prop('checked') == true) {
-                $("#inputanKuliner").show();
+                $("#inputanTransportasi").show();
             } else {
-                $("#inputanKuliner").hide();
+                $("#inputanTransportasi").hide();
             }
         });
 
@@ -269,7 +269,7 @@
                     "namaWilayah": $("#wilayahProperty option:selected").text(),
                 },
                 "belanja": $("#belanja").val(),
-                "kuliner": $("#kuliner").val(),
+                "transportasi": $("#transportasi").val(),
                 "lainnya": $("#lainnya").val(),
                 "rumahSakit": $("#rumahSakit").val(),
                 "sekolah": $("#sekolah").val(),
