@@ -78,7 +78,7 @@ public class CmdRunner implements CommandLineRunner {
                 // listWebsitePhoto.add(new WebsitePhoto(3, "15.png", 1));
                 // websiteRepository.save(new Website(1, "Onasis Town House", "video3.mp4", listWebsitePhoto));
 
-                logger.info("website tittle has been created");
+                // logger.info("website tittle has been created");
 
                 // Double harga = 1200000000.0;
                 // PropertyDetails propertyDetails1 = new PropertyDetails(1, 1, 35, 40, 2, 1,

@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dreamtown.onasistownhouse.entity.ContactPerson;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Website;
+import com.dreamtown.onasistownhouse.repository.ContactPersonRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
@@ -69,6 +71,9 @@ public class MainController {
     private WebsiteService websiteService;
 
     @Autowired
+    private ContactPersonRepository contactPersonRepository;
+
+    @Autowired
     private Utils utils;
 
     @GetMapping(value = "/")
@@ -78,6 +83,9 @@ public class MainController {
         model.addAttribute("websiteName", websiteService.websiteName());
         String namafile = web.getWebsiteVideo().split("\\.")[0];
         model.addAttribute("websiteVideo", "/stream/mp4/" + namafile);
+        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
+        ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
+        model.addAttribute("contactPerson", cp);
         return "index";
     }
 

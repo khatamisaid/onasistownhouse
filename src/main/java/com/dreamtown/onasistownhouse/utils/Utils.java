@@ -1,5 +1,7 @@
 package com.dreamtown.onasistownhouse.utils;
 
+import java.util.Random;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,5 +21,10 @@ public class Utils {
         } catch (NullPointerException e) {
             return null;
         }
+    }
+
+    public Integer getRandomIndex(Integer length) {
+        Random rand = new Random();
+        return rand.nextInt(length);
     }
 }
