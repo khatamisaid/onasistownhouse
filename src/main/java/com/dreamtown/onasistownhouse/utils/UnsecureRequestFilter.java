@@ -16,6 +16,7 @@ public class UnsecureRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) 
                     throws ServletException, IOException { 
         if (!request.isSecure()) {
+            System.out.println(request.getRequestURL().toString());
             response.sendRedirect("https://onasistownhouse.com/");
         } else { 
             filterChain.doFilter(request, response); 
