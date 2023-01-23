@@ -160,6 +160,8 @@ public class MainController {
         Property property = propertyService.getPropertyByName(namaProperty.get());
         PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(),
                 tipeProperty.get());
+        Website web = websiteRepository.findAll().get(0);
+        model.addAttribute("website", web);
         model.addAttribute("property", propertyDetails);
         model.addAttribute("websiteName", websiteService.websiteName());
         String[] splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
