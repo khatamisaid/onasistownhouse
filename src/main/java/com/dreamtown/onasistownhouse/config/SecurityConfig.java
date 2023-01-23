@@ -45,7 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // http.csrf().and().headers().xssProtection().and().frameOptions().sameOrigin().and()
         http.csrf().disable()
                 .headers().frameOptions().sameOrigin().and()
-                .authorizeRequests()
+                .requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure().and().authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/admin/**").authenticated()
                 .and()
@@ -66,7 +68,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredUrl("/login?expired")
                 .and()
                 .invalidSessionUrl("/login");
-        http.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
     }
 }
