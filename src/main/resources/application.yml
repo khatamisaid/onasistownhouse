@@ -72,8 +72,8 @@ spring:
       max-request-size: -1
 server:
   tomcat:
-    remote-ip-header: x-forwarded-for
-    protocol-header: x-forwarded-proto
+    remote-ip-header: "x-forwarded-for"
+    protocol-header: "x-forwarded-proto"
   port: 8082
   error:
     whitelabel:
