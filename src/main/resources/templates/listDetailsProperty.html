@@ -203,13 +203,13 @@
                 <div class="col-md-12">
                     <div id="listCarousel" class="owl-carousel owl-theme">
                         <div th:attr="onclick=|itemClicked('${detailsProperty.tipeProperty}')|" style="cursor: pointer;"
-                            th:each="detailsProperty: ${property.listPropertyDetails}" class="pricing-card">
+                            th:each="detailsProperty, iter: ${listPropertyDetails}" class="pricing-card">
                             <img style="height: 250px;"
                                 th:src="@{'/loadfile/'+${detailsProperty.listPhoto[0].namaPhoto}}" alt="">
                             <div class="desc">
                                 <div class="name" th:text="'Tipe '+${detailsProperty.tipeProperty}"></div>
                                 <div style="font-size: 28px; font-weight: 600;" class="amount"
-                                    th:id="'harga'+${detailsProperty.idDetailsProperty}"></div>
+                                    th:id="'harga'+${iter.index}"></div>
                                 <!-- <ul class="list-unstyled list">
                                     <li><i class="ti-check"></i> Hotel ut nisan the duru</li>
                                     <li><i class="ti-check"></i> Orci miss natoque vasa ince</li>
@@ -249,11 +249,11 @@
         /*<![CDATA[*/
         var property = /*[[${property}]]*/null;
         var transportasi = /*[[${transportasi}]]*/null;
-        var listDetailsProperty = /*[[${property.listPropertyDetails}]]*/null;
+        var listDetailsProperty = /*[[${listPropertyDetails}]]*/null;
         $(document).ready(function () {
-            if (property.listPropertyDetails != null || property.listPropertyDetails.length > 0) {
+            if (listDetailsProperty != null || listPropertyDetails.length > 0) {
                 listDetailsProperty.forEach(function (detailsProperty, index) {
-                    setHarga(detailsProperty.idDetailsProperty, detailsProperty.harga);
+                    setHarga(index, detailsProperty.harga);
                 });
             }
         });
@@ -261,6 +261,7 @@
             window.location.href = `/p/${property.propertyName}/${tipeProperty}`;
         }
         function setHarga(id, harga) {
+            console.log(`#harga${id}`, formatRupiah(harga));
             $(`#harga${id}`).text(formatRupiah(harga));
         }
         function formatRupiah(angka) {
@@ -268,7 +269,7 @@
         }
 
         $('#listCarousel').owlCarousel({
-            loop: true,
+            loop: false,
             margin: 30,
             mouseDrag: true,
             autoplay: true,
