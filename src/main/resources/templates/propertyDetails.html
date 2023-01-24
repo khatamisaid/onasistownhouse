@@ -72,15 +72,17 @@
                 </div>
                 <div class="col-md-4" style="overflow: scroll; height: 459px;">
                     <div class="section-subtitle"><span>Whatsapp</span></div>
-                    <div th:each="contact : ${property.listContactPerson}" class="reservations mb-30">
-                        <div class="icon"><img style="width: 35px; height: 36px;" th:src="@{/images/whatsapp-logo.png}"
-                                alt="Image Not Found"></div>
-                        <div class="text">
-                            <p>Info Lebih Lanjut</p> <a
-                                th:href="'https://wa.me/+62'+${contact.nomorTelpon}+'?text=asd123'"
-                                th:text="${contact.namaContact}"></a>
+                    <th:block th:each="contact : ${property.listContactPerson}">
+                        <div style="cursor: pointer;" th:attr="onclick=|goToWhatsApp('${contact.nomorTelpon}')|" class="reservations mb-30">
+                            <div class="icon">
+                                <img style="width: 35px; height: 36px;" th:src="@{/images/whatsapp-logo.png}"
+                                    alt="Image Not Found">
+                            </div>
+                            <div class="text">
+                                <p>Info Lebih Lanjut</p> <a th:text="${contact.namaContact}"></a>
+                            </div>
                         </div>
-                    </div>
+                    </th:block>
                 </div>
             </div>
             <div class="row mt-5">
@@ -165,6 +167,9 @@
         });
         function formatRupiah(angka) {
             return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 }).replace(".0 juta", " juta").replace(".0 miliar", " miliar");
+        }
+        function goToWhatsApp(nomorHp){
+            window.open(`https://wa.me/+62${nomorHp}`, '_blank');
         }
         function zoomImage(url) {
             $.magnificPopup.open({
