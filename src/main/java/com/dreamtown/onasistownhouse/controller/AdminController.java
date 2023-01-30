@@ -259,7 +259,7 @@ public class AdminController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/formulir_pemesanan", method = RequestMethod.GET)
+    @RequestMapping(value = "/simulasi_sistem_pembayaran", method = RequestMethod.GET)
     public String formulirPemesanan(Model model) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
         model.addAttribute("tanggal", sdf.format(new Date()));
