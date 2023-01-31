@@ -196,7 +196,7 @@ public class MainController {
         model.addAttribute("rumahSakit", utils.checkNullOrEmptyString(property.getRumahSakit()));
         model.addAttribute("lainnya", utils.checkNullOrEmptyString(property.getLainnya()));
         model.addAttribute("property", property);
-        model.addAttribute("listPropertyDetails", propertyDetailsService.findAllDetailsOrderByTipePropertyAsc());
+        model.addAttribute("listPropertyDetails", propertyDetailsService.findAllByIdPropertyAndPropertyStatusIsNotOrderByTipePropertyAsc(property.getIdProperty()));
         model.addAttribute("website", web);
         model.addAttribute("websiteName", websiteService.websiteName());
         return "listDetailsProperty";

@@ -250,10 +250,10 @@
                                 <div class="col-md-4">
                                     <p style="color:black" id="totalkeseluruhanHarga">Rp. 0</p>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2" id="lblTglAngsuran" style="display: none;">
                                     <label for="tanggalAngsuran">Tanggal: </label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="inputTglAngsuran" style="display: none;">
                                     <input class="form-control" type="date" name="tanggalAngsuran" id="tanggalAngsuran"
                                         placeholder="masukan tanggal angsuran" />
                                 </div>
@@ -388,7 +388,7 @@
                     $("#luasBangunan").text(`${res.propertyDetails.luasBangunan} (m²)`);
                     $("#luasTanah").text(`${res.propertyDetails.luasTanah} (m²)`);
                     $("#hargaJual").text(`${formatRupiah(res.propertyDetails.harga.toString(), 'Rp. ')}`);
-                    $("#headerFormulir").text(`Formulir Pemesanan Rumah ${res.property.propertyName}`);
+                    // $("#headerFormulir").text(`Simulasi Sistem Pembayaran ${res.property.propertyName}`);
                     return;
                 }
                 $("#sectionPembayaran").hide();
@@ -398,9 +398,6 @@
         });
         /* Fungsi */
         function formatRupiah(angka, prefix) {
-            // if (angka.startsWith('0')) {
-            //     return "";
-            // }
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
@@ -417,9 +414,6 @@
         }
 
         function formatRupiahPerBulan(angka, prefix) {
-            // if (angka.startsWith('0')) {
-            //     return "";
-            // }
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
                 sisa = split[0].length % 3,
@@ -468,11 +462,12 @@
             }
             $("#tableCicilan").find('tbody').empty();
             for (let i = 1; i <= this.value; i++) {
+                var tanggalCicilan = moment($("#tanggalDp").val()).add(i, 'months').format('YYYY-MM-DD');
                 $("#tableCicilan").find('tbody').append(
                     `<tr><td style="color:#aa8453">Cicilan ${i}</td>
                                             <td style="color:#aa8453">${$("#hargaCicilan").text().replace(" / Bulan", "")}</td>
                                             <td>
-                                                <input class="form-control" type="date" name="tglCicilan[]" id="tglCicilan${i}"
+                                                <input value="${tanggalCicilan}" class="form-control" type="date" name="tglCicilan[]" id="tglCicilan${i}"
                                                     placeholder="masukan tanggal cicilan" />
                                             </td></tr>`
                 );
@@ -481,11 +476,16 @@
         });
         $("#caraBayar").on('change', function () {
             if (this.value == 1) {
+                $("#lblTglAngsuran").show();
+                $("#inputTglAngsuran").show();
                 $("#sectionTunaiBertahap").hide();
             } else if (this.value == 2) {
+                $("#lblTglAngsuran").hide();
+                $("#inputTglAngsuran").hide();
                 $("#sectionTunaiBertahap").show();
             }
         });
+
         $("#btnPrint").on('click', function () {
 
             // var jsonData = {

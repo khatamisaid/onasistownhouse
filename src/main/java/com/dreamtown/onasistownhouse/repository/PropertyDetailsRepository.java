@@ -32,5 +32,5 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
 
     PropertyDetails findFirstByIdPropertyAndTipeProperty(Integer idProperty, String tipeProperty);
 
-    List<PropertyDetails> findAllByPropertyStatusIsNotOrderByTipePropertyAsc(PropertyStatus propertyStatus);
+    List<PropertyDetails> findAllByIdPropertyOrderByTipePropertyAsc(Integer idProperty);
 }

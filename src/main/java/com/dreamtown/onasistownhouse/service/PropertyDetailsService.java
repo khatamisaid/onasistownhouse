@@ -1,6 +1,7 @@
 package com.dreamtown.onasistownhouse.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +19,7 @@ public class PropertyDetailsService {
         return propertyDetailsRepository.findFirstByIdPropertyAndTipeProperty(id, tipeProperty);
     }
 
-    public List<PropertyDetails> findAllDetailsOrderByTipePropertyAsc() {
-        PropertyStatus ps = new PropertyStatus();
-        ps.setIdPropertyStatus(2);
-        return propertyDetailsRepository.findAllByPropertyStatusIsNotOrderByTipePropertyAsc(ps);
+    public List<PropertyDetails> findAllByIdPropertyAndPropertyStatusIsNotOrderByTipePropertyAsc(Integer idProperty) {
+        return propertyDetailsRepository.findAllByIdPropertyOrderByTipePropertyAsc(idProperty);
     }
 }
