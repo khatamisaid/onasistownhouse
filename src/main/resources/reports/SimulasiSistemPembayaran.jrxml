@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SimulasiSistemPembayaran" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dca8abf9-7b7f-4664-b02d-6ee485add9f5">
+	<parameter name="SUBREPORT_DIR1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Putri\\JaspersoftWorkspace\\MyReports\\SimulasiSistemPembayaranP1.jasper"]]></defaultValueExpression>
+	</parameter>
+	<field name="listDetailsProperty" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="17" width="361" height="20" uuid="f15108bb-5a0b-4efc-896c-5c9eedcf890f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SIMULASI PEMESANAN RUMAH]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="35" width="361" height="18" uuid="8d60ce2f-e02e-4680-bdb7-44556acd5210"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{namaProperty}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement mode="Transparent" x="20" y="5" width="60" height="61" uuid="d3e8e88b-d66a-4062-a947-b709b6f4692b"/>
+				<imageExpression><![CDATA["https://onasistownhouse.com/img/favicon.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="9" y="80" width="540" height="1" uuid="fa9acea1-813a-48a0-8463-6753bb7b38a7"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="425" y="0" width="124" height="20" uuid="54a3165d-1f5a-4a94-91d5-04e19b56e543"/>
+				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="385" y="0" width="48" height="20" uuid="b5014a4f-7259-4d22-8077-84912db2ef41"/>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="215" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="2" width="539" height="55" uuid="89163048-c3a6-4039-a40f-38349e71e4e6"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+                  ($F{subReportBeanList})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR1}]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="57" width="99" height="1" uuid="3c495e8e-d228-428f-ab3b-a43ad3fc969d"/>
+			</break>
+		</band>
+	</detail>
+</jasperReport>

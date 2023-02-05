@@ -107,31 +107,6 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="88" splitType="Stretch">
-			<image>
-				<reportElement mode="Transparent" x="20" y="10" width="60" height="61" uuid="5dd4f490-1993-47cb-88be-de5e34dc63bd"/>
-				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="100" y="22" width="361" height="20" uuid="86d3a857-796d-4ec4-aab1-282d1db976b7"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[FORMULIR PEMESANAN RUMAH]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="101" y="40" width="361" height="18" uuid="28d01fff-bd16-414b-b99d-9d7278b2d557"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{namaProperty}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="9" y="85" width="540" height="1" uuid="92209847-d56c-40ea-8f34-cc6bf2367595"/>
-			</line>
-		</band>
-	</title>
 	<detail>
 		<band height="563" splitType="Stretch">
 			<image>
@@ -273,14 +248,6 @@
 					<printWhenExpression><![CDATA[$F{periodeCicilanIsTrue} == true]]></printWhenExpression>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cicilan}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="385" y="0" width="48" height="20" uuid="161d8c2b-8d95-4494-8d79-04bbddcb63ac"/>
-				<text><![CDATA[Tanggal]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="425" y="0" width="124" height="20" uuid="c8487076-d5d2-4a46-9a73-8d01b2083bf1"/>
-				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="190" y="335" width="140" height="20" uuid="2bf934cb-c62a-474e-9681-105fa8021232"/>

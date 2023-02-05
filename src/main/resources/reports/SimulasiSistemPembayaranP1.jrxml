@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SimulasiSistemPembayaranP1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc9ac91c-3479-4c43-b697-0f4f40ca77a9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="674" splitType="Stretch">
+			<staticText>
+				<reportElement x="70" y="40" width="100" height="30" uuid="08d28046-40bf-4afb-8329-2a329a71012b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Property]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="76" width="100" height="30" uuid="aaf8ca3a-9647-45d7-9282-9ec0c2ef26c9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tipe Property]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="150" width="100" height="30" uuid="149694f3-6d49-45c8-be5e-2eebefaa536c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nama Pembeli]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="114" width="100" height="30" uuid="e0e882f6-fa59-4269-b60b-30e2155fae8f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Luas Bangunan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="340" width="100" height="30" uuid="cf0ac107-4402-47e6-87fc-ef146327d9b7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Cara Bayar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="264" width="100" height="30" uuid="43ebcaf6-eb8d-433b-87e8-2faea163c0aa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[No. Telpon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="226" width="100" height="30" uuid="b79811c3-d128-4a2a-879d-896d58b756db"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Alamat Lengkap]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="190" width="100" height="30" uuid="6eb7c32f-319d-4066-a020-aa896c091922"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[No. KTP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="490" width="100" height="30" uuid="9f253e4a-ddad-4357-8f80-938c58c2f5cf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Booking Fee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="454" width="100" height="30" uuid="0f59adfc-5242-41bf-a2f4-f9a45e0f353c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="416" width="100" height="30" uuid="5527d2cb-648f-422a-8d11-187a87810652"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="566" width="100" height="30" uuid="fdf40640-97f7-4608-ba40-ef61d92bc8e4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total DP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="380" width="100" height="30" uuid="b4fc8117-91bb-45f7-81e5-bcfd639f6baf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Harga Property]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="530" width="100" height="30" uuid="93627f3c-1816-48bc-a581-7aa412ccd7fe"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[DP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="604" width="100" height="30" uuid="327864e9-4414-4633-8a55-930e8b90ad8f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Angsuran]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="301" width="100" height="30" uuid="9e6f2574-0f5b-435a-abf4-247d91b6739a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nama Marketing]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
