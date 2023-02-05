@@ -97,10 +97,48 @@
     <div th:replace="fragments/navbar :: navbar"></div>
     <!-- Slider -->
     <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
-    <header class="header slider-fade" id="header">
+    <header th:fragment="header" class="header slider-fade" id="header">
         <div class="owl-carousel owl-theme">
-            <div th:each="photo : ${website.listWebsitePhoto}" class="text-center item bg-img" data-overlay-dark="2"
-                th:attr="data-background='/loadfile/'+${photo.namaPhoto}">
+            <div class="text-center item bg-img" data-overlay-dark="2"
+                th:attr="data-background='/loadfile/'+${property.p1}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 offset-md-1">
+                                <span>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                </span>
+                                <h2>Enjoy The Best Moments of Life</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${property.p2 != null}" class="text-center item bg-img" data-overlay-dark="2"
+                th:attr="data-background='/loadfile/'+${property.p3}">
+                <div class="v-middle caption">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 offset-md-1">
+                                <span>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                    <i class="star-rating"></i>
+                                </span>
+                                <h2>Enjoy The Best Moments of Life</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${property.p3 != null}" class="text-center item bg-img" data-overlay-dark="2"
+                th:attr="data-background='/loadfile/'+${property.p3}">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row">
@@ -204,6 +242,16 @@
                     <div id="listCarousel" class="owl-carousel owl-theme">
                         <div th:attr="onclick=|itemClicked('${detailsProperty.tipeProperty}')|" style="cursor: pointer;"
                             th:each="detailsProperty, iter: ${listPropertyDetails}" class="pricing-card">
+                            <span
+                                th:if="${detailsProperty.propertyStatus.idPropertyStatus == 1 and session.role != null}"
+                                style="position: absolute; z-index: 20; background-color:#03C988; color:white; border-radius:100px;margin-top: 4px; margin-left: 4px;"
+                                class="text-center p-2">AVAILABLE</span>
+                            <span th:if="${detailsProperty.propertyStatus.idPropertyStatus == 2}"
+                                style="position: absolute; z-index: 20; background-color:#FFEA20; color:white; border-radius:100px;margin-top: 4px; margin-left: 4px;"
+                                class="text-center p-2">HOLD</span>
+                            <span th:if="${detailsProperty.propertyStatus.idPropertyStatus == 3}"
+                                style="position: absolute; z-index: 20; background-color:#aa8453; color:white; border-radius:100px; margin-top: 4px; margin-left: 4px;"
+                                class="text-center p-2">SOLD</span>
                             <img style="height: 250px;"
                                 th:src="@{'/loadfile/'+${detailsProperty.listPhoto[0].namaPhoto}}" alt="">
                             <div class="desc">
@@ -275,7 +323,7 @@
             autoplay: true,
             dots: true,
             nav: true,
-            navText: ["<span class='fa-solid fa-chevron-left'></span>","<span class='fa-solid fa-chevron-right'></span>"],
+            navText: ["<span class='fa-solid fa-chevron-left'></span>", "<span class='fa-solid fa-chevron-right'></span>"],
             responsiveClass: true,
             responsive: {
                 0: {

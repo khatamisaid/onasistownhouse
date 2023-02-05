@@ -115,6 +115,7 @@ public class AdminController {
     @RequestMapping(value = "/p/{propertyName}", method = RequestMethod.GET)
     public String findPropertyWithId(Model model, @PathVariable String propertyName) {
         Property property = propertyRepository.findOneByPropertyName(propertyName);
+        model.addAttribute("website", websiteRepository.findAll().get(0));
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
@@ -167,17 +168,49 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/property", method = RequestMethod.POST)
-    public ResponseEntity<Map> postProperty(@RequestPart Property property, @RequestPart MultipartFile file)
+    public ResponseEntity<Map> postProperty(@RequestPart Property property, @RequestPart MultipartFile file,
+            @RequestPart(required = true) MultipartFile p1, @RequestPart(required = false) MultipartFile p2,
+            @RequestPart(required = false) MultipartFile p3)
             throws IllegalStateException, IOException {
         Map response = new HashMap<>();
-        if (file.isEmpty())
+        if (file.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
         String[] splitFileName = file.getOriginalFilename().split("\\.");
         String extension = splitFileName[splitFileName.length - 1];
         String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
         File fileTemp = new File(env.getProperty("storage.images") + fileName);
         file.transferTo(fileTemp);
         property.setPropertyBanner(fileName);
+        if (p1.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        String[] splitP1 = p1.getOriginalFilename().split("\\.");
+        String extensionP1 = splitP1[splitP1.length - 1];
+        String fileNameP1 = UUIDGenerator.generateType4UUID().toString() + "." + extensionP1;
+        File fileTempP1 = new File(env.getProperty("storage.images") + fileNameP1);
+        p1.transferTo(fileTempP1);
+        property.setP1(fileNameP1);
+        try {
+            String[] splitP2 = p2.getOriginalFilename().split("\\.");
+            String extensionP2 = splitP2[splitP2.length - 1];
+            String fileNameP2 = UUIDGenerator.generateType4UUID().toString() + "." + extensionP2;
+            File fileTempP2 = new File(env.getProperty("storage.images") + fileNameP2);
+            p2.transferTo(fileTempP2);
+            property.setP2(fileNameP2);
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+        try{
+            String[] splitP3 = p3.getOriginalFilename().split("\\.");
+            String extensionP3 = splitP3[splitP3.length - 1];
+            String fileNameP3 = UUIDGenerator.generateType4UUID().toString() + "." + extensionP3;
+            File fileTempP3 = new File(env.getProperty("storage.images") + fileNameP3);
+            p3.transferTo(fileTempP3);
+            property.setP3(fileNameP3);
+        }catch(NullPointerException e){
+            System.out.println(e.getMessage());
+        }
         propertyRepository.save(property);
         response.put("message", "Property Berhasil di tambahkan");
         return new ResponseEntity<>(response, HttpStatus.OK);

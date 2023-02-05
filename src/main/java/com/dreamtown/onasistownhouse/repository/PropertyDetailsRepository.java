@@ -28,7 +28,7 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     @Query(value = "SELECT DISTINCT tipe_property from property_details where id_property = ?1 order by tipe_property ASC", nativeQuery = true)
     List<String> findDistinctTipePropertyByIdProperty(Integer idProperty);
 
-    Optional<PropertyDetails> findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(Integer idProperty, PropertyStatus status);
+    Optional<PropertyDetails> findFirstByIdPropertyOrderByHargaAsc(Integer idProperty);
 
     PropertyDetails findFirstByIdPropertyAndTipeProperty(Integer idProperty, String tipeProperty);
 

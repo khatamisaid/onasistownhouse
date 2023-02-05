@@ -49,6 +49,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class MainController {
 
@@ -75,6 +77,9 @@ public class MainController {
 
     @Autowired
     private Utils utils;
+
+    @Autowired
+    private HttpSession session;
 
     @GetMapping(value = "/")
     public String index(Model model) {
@@ -208,8 +213,7 @@ public class MainController {
         Map res = new HashMap<>();
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(4);
-        Page<Property> propertyPage = propertyService.listRekomendasi(PageRequest.of(currentPage - 1, pageSize));
-
+        Page<Property> propertyPage = propertyService.listRekomendasi(PageRequest.of(currentPage - 1, pageSize), session.getAttribute("role") != null);
         res.put("propertyPage", propertyPage);
         int totalPages = propertyPage.getTotalPages();
         if (totalPages > 0) {

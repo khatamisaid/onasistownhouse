@@ -51,6 +51,7 @@
     <div th:replace="admin/fragments/aside :: sidebar"></div>
     <!-- Main -->
     <div id="cappa-main">
+        <div th:replace="admin/fragments/header :: header"></div>
         <section class="rooms1 section-padding bg-black">
             <div class="container">
                 <div class="row">
@@ -177,12 +178,22 @@
 
         function printListPropertyDetails() {
             $("#listDetailProperty").empty();
+            console.log(property.listPropertyDetails);
             property.listPropertyDetails.forEach(function (propertyDetails, index) {
+                var badge;
+                if (propertyDetails.propertyStatus.idPropertyStatus == 3) {
+                    badge = `<span style="position: absolute; z-index: 20; background-color:#aa8453; color:white; border-radius:100px;margin-top: 4px; margin-left: 4px;" class="text-center p-2">SOLD</span>`;
+                } else if (propertyDetails.propertyStatus.idPropertyStatus == 2) {
+                    badge = `<span style="position: absolute; z-index: 20; background-color:#FFEA20; color:white; border-radius:100px;margin-top: 4px; margin-left: 4px;" class="text-center p-2">HOLD</span>`;
+                } else if (propertyDetails.propertyStatus.idPropertyStatus == 1 && role != null) {
+                    badge = `<span style="position: absolute; z-index: 20; background-color:#03C988; color:white; border-radius:100px;margin-top: 4px; margin-left: 4px;" class="text-center p-2">AVAILABLE</span>`;
+                }
                 $("#listDetailProperty").append(
                     `<div class="col-md-4">
                         <div class="item">
+                            ${badge ?? ''}
                             <div class="position-re o-hidden"> <img style="height: 390px;"
-                                    src="${property.propertyBanner == '' ? '/img/rooms/1.jpg' : '/loadfile/' + property.propertyBanner}"
+                                    src="${property.propertyBanner == '' ? '/img/rooms/1.jpg' : '/loadfile/' + propertyDetails.listPhoto[0].namaPhoto}"
                                     alt="Gada Foto"> </div>
                                     ${role != 'Marketing' ? `<span onclick="onOptionPropertyClicked(${propertyDetails.idDetailsProperty})"
                         style="cursor: pointer;" class="category"><i
@@ -215,7 +226,7 @@
         }
 
         function formatRupiah(angka) {
-            return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 });
+            return toRupiah(angka, { symbol: 'IDR', useUnit: true, longUnit: true, spaceBeforeUnit: true, formal: false, decimal: '.', floatingPoint: 1 }).replace('.0', '');
         }
     </script>
 </body>

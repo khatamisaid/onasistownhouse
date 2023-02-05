@@ -59,6 +59,15 @@ public class Property extends DateAudit {
     @Column(name = "lainnya", columnDefinition = "TEXT")
     private String lainnya;
 
+    @Column(name = "p1", columnDefinition = "TEXT")
+    private String p1;
+
+    @Column(name = "p2", columnDefinition = "TEXT")
+    private String p2;
+
+    @Column(name = "p3", columnDefinition = "TEXT")
+    private String p3;
+
     @Column(name = "property_banner")
     private String propertyBanner;
 

@@ -109,7 +109,8 @@
                             <div class="form-group" id="inputanTransportasi" style="display: none;">
                                 <label for="transportasi">Masukan moda trasnportasi terdekat</label>
                                 <textarea style="color: #1b1b1b;" placeholder="masukan moda trasnportasi terdekat"
-                                    type="text" class="form-control-sm" id="transportasi" name="transportasi"></textarea>
+                                    type="text" class="form-control-sm" id="transportasi"
+                                    name="transportasi"></textarea>
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
@@ -138,6 +139,15 @@
                                 <label for="bannerProperty">Tambahkan untuk banner Property</label>
                                 <input placeholder="masukan banner property" type="file" class="form-control-sm"
                                     accept="image/jpeg, image/png" id="bannerProperty" name="bannerProperty" />
+                            </div>
+                            <div class="form-group">
+                                <label for="photoHeaderProperty">Tambahkan untuk Photo Header Property</label>
+                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
+                                    accept="image/jpeg, image/png" id="photoHeaderProperty" name="photoHeaderProperty" />
+                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
+                                    accept="image/jpeg, image/png" id="photoHeaderProperty1" name="photoHeaderProperty1" />
+                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
+                                    accept="image/jpeg, image/png" id="photoHeaderProperty2" name="photoHeaderProperty2" />
                             </div>
                         </form>
                         <div class="d-flex justify-content-center mt-2">
@@ -282,6 +292,13 @@
             var formData = new FormData();
             formData.append("property", blobData);
             formData.append("file", $("#bannerProperty").prop('files')[0]);
+            formData.append("p1", $("#photoHeaderProperty").prop('files')[0]);
+            if($("#photoHeaderProperty1").prop('files')[0] != undefined){
+                formData.append("p2", $("#photoHeaderProperty1").prop('files')[0]);
+            }
+            if($("#photoHeaderProperty2").prop('files')[0] != undefined){
+                formData.append("p3", $("#photoHeaderProperty2").prop('files')[0]);
+            }
             $.ajax({
                 url: '/admin/property',
                 method: "POST",

@@ -1,0 +1,61 @@
+<header th:fragment="header" class="header slider-fade" id="header">
+    <div class="owl-carousel owl-theme">
+        <div class="text-center item bg-img" data-overlay-dark="2"
+            th:attr="data-background='/loadfile/'+${property.p1}">
+            <div class="v-middle caption">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <span>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                            </span>
+                            <h2>Enjoy The Best Moments of Life</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${property.p2 != null}" class="text-center item bg-img" data-overlay-dark="2"
+            th:attr="data-background='/loadfile/'+${property.p3}">
+            <div class="v-middle caption">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <span>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                            </span>
+                            <h2>Enjoy The Best Moments of Life</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${property.p3 != null}" class="text-center item bg-img" data-overlay-dark="2"
+            th:attr="data-background='/loadfile/'+${property.p3}">
+            <div class="v-middle caption">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1">
+                            <span>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                                <i class="star-rating"></i>
+                            </span>
+                            <h2>Enjoy The Best Moments of Life</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

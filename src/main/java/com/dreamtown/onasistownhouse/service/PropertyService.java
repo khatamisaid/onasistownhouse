@@ -34,19 +34,27 @@ public class PropertyService {
         return new PageImpl<>(listProperty.subList(s, e), pageable, listProperty.size());
     }
 
-    public Page<Property> listRekomendasi(Pageable pageable) {
+    public Page<Property> listRekomendasi(Pageable pageable, Boolean isAdmin) {
         List<Property> tempListProperty = propertyRepository.findAll();
         List<Property> listProperty = new ArrayList<>();
         for (Property p : tempListProperty) {
             p.getListPropertyDetails().clear();
             List<PropertyDetails> propertyDetails = new ArrayList<>();
             Optional<PropertyDetails> tempDetails = propertyDetailsRepository
-                    .findFirstByIdPropertyAndPropertyStatusOrderByHargaAsc(p.getIdProperty(),
-                            new PropertyStatus(1, "Available"));
+                    .findFirstByIdPropertyOrderByHargaAsc(p.getIdProperty());
             if (tempDetails.isPresent()) {
-                propertyDetails.add(tempDetails.get());
-                p.setListPropertyDetails(propertyDetails);
-                listProperty.add(p);
+                PropertyDetails pDetails = tempDetails.get();
+                if (isAdmin) {
+                    propertyDetails.add(tempDetails.get());
+                    p.setListPropertyDetails(propertyDetails);
+                    listProperty.add(p);
+                } else {
+                    if (pDetails.getPropertyStatus().getIdPropertyStatus() != 2) {
+                        propertyDetails.add(tempDetails.get());
+                        p.setListPropertyDetails(propertyDetails);
+                        listProperty.add(p);
+                    }
+                }
             }
 
         }
