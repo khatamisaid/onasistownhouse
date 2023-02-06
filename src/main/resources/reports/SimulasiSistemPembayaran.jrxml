@@ -4,12 +4,16 @@
 	<parameter name="SUBREPORT_DIR1" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Putri\\JaspersoftWorkspace\\MyReports\\SimulasiSistemPembayaranP1.jasper"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="SUBREPORT_DIR2" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Putri\\JaspersoftWorkspace\\MyReports\\SimulasiSistemPembayaranP2.jasper"]]></defaultValueExpression>
+	</parameter>
 	<field name="listDetailsProperty" class="java.util.List"/>
+	<field name="listCicilanProperty" class="java.util.List"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="81" splitType="Stretch">
+		<band height="95" splitType="Stretch">
 			<staticText>
 				<reportElement x="100" y="17" width="361" height="20" uuid="f15108bb-5a0b-4efc-896c-5c9eedcf890f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -22,40 +26,42 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{namaProperty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Smart Home Tanjung Priuk"]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement mode="Transparent" x="20" y="5" width="60" height="61" uuid="d3e8e88b-d66a-4062-a947-b709b6f4692b"/>
 				<imageExpression><![CDATA["https://onasistownhouse.com/img/favicon.png"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="9" y="80" width="540" height="1" uuid="fa9acea1-813a-48a0-8463-6753bb7b38a7"/>
+				<reportElement x="9" y="70" width="540" height="1" uuid="fa9acea1-813a-48a0-8463-6753bb7b38a7"/>
 			</line>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch">
 			<textField>
-				<reportElement x="425" y="0" width="124" height="20" uuid="54a3165d-1f5a-4a94-91d5-04e19b56e543"/>
-				<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
+				<reportElement x="420" y="75" width="124" height="20" uuid="54a3165d-1f5a-4a94-91d5-04e19b56e543"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="385" y="0" width="48" height="20" uuid="b5014a4f-7259-4d22-8077-84912db2ef41"/>
+				<reportElement x="380" y="75" width="48" height="20" uuid="b5014a4f-7259-4d22-8077-84912db2ef41"/>
 				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 		</band>
-	</pageHeader>
+	</title>
 	<detail>
 		<band height="215" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="2" width="539" height="55" uuid="89163048-c3a6-4039-a40f-38349e71e4e6"/>
+				<reportElement x="0" y="0" width="539" height="55" uuid="89163048-c3a6-4039-a40f-38349e71e4e6"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
-                  ($F{subReportBeanList})]]></dataSourceExpression>
+                  ($F{listDetailsProperty})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR1}]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="57" width="99" height="1" uuid="3c495e8e-d228-428f-ab3b-a43ad3fc969d"/>
+				<reportElement x="0" y="55" width="99" height="1" uuid="3c495e8e-d228-428f-ab3b-a43ad3fc969d"/>
 			</break>
+			<subreport>
+				<reportElement x="0" y="56" width="539" height="55" uuid="e9a0b1de-c8b4-4ca5-a15b-fcc97ce930c9"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+                  ($F{listCicilanProperty})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2}]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 </jasperReport>

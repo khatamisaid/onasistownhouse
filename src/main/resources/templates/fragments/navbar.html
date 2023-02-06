@@ -27,26 +27,6 @@
                 </li>
                 <li class="nav-item dropdown"> <a th:classappend="${#httpServletRequest.getRequestURI() == '/property' ? 'active':''}" class="nav-link" th:href="@{/property}">Property</a>
                 </li>
-                <!-- <li class="nav-item"><a class="nav-link" href="#rekomendasi">Rekomendasi</a></li> -->
-                <!-- <li class="nav-item dropdown"> <span class="nav-link"> Rooms & Suites <i
-                            class="ti-angle-down"></i></span>
-                    <ul class="dropdown-menu last">
-                        <li class="dropdown-item"><a href="rooms.html">Rooms 1</a></li>
-                        <li class="dropdown-item"><a href="rooms2.html">Rooms 2</a></li>
-                        <li class="dropdown-item"><a href="rooms3.html">Rooms 3</a></li>
-                        <li class="dropdown-item"><a href="room-details.html">Room Details</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="restaurant.html">Restaurant</a></li>
-                <li class="nav-item"><a class="nav-link" href="spa-wellness.html">Spa</a></li>
-                <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                <li class="nav-item dropdown"> <span class="nav-link"> News <i class="ti-angle-down"></i></span>
-                    <ul class="dropdown-menu last">
-                        <li class="dropdown-item"><a href="news.html">News 1</a></li>
-                        <li class="dropdown-item"><a href="news2.html">News 2</a></li>
-                        <li class="dropdown-item"><a href="post.html">Single Post</a></li>
-                    </ul>
-                </li> -->
                 <li class="nav-item"><a class="nav-link" href="#tentangKami">Tentang Kami</a></li>
                 <li style="cursor: pointer;"
                     th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"

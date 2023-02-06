@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SimulasiSistemPembayaranP2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c8bebb9e-9e63-41fb-ba8d-b92c0a015b9e">
+	<parameter name="SUBREPORT_DIR3" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Putri\\JaspersoftWorkspace\\MyReports\\SimulasiSistemPembayaranP3.jasper"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="listCicilanDetailProperty" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="60" y="28" width="100" height="20" uuid="230f204b-5fde-45c0-86bf-80d88fe66770"/>
+				<text><![CDATA[Periode Cicilan]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="28" width="140" height="20" uuid="7db9b1a4-47d7-4706-936b-73490fdcccc2"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="60" y="52" width="100" height="20" uuid="926aa1ad-797d-4bad-b97e-05efbd61f7e4"/>
+				<text><![CDATA[Biaya Admin]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="52" width="140" height="20" uuid="9f819960-4344-4ea5-a327-032f5c65b6da"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="60" y="77" width="100" height="20" uuid="f38447ff-4804-4d10-a72a-bdff8064f3ea"/>
+				<text><![CDATA[Cicilan]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="77" width="140" height="20" uuid="3cfcc02f-5065-44fb-8b06-567f2d82564d"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="55" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="539" height="55" uuid="34cb2fa2-e6b5-479d-9202-4bdb208bf639"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource
+                  ($F{listCicilanDetailProperty})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR3}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
