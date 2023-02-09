@@ -9,15 +9,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
-import com.dreamtown.onasistownhouse.entity.PropertyStatus;
 
 public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails, Integer> {
 
     @Modifying
     @Query("delete from PropertyDetails pd where pd.idProperty=:idProperty")
     void deleteWhereIdProperty(@Param("idProperty") Integer idProperty);
-    
-    PropertyDetails findOneByIdPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty); 
+
+    PropertyDetails findOneByIdPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty);
 
     @Query(value = "SELECT * from property_details where id_property = ?1 order by harga ASC", nativeQuery = true)
     List<PropertyDetails> findDetailsPropertyByIdOrderByHargaAsc(Integer id);
@@ -29,6 +28,8 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     List<String> findDistinctTipePropertyByIdProperty(Integer idProperty);
 
     Optional<PropertyDetails> findFirstByIdPropertyOrderByHargaAsc(Integer idProperty);
+
+    Optional<PropertyDetails> findFirstByIdPropertyOrderByHargaDesc(Integer idProperty);
 
     PropertyDetails findFirstByIdPropertyAndTipeProperty(Integer idProperty, String tipeProperty);
 

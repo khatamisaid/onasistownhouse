@@ -14,6 +14,7 @@ import com.dreamtown.onasistownhouse.entity.MWilayah;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.PropertyStatus;
+import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 
@@ -23,6 +24,8 @@ public class PropertyService {
     private PropertyRepository propertyRepository;
     @Autowired
     private PropertyDetailsRepository propertyDetailsRepository;
+    @Autowired
+    private MWilayahRepository mWilayahRepository;
 
     public Page<Property> findPaginated(Pageable pageable, Integer idWilayah) {
         Property p = new Property();
@@ -34,14 +37,26 @@ public class PropertyService {
         return new PageImpl<>(listProperty.subList(s, e), pageable, listProperty.size());
     }
 
-    public Page<Property> listRekomendasi(Pageable pageable, Boolean isAdmin) {
-        List<Property> tempListProperty = propertyRepository.findAll();
+    public Page<Property> listRekomendasi(Pageable pageable, Boolean isAdmin, String area, String sortBy) {
+        List<Property> tempListProperty = new ArrayList<Property>();
+        if (area.equalsIgnoreCase("")) {
+            tempListProperty = propertyRepository.findAll();
+        } else {
+            tempListProperty = propertyRepository
+                    .findByWilayah(mWilayahRepository.findById(Integer.parseInt(area)).get());
+        }
         List<Property> listProperty = new ArrayList<>();
         for (Property p : tempListProperty) {
             p.getListPropertyDetails().clear();
             List<PropertyDetails> propertyDetails = new ArrayList<>();
-            Optional<PropertyDetails> tempDetails = propertyDetailsRepository
-                    .findFirstByIdPropertyOrderByHargaAsc(p.getIdProperty());
+            Optional<PropertyDetails> tempDetails = null;
+            if (sortBy.equalsIgnoreCase("1")) {
+                tempDetails = propertyDetailsRepository
+                        .findFirstByIdPropertyOrderByHargaAsc(p.getIdProperty());
+            } else if (sortBy.equalsIgnoreCase("2")) {
+                tempDetails = propertyDetailsRepository
+                        .findFirstByIdPropertyOrderByHargaDesc(p.getIdProperty());
+            }
             if (tempDetails.isPresent()) {
                 PropertyDetails pDetails = tempDetails.get();
                 if (isAdmin) {

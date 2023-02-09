@@ -27,7 +27,7 @@
                 </li>
                 <li class="nav-item dropdown"> <a th:classappend="${#httpServletRequest.getRequestURI() == '/property' ? 'active':''}" class="nav-link" th:href="@{/property}">Property</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#tentangKami">Tentang Kami</a></li>
+                <li class="nav-item"><a class="nav-link" href="#footerTop">Tentang Kami</a></li>
                 <li style="cursor: pointer;"
                     th:if="${session.role == 'Super User' || session.role == 'Admin' || session.role == 'Marketing'}"
                     class="nav-item"><a class="nav-link" onclick="window.location.href = '/admin'">Halaman Admin</a>

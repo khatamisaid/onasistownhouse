@@ -150,12 +150,12 @@ public class MainController {
 
     @RequestMapping(value = "/listProperty", method = RequestMethod.GET)
     public ResponseEntity<Map> listProperty(@RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size, @RequestParam("wilayah") Optional<Integer> wilayah) {
+            @RequestParam("size") Optional<Integer> size, @RequestParam("area") Optional<Integer> area) {
         Map res = new HashMap<>();
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(8);
         Page<Property> propertyPage = propertyService.findPaginated(PageRequest.of(currentPage - 1, pageSize),
-                wilayah.orElse(null));
+                area.orElse(null));
         res.put("propertyPage", propertyPage);
         int totalPages = propertyPage.getTotalPages();
         if (totalPages > 0) {
@@ -201,7 +201,8 @@ public class MainController {
         model.addAttribute("rumahSakit", utils.checkNullOrEmptyString(property.getRumahSakit()));
         model.addAttribute("lainnya", utils.checkNullOrEmptyString(property.getLainnya()));
         model.addAttribute("property", property);
-        model.addAttribute("listPropertyDetails", propertyDetailsService.findAllByIdPropertyAndPropertyStatusIsNotOrderByTipePropertyAsc(property.getIdProperty()));
+        model.addAttribute("listPropertyDetails", propertyDetailsService
+                .findAllByIdPropertyAndPropertyStatusIsNotOrderByTipePropertyAsc(property.getIdProperty()));
         model.addAttribute("website", web);
         model.addAttribute("websiteName", websiteService.websiteName());
         return "listDetailsProperty";
@@ -209,11 +210,14 @@ public class MainController {
 
     @RequestMapping(value = "/listRekomendasi")
     public ResponseEntity<Map> listRekomendasi(@RequestParam(name = "page", defaultValue = "1") Optional<Integer> page,
-            @RequestParam(name = "size", defaultValue = "4") Optional<Integer> size) {
+            @RequestParam(name = "size", defaultValue = "4") Optional<Integer> size,
+            @RequestParam(name = "area", defaultValue = "") Optional<String> area,
+            @RequestParam(name = "sortBy", defaultValue = "1") Optional<String> sortBy) {
         Map res = new HashMap<>();
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(4);
-        Page<Property> propertyPage = propertyService.listRekomendasi(PageRequest.of(currentPage - 1, pageSize), session.getAttribute("role") != null);
+        Page<Property> propertyPage = propertyService.listRekomendasi(PageRequest.of(currentPage - 1, pageSize),
+                session.getAttribute("role") != null, area.get(), sortBy.get());
         res.put("propertyPage", propertyPage);
         int totalPages = propertyPage.getTotalPages();
         if (totalPages > 0) {

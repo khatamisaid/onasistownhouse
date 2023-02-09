@@ -17,7 +17,7 @@
         var page = 1;
         var size = 8;
         function getListProperty() {
-            $.get(`/listProperty?page=${page}&size=${size}&wilayah=${$("#area option:selected").val()}`, function (res) {
+            $.get(`/listProperty?page=${page}&size=${size}&area=${$("#area option:selected").val()}`, function (res) {
                 $("#contentListProperty").empty();
                 res.propertyPage.content.forEach(function (property, index) {
                     $("#contentListProperty").append(`<div class="col-md-3">
