@@ -44,6 +44,7 @@ storage:
   images: C:\\filetemp\\images\\
   videos: C:\\filetemp\\videos\\
   file: ./laporan/
+  reports: C:\\Users\\Putri\\JaspersoftWorkspace\\MyReports\\
 ---
 spring:
   config:
@@ -90,6 +91,7 @@ storage:
   images: /home/onasistownhouse.com/storage/images/
   videos: /home/onasistownhouse.com/storage/videos/
   file: /home/onasistownhouse.com/storage/file/
+  reports: /home/onasistownhouse.com/storage/reports/
 logging:
   pattern: 
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
