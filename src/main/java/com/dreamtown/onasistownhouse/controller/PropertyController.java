@@ -174,6 +174,9 @@ public class PropertyController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Autowired
+    private CetakFormulirPemesananRumah cetakFormulirPemesananRumah;
+
     @RequestMapping(value = "/cetakFormulirPemesanan", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Map> cetakFormulirPemesanan(
             @RequestBody ViewModelCetakFormulirPemesananRumah vmCetakRumah) throws IOException {
@@ -185,10 +188,10 @@ public class PropertyController {
         }
         Map response = new HashMap();
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
-        String path = env.getProperty("storage.file") + "test.pdf";
+        String path = env.getProperty("storage.file") + "/test.pdf";
         List<ViewModelCetakFormulirPemesananRumah> list = new ArrayList<>();
         list.add(vmCetakRumah);
-        new CetakFormulirPemesananRumah().writePdf(list, path);
+        cetakFormulirPemesananRumah.writePdf(list, path);
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
         response.put("file", out);
