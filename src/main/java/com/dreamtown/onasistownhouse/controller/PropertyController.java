@@ -188,7 +188,8 @@ public class PropertyController {
         }
         Map response = new HashMap();
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
-        String path = env.getProperty("storage.file") + "/test.pdf";
+        String path = env.getProperty("storage.file") + "test.pdf";
+        System.out.println("path: " + path);
         List<ViewModelCetakFormulirPemesananRumah> list = new ArrayList<>();
         list.add(vmCetakRumah);
         cetakFormulirPemesananRumah.writePdf(list, path);
