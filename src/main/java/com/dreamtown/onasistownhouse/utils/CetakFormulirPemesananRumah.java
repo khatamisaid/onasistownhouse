@@ -34,9 +34,9 @@ public class CetakFormulirPemesananRumah {
                 String masterReportFileName = env.getProperty("storage.reports")
                                 + "SimulasiSistemPembayaran.jrxml";
                 String subReportFileName1 = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaran1.jasper";
+                                + "SimulasiSistemPembayaranP1.jasper";
                 String subReportFileName2 = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaran2.jasper";
+                                + "SimulasiSistemPembayaranP2.jasper";
                 JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(list);
                 try {
                         JasperReport jasperMasterReport = JasperCompileManager
