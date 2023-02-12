@@ -75,7 +75,14 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
+security:
+  require-ssl: true
 server:
+  ssl:
+    key-store: /etc/letsencrypt/live/onasistownhouse.com/keystore.p12
+    key-store-password: ImNumber4
+    keyStoreType: PKCS12
+    keyAlias: onasistownhouse
   tomcat:
     remote-ip-header: x-forwarded-for
     protocol-header: x-forwarded-proto
