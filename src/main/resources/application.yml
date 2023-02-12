@@ -79,6 +79,8 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
+security:
+  require-ssl: true
 server:
   tomcat:
     remote-ip-header: x-forwarded-for
@@ -95,6 +97,7 @@ server:
     certificate: classpath:fullchain.pem
     certificate-private-key: classpath:privkey.pem
     trust-certificate: classpath:fullchain.pem
+    client-auth: need
 storage: 
   images: /home/onasistownhouse.com/storage/images/
   videos: /home/onasistownhouse.com/storage/videos/
