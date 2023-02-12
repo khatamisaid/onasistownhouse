@@ -309,7 +309,6 @@
             window.location.href = `/p/${property.propertyName}/${tipeProperty}`;
         }
         function setHarga(id, harga) {
-            console.log(`#harga${id}`, formatRupiah(harga));
             $(`#harga${id}`).text(formatRupiah(harga));
         }
         function formatRupiah(angka) {

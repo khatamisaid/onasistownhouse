@@ -136,10 +136,6 @@
             console.log($("#detailPropertyId").val());
         });
 
-        function testing(param) {
-            return param;
-        }
-
         function hapusProperty() {
             Swal.fire({
                 title: 'Yakin ingin menghapus Property?',
@@ -166,7 +162,6 @@
                             });
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            console.log(textStatus);
                         }
                     });
 
@@ -178,7 +173,6 @@
 
         function printListPropertyDetails() {
             $("#listDetailProperty").empty();
-            console.log(property.listPropertyDetails);
             property.listPropertyDetails.forEach(function (propertyDetails, index) {
                 var badge;
                 if (propertyDetails.propertyStatus.idPropertyStatus == 3) {

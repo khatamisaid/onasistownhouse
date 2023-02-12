@@ -48,7 +48,6 @@ public class FileManager {
             channelSftp = setupJsch();
             return channelSftp.isConnected();
         } catch (JSchException e) {
-            System.out.println(e.getMessage());
             return false;
         }
     }
@@ -62,7 +61,6 @@ public class FileManager {
             channelSftp.put(inputStream, pathWithFileName);
             // channelSftp.exit();
         } catch (JSchException | SftpException | IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -77,7 +75,6 @@ public class FileManager {
             // channelSftp.exit();
             return imageStr;
         } catch (JSchException | IOException | SftpException e) {
-            System.out.println(e.getMessage());
         }
         return "";
     }

@@ -199,7 +199,6 @@ public class AdminController {
             p2.transferTo(fileTempP2);
             property.setP2(fileNameP2);
         } catch (NullPointerException e) {
-            System.out.println(e.getMessage());
         }
         try{
             String[] splitP3 = p3.getOriginalFilename().split("\\.");
@@ -209,7 +208,6 @@ public class AdminController {
             p3.transferTo(fileTempP3);
             property.setP3(fileNameP3);
         }catch(NullPointerException e){
-            System.out.println(e.getMessage());
         }
         propertyRepository.save(property);
         response.put("message", "Property Berhasil di tambahkan");

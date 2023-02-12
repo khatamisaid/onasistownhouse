@@ -177,7 +177,6 @@
         $("#btnTambahWilayah").on('click', function () {
             var url = `/wilayah?namaWilayah=${$("#namaWilayah").val()}`;
             $.post(url, function (data) {
-                console.log(data);
                 Swal.fire({
                     position: 'center',
                     icon: 'success',

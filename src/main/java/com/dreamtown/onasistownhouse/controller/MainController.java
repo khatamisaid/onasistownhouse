@@ -105,7 +105,6 @@ public class MainController {
             data.put("message", "sukses upload file");
             data.put("mimeType", mimeType);
         } catch (IllegalStateException | IOException e) {
-            System.out.println(e.getMessage());
             data.put("message", "gagal upload file");
         }
         return new ResponseEntity<>(data, HttpStatus.OK);
@@ -227,14 +226,6 @@ public class MainController {
             res.put("pageNumbers", pageNumbers);
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/tentangkami", method = RequestMethod.GET)
-    public String tentangkamiView(Model model) {
-        Website web = websiteRepository.findAll().get(0);
-        model.addAttribute("website", web);
-        model.addAttribute("websiteName", websiteService.websiteName());
-        return "tentangkami";
     }
 
 }
