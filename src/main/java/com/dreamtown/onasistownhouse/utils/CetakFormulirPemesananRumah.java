@@ -29,6 +29,7 @@ public class CetakFormulirPemesananRumah {
 
         public Boolean writePdf(List<ViewModelCetakFormulirPemesananRumah> list, String path)
                         throws FileNotFoundException {
+                System.out.println("env: " + env.getProperty("storage.reports"));
                 String masterReportFileName = env.getProperty("storage.reports")
                                 + "SimulasiSistemPembayaran.jrxml";
                 String subReportFileName1 = env.getProperty("storage.reports")
