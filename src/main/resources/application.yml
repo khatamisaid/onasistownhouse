@@ -86,7 +86,7 @@ server:
   tomcat:
     remote-ip-header: x-forwarded-for
     protocol-header: x-forwarded-proto
-  port: 8082
+  port: 8443
   error:
     whitelabel:
       enabled: false
