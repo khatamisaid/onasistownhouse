@@ -31,12 +31,12 @@ public class CetakFormulirPemesananRumah {
 
         public Boolean writePdf(List<ViewModelCetakFormulirPemesananRumah> list, String path)
                         throws FileNotFoundException {
-                String masterReportFileName = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaran.jrxml";
-                String subReportFileName1 = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaran1.jasper";
-                String subReportFileName2 = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaran2.jasper";
+                String masterReportFileName = "/reports"
+                                + "/SimulasiSistemPembayaran.jrxml";
+                String subReportFileName1 = "/reports"
+                                + "/SimulasiSistemPembayaran1.jasper";
+                String subReportFileName2 = "/reports"
+                                + "/SimulasiSistemPembayaran2.jasper";
                 JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(list);
                 try {
                         JasperReport jasperMasterReport = JasperCompileManager
