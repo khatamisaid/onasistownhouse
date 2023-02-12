@@ -42,9 +42,9 @@ public class CetakFormulirPemesananRumah {
                         JasperReport jasperMasterReport = JasperCompileManager
                                         .compileReport(new FileInputStream(new File(masterReportFileName)));
                         Map<String, Object> parameters = new HashMap<>();
-                        parameters.put("SUBREPORT_DIR_1",
+                        parameters.put("SUBREPORT_DIR1",
                                         subReportFileName1);
-                        parameters.put("SUBREPORT_DIR_2",
+                        parameters.put("SUBREPORT_DIR2",
                                         subReportFileName2);
                         JasperPrint jrPrint = JasperFillManager.fillReport(jasperMasterReport,
                                         parameters, beanColDataSource);
