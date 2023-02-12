@@ -487,193 +487,51 @@
         });
 
         $("#btnPrint").on('click', function () {
-
-            // var jsonData = {
-            //     "tanggal": "09 January 2023",
-            //     "namaProperty": "Smart Home Jalan Pemuda",
-            //     "tipeProperty": " A ",
-            //     "luasBangunan": "42 (m²)",
-            //     "luasTanah": "52 (m²)",
-            //     "namaPembeli": "asd",
-            //     "noKtpPembeli": "142131",
-            //     "alamatLengkap": "sdasd",
-            //     "noTelepon": "+62812364217128",
-            //     "caraBayar": "Tunai Bertahap",
-            //     "hargaProperty": "Rp. 1.400.000.000",
-            //     "discount": "Rp. 25.000.000",
-            //     "hargaSetelahDiscount": "Rp. 1.375.000.000",
-            //     "bookingFee": "Rp. 25.000.000",
-            //     "tanggalBooking": "09 January 2023",
-            //     "dp": "20%",
-            //     "tanggalDp": "09 January 2023",
-            //     "hargaDp": "Rp. 270.000.000",
-            //     "totalHarga": "Rp. 1.080.000.000",
-            //     "periodeCicilanIsTrue": true,
-            //     "periodeCicilan": "14 bulan",
-            //     "cicilan": "Rp. 100.142.858 / Bulan",
-            //     "kenaAdmin": true,
-            //     "biayaAdmin": "Rp. 6.000.000"
-            // }
-
-            var jsonDataTest = {
-                "tanggal": "10 February 2023",
-                "namaProperty": "Smart Home Koja",
-                "jasperP1": [
-                    {
-                        "namaProperty": "Smart Home Koja",
-                        "tipeProperty": " A ",
-                        "luasBangunan": "40 (m²)",
-                        "luasTanah": "32 (m²)",
-                        "namaPembeli": "Said Muhammad Khatami",
-                        "noKtpPembeli": "32147129370005",
-                        "alamatLengkap": "Jalan Raya pelabuhan Lorong T",
-                        "noTelepon": "+6281324812374",
-                        "namaMarketing": "Jono",
-                        "catatan": "Tambahin Kolam renang",
-                        "caraBayar": "Tunai",
-                        "hargaProperty": "Rp. 1.200.000.000",
-                        "discount": "Rp. 2.500.0000",
-                        "hargaSetelahDiscount": "Rp. 1.175.000.000",
-                        "bookingFee": "Rp. 25.000.000",
-                        "tanggalBooking": "10 February 2023",
-                        "dp": "20%",
-                        "tanggalDp": "13 February 2023",
-                        "hargaDp": "Rp. 230.000.000",
-                        "totalHarga": "Rp. 920.000.000",
-                        "tanggalTotalHarga": "15 February 2023",
-                        "periodeCicilanIsTrue": false,
+            var vmCetakRumah = [];
+            if ($("#caraBayar option:selected").val() == 2) {
+                for (let i = 1; i <= $("#periodeCicilan option:selected").val(); i++) {
+                    var obj = {
+                        "txtCicilan": `Cicilan ${i}`,
+                        "nominalCicilan": $("#hargaCicilan").text().replace(" / Bulan", ""),
+                        "tanggalCicilan": moment($(`#tglCicilan${i}`).val(), 'YYYY-MM-DD').format("DD MMMM YYYY")
                     }
-                ],
-                "jasperP2": [
-                    {
-                        "txtCicilan": "Cicilan 1",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 March 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 2",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 April 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 3",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 May 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 4",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 June 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 5",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 July 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 6",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 August 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 7",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 September 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 8",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 October 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 9",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 November 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 10",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 December 2023"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 11",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 January 2024"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 12",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 February 2024"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 13",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 March 2024"
-                    },
-                    {
-                        "txtCicilan": "Cicilan 14",
-                        "nominalCicilan": "Rp. 65.714.286",
-                        "tanggalCicilan": "13 April 2024"
-                    }
-                ],
-                "periodeCicilanIsTrue": false
+                    vmCetakRumah.push(obj);
+                }
             }
-                // "periodeCicilan": "14 bulan",
-                // "cicilan": "Rp. 65.714.286 / Bulan",
-                // "kenaAdmin": true,
-                // "biayaAdmin": "Rp. 6.000.000"
+            var listSubreport1 = [];
+            var subReport1 = {
+                "namaProperty": $("#property option:selected").text(),
+                "tipeProperty": $("#tipeProperty option:selected").text(),
+                "luasBangunan": $("#luasBangunan").text(),
+                "luasTanah": $("#luasTanah").text(),
+                "namaPembeli": $("#namaPembeli").val(),
+                "noKtpPembeli": $("#nomorKtp").val(),
+                "alamatLengkap": $("#alamatLengkap").val(),
+                "noTelepon": `+62${$("#nomerTelpon").val()}`,
+                "namaMarketing": $("#namaMarketing").val(),
+                "catatan": $("#catatan").val(),
+                "caraBayar": $("#caraBayar option:selected").text(),
+                "hargaProperty": $("#hargaJual").text(),
+                "discount": $("#discount").val(),
+                "hargaSetelahDiscount": $("#totalHarga").text(),
+                "bookingFee": $("#bookingFee").val(),
+                "tanggalBooking": moment($("#tanggalBooking").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
+                "dp": $("#dpBayar option:selected").text(),
+                "tanggalDp": moment($("#tanggalDp").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
+                "hargaDp": $("#totalDp").text(),
+                "totalHarga": $("#totalkeseluruhanHarga").text(),
+                "tanggalTotalHarga": $("#caraBayar option:selected").val() == 1 ? moment($("#tanggalAngsuran").val(), 'YYYY-MM-DD').format("DD MMMM YYYY") : null,
+                "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2
+            };
+            listSubreport1.push(subReport1);
+            var jsonData = {
+                "tanggal": moment().format("DD MMMM YYYY"),
+                "namaProperty": $("#property option:selected").text(),
+                "jasperP1": listSubreport1,
+                "jasperP2": vmCetakRumah,
+                "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2
 
-
-            // var vmCetakRumah = [];
-            // if ($("#caraBayar option:selected").val() == 2) {
-            //     for (let i = 1; i <= $("#periodeCicilan option:selected").val(); i++) {
-            //         var obj = {
-            //             "txtCicilan": `Cicilan ${i}`,
-            //             "nominalCicilan": $("#hargaCicilan").text().replace(" / Bulan", ""),
-            //             "tanggalCicilan": moment($(`#tglCicilan${i}`).val(), 'YYYY-MM-DD').format("DD MMMM YYYY")
-            //         }
-            //         vmCetakRumah.push(obj);
-            //     }
-            // }
-            // var listSubreport1 = [];
-            // var subReport1 = {
-            //     "namaProperty": $("#property option:selected").text(),
-            //     "tipeProperty": $("#tipeProperty option:selected").text(),
-            //     "luasBangunan": $("#luasBangunan").text(),
-            //     "luasTanah": $("#luasTanah").text(),
-            //     "namaPembeli": $("#namaPembeli").val(),
-            //     "noKtpPembeli": $("#nomorKtp").val(),
-            //     "alamatLengkap": $("#alamatLengkap").val(),
-            //     "noTelepon": `+62${$("#nomerTelpon").val()}`,
-            //     "namaMarketing": $("#namaMarketing").val(),
-            //     "catatan": $("#catatan").val(),
-            //     "caraBayar": $("#caraBayar option:selected").text(),
-            //     "hargaProperty": $("#hargaJual").text(),
-            //     "discount": $("#discount").val(),
-            //     "hargaSetelahDiscount": $("#totalHarga").text(),
-            //     "bookingFee": $("#bookingFee").val(),
-            //     "tanggalBooking": moment($("#tanggalBooking").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
-            //     "dp": $("#dpBayar option:selected").text(),
-            //     "tanggalDp": moment($("#tanggalDp").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
-            //     "hargaDp": $("#totalDp").text(),
-            //     "totalHarga": $("#totalkeseluruhanHarga").text(),
-            //     "tanggalTotalHarga": $("#caraBayar option:selected").val() == 1 ? moment($("#tanggalAngsuran").val(), 'YYYY-MM-DD').format("DD MMMM YYYY") : null,
-            //     "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2
-            // };
-            // listSubreport1.push(subReport1);
-            // var jsonData = {
-            //     "tanggal": moment().format("DD MMMM YYYY"),
-            //     "namaProperty": $("#property option:selected").text(),
-            //     "jasperP1": listSubreport1,
-            //     "jasperP2": vmCetakRumah,
-            //     "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2,
-            //     "periodeCicilan": $("#periodeCicilan option:selected").text(),
-            //     "cicilan": $("#hargaCicilan").text(),
-            //     "kenaAdmin": $("#periodeCicilan option:selected").val() > 12,
-            //     "biayaAdmin": $("#biayaAdmin").text(),
-
-            // }
-            // console.log(jsonData);
+            }
 
             var urlHit = `/property/cetakFormulirPemesanan`;
             $.ajax({
