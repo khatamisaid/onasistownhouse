@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 import com.dreamtown.onasistownhouse.viewmodel.ViewModelCetakFormulirPemesananRumah;
 
@@ -22,6 +23,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
+@Service
 public class CetakFormulirPemesananRumah {
 
         @Autowired

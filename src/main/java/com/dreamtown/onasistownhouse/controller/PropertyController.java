@@ -2,10 +2,8 @@ package com.dreamtown.onasistownhouse.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
@@ -35,17 +32,13 @@ import com.dreamtown.onasistownhouse.entity.Website;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
-import com.dreamtown.onasistownhouse.repository.PropertyStatusRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.WebsiteService;
-import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananCicilan;
 import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananRumah;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
 import com.dreamtown.onasistownhouse.viewmodel.ViewModelCetakFormulirPemesananRumah;
-import com.dreamtown.onasistownhouse.viewmodel.ViewModelPemesananCicilan;
 
 import static org.springframework.http.MediaType.*;
-import org.springframework.http.HttpHeaders;
 
 @Controller
 @RequestMapping(value = "/property")
@@ -190,10 +183,9 @@ public class PropertyController {
             ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
             return respEntity;
         }
-        System.out.println("env reports: " + env.getProperty("storage.reports"));
         Map response = new HashMap();
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
-        String path = env.getProperty("storage.file") + "/test.pdf";
+        String path = env.getProperty("storage.file") + "test.pdf";
         List<ViewModelCetakFormulirPemesananRumah> list = new ArrayList<>();
         list.add(vmCetakRumah);
         new CetakFormulirPemesananRumah().writePdf(list, path);
