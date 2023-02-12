@@ -51,6 +51,7 @@ public class CetakFormulirPemesananRumah {
                         JasperExportManager.exportReportToPdfFile(jrPrint, path);
                         return true;
                 } catch (JRException ex) {
+                        System.out.println(ex.getMessage());
                 }
                 return false;
         }
