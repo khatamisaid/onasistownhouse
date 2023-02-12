@@ -59,7 +59,7 @@ public class PropertyController {
 
     @Autowired
     private Environment env;
-    
+
     @Autowired
     private MWilayahRepository mWilayahRepository;
 
@@ -68,7 +68,7 @@ public class PropertyController {
 
     @Autowired
     private WebsiteRepository websiteRepository;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String property(Model model) {
         Website web = websiteRepository.findAll().get(0);
@@ -190,32 +190,13 @@ public class PropertyController {
             ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
             return respEntity;
         }
+        System.out.println("env reports: " + env.getProperty("storage.reports"));
         Map response = new HashMap();
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
         String path = env.getProperty("storage.file") + "/test.pdf";
         List<ViewModelCetakFormulirPemesananRumah> list = new ArrayList<>();
         list.add(vmCetakRumah);
         new CetakFormulirPemesananRumah().writePdf(list, path);
-        InputStream inputStream = new FileInputStream(path);
-        byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
-        response.put("file", out);
-        response.put("filename", filename);
-        return new ResponseEntity(response, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/cetakFormulirPemesananCicilan", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<Map> cetakFormulirPemesananCicilan(@RequestParam String propertyName,
-            @RequestBody List<ViewModelPemesananCicilan> vmCetakRumah) throws IOException {
-        if (propertyName.equalsIgnoreCase("")) {
-            Map response = new HashMap();
-            response.put("message", "File Not Found");
-            ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
-            return respEntity;
-        }
-        Map response = new HashMap();
-        String filename = "Formulir_Pemesanan_Rumah_Bertahap_" + propertyName + ".pdf";
-        String path = env.getProperty("storage.file") + "/test2.pdf";
-        new CetakFormulirPemesananCicilan(vmCetakRumah, path, propertyName).writePdf();
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
         response.put("file", out);
