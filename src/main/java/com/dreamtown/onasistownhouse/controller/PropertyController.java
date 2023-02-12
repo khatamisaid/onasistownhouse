@@ -181,28 +181,6 @@ public class PropertyController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/cetakFormulirPemesananTest", produces = APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity cetakFormulirPemesananWithRequestBody(
-            @RequestPart ViewModelCetakFormulirPemesananRumah vmCetakRumah)
-            throws MalformedURLException, IOException {
-        if (vmCetakRumah.getNamaProperty().equalsIgnoreCase("")) {
-            Map response = new HashMap();
-            response.put("message", "File Not Found");
-            ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
-            return respEntity;
-        }
-        String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
-        String path = env.getProperty("storage.file");
-        new CetakFormulirPemesananRumah(vmCetakRumah, path).writePdf();
-        InputStream inputStream = new FileInputStream(path);
-        String type = new File(path).toURL().openConnection().guessContentTypeFromName(path);
-        byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("content-disposition", "attachment; filename=" + filename);
-        responseHeaders.add("Content-Type", type);
-        return new ResponseEntity(out, responseHeaders, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/cetakFormulirPemesanan", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Map> cetakFormulirPemesanan(
             @RequestBody ViewModelCetakFormulirPemesananRumah vmCetakRumah) throws IOException {
@@ -215,7 +193,9 @@ public class PropertyController {
         Map response = new HashMap();
         String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
         String path = env.getProperty("storage.file") + "/test.pdf";
-        new CetakFormulirPemesananRumah(vmCetakRumah, path).writePdf();
+        List<ViewModelCetakFormulirPemesananRumah> list = new ArrayList<>();
+        list.add(vmCetakRumah);
+        new CetakFormulirPemesananRumah().writePdf(list, path);
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
         response.put("file", out);

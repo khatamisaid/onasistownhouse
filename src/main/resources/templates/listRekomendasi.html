@@ -18,7 +18,7 @@
         var page = 1;
         var size = 4;
         function getRekomendasiProperty() {
-            $.get(`/listRekomendasi?page=${page}&size=${size}&area=${$("#area option:selected").val()}&sortBy=${$("#sortBy option:selected").val()}`, function (res) {
+            $.get(`/listRekomendasi?page=${page}&size=${size}&area=${$("#area option:selected").val() ?? ''}&sortBy=${$("#sortBy option:selected").val() ?? '1'}`, function (res) {
                 $("#contentListRekomendasi").empty();
                 res.propertyPage.content.forEach(function (property, index) {
                     var propertyDetails = property.listPropertyDetails[0];

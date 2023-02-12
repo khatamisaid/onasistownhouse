@@ -1,5 +1,8 @@
 package com.dreamtown.onasistownhouse.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +11,7 @@ import java.util.Map;
 
 import com.dreamtown.onasistownhouse.viewmodel.ViewModelCetakFormulirPemesananRumah;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -16,38 +20,31 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class CetakFormulirPemesananRumah {
-    
-    private List<ViewModelCetakFormulirPemesananRumah> data;
-    private String path;
 
-    public CetakFormulirPemesananRumah(ViewModelCetakFormulirPemesananRumah vmCetakPemesanan, String path){
-        List<ViewModelCetakFormulirPemesananRumah> tempList = new ArrayList<>();
-        tempList.add(vmCetakPemesanan);
-        this.data = tempList;
-        this.path = path;
-    }
-
-    public Boolean writePdf(){
+    public Boolean writePdf(List<ViewModelCetakFormulirPemesananRumah> list, String path) throws FileNotFoundException {
+        String masterReportFileName = "/reports"
+                + "/SimulasiSistemPembayaran.jrxml";
+        String subReportFileName1 = "./reports"
+                + "/SimulasiSistemPembayaran1.jasper";
+        String subReportFileName2 = "/reports"
+                + "/SimulasiSistemPembayaran2.jasper";
+        JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(list);
         try {
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(data);
-            InputStream employeeReportStream = getClass().getResourceAsStream("/reports/formulirPemesananRumah.jrxml");
-            JasperReport jr = JasperCompileManager.compileReport(employeeReportStream);
-            JasperPrint jrPrint = JasperFillManager.fillReport(jr, setParameterReport(), dataSource);
+            JasperReport jasperMasterReport = JasperCompileManager
+                    .compileReport(new FileInputStream(new File(masterReportFileName)));
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("SUBREPORT_DIR_1",
+                    subReportFileName1);
+            parameters.put("SUBREPORT_DIR_2",
+                    subReportFileName2);
+            JasperPrint jrPrint = JasperFillManager.fillReport(jasperMasterReport,
+                    parameters, beanColDataSource);
             JasperExportManager.exportReportToPdfFile(jrPrint, path);
             return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (JRException ex) {
+            System.out.println(ex.getStackTrace().toString());
+            System.out.println(ex.getMessage());
         }
         return false;
     }
-
-    private Map<String, Object> setParameterReport() {
-        Map data = new HashMap();
-        InputStream logo = getClass().getResourceAsStream("/static/img/favicon.png");
-        InputStream watermark = getClass().getResourceAsStream("/static/img/watermark.png");
-        data.put("logo", logo);
-        data.put("watermark", watermark);
-        return data;
-    }
-
 }
