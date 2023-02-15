@@ -183,12 +183,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row justify-content-center mt-5">
-            <div class="col-md-4 text-center" style="background-color: wheat; border-radius: 8px; padding: 4px 4px 4px 4px;">
-                <h4 style="margin-top: 8px;">Jumlah Visitor</h4>
-                <h1>2</h1>
-            </div>
-        </div> -->
     </section>
 
     <!-- Promo Video -->
@@ -277,6 +271,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-4 text-center"
+                style="background-color: wheat; border-radius: 8px; padding: 4px 4px 4px 4px;">
+                <h4 style="margin-top: 8px;">Jumlah Visitor</h4>
+                <h1>2</h1>
             </div>
         </div>
     </section>
@@ -410,8 +411,21 @@
             }
         });
         function btnClickWA(id) {
-            $.get(`/cp/findById/${id}`, function (notelp) {
-                window.open(`https://wa.me/+62${notelp}`);
+            $.get(`/cp/findById/${id}`, function (cp) {
+                $.ajax({
+                    url: `/cp/log_whatsapp`,
+                    method: "POST",
+                    data: JSON.stringify(cp),
+                    processData: false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data, textStatus, jqXHR) {
+                        var newWindow = window.open("","_blank");
+                        newWindow.location.href = `https://wa.me/+62${cp.nomorTelpon}`;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+
             });
         }
         /*]]>*/

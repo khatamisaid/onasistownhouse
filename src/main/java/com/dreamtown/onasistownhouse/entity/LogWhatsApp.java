@@ -30,7 +30,10 @@ public class LogWhatsApp extends DateAudit{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_log_whatsapp")
-    private Integer idLogWhatsApp;
+    private Long idLogWhatsApp;
+
+    @Column(name = "dihubungi")
+    private Integer dihubungi;
 
     @Column(name = "nomor_telpon")
     private String nomorTelpon;

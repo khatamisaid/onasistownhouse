@@ -52,10 +52,121 @@
                     </div>
                 </div>
             </div>
+            <div class="container mt-5">
+                <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <canvas id="barDataNoTelpon"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
+    <script th:src="@{/js/chart-utils.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:inline="javascript">
+        var Utils = ChartUtils.init();
+        var noTelpBarChart;
+
+        function chartNoTelpon() {
+            var listLables = [];
+            var listValues = [];
+            $.get(`/cp/log_whatsapp`, function (listLog) {
+                listLog.forEach(function (log) {
+                    listLables.push(log.namaContact);
+                    listValues.push(log.dihubungi);
+                });
+            });
+            setTimeout(() => {
+                if (noTelpBarChart) {
+                    noTelpBarChart.destroy();
+                }
+                var ctx = $(`#barDataNoTelpon`);
+                noTelpBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: listLables,
+                        datasets: [
+                            {
+                                label: 'Total Nama yang dihubungi',
+                                data: listValues,
+                                borderColor: Utils.CHART_COLORS.blue,
+                                backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+                                borderWidth: 2,
+                                borderRadius: 5,
+                                borderSkipped: false,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Total Nama yang dihubungi',
+                                color: "white", // not 'fontColor:' anymore
+                                // fontSize: 18,
+                                font: {
+                                    size: 18, // 'size' now within object 'font {}'
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {  // not 'yAxes: [{' anymore (not an array anymore)
+                                ticks: {
+                                    color: "white", // not 'fontColor:' anymore
+                                    // fontSize: 18,
+                                    font: {
+                                        size: 18, // 'size' now within object 'font {}'
+                                    },
+                                    stepSize: 1,
+                                    beginAtZero: true
+                                }
+                            },
+                            x: {  // not 'xAxes: [{' anymore (not an array anymore)
+                                ticks: {
+                                    color: "white",  // not 'fontColor:' anymore
+                                    //fontSize: 14,
+                                    font: {
+                                        size: 14 // 'size' now within object 'font {}'
+                                    },
+                                    stepSize: 1,
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    },
+                });
+            }, 2000);
+
+        }
+
+        const ctx3 = document.getElementById('barDataNoTelpon');
+        const actions = [
+            {
+                name: 'Randomize',
+                handler(chart) {
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data = Utils.numbers({ count: chart.data.labels.length, min: -100, max: 100 });
+                    });
+                    chart.update();
+                }
+            },
+        ];
+        const DATA_COUNT = 7;
+        const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+
+        const labels = Utils.months({ count: 7 });
+        $(document).ready(function () {
+            chartNoTelpon();
+        });
+    </script>
 </body>
 
 </html>
