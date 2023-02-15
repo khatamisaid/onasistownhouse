@@ -89,8 +89,10 @@ public class MainController {
         String namafile = web.getWebsiteVideo().split("\\.")[0];
         model.addAttribute("websiteVideo", "/stream/mp4/" + namafile);
         List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
-        ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
-        model.addAttribute("contactPerson", cp);
+        if (listContactPerson.size() > 0) {
+            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
+            model.addAttribute("contactPerson", cp);
+        }
         return "index";
     }
 
