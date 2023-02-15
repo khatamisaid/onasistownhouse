@@ -1,4 +1,4 @@
-<a rel="nofollow" target="_blank" title="WhatsApp" th:attr="onclick=|btnClickWA('${contactPerson.idContactPerson}')|" class="progress-wrap1"
+<a th:if="${contactPerson != null}" rel="nofollow" target="_blank" title="WhatsApp" th:attr="onclick=|btnClickWA('${contactPerson.idContactPerson}')|" class="progress-wrap1"
     th:fragment="hubungikami">
     <img style="width: 42px;" src="/images/whatsapp-logo.png" alt="" srcset="">
     <span>Halo, Hubungi Kami</span>
