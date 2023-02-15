@@ -56,18 +56,13 @@
                             <input style="display: none;" type="file" name="foto"
                                 th:attr="onchange=|changeVideo('${website.idWebsite}')|" id="video"
                                 class="custom-file-input" accept="video/mp4">
-                            <button id="testingBtn" class="btn btn-primary">Test</button>
                         </div>
                         <section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="3"
                             data-background="/images/backgroundvideo.jpg">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-8 offset-md-2 text-center">
-                                        <!-- <span><i class="star-rating"></i><i class="star-rating"></i><i
-                                                class="star-rating"></i><i class="star-rating"></i><i
-                                                class="star-rating"></i></span> -->
                                         <div class="section-title"><span th:text="${website.websiteName}"></span></div>
-                                        <!-- <div class="section-title"><span>Promotional Video</span></div> -->
                                     </div>
                                 </div>
                                 <div class="row">
@@ -93,15 +88,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- <section class="section-padding">
-            <div class="container">
-                <div class="col-md-12">
-                    <div class="section-subtitle">Onasis Town House</div>
-                    <div class="section-title">Property</div>
-                </div>
-            </div>
-        </section> -->
     </div>
     <div id="modalLoading" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -110,7 +96,8 @@
                 <div class="modal-body">
                     <div class="preloader-position loader"> <span></span> </div>
                     <h4 style="color: #aa8453; text-align: center; margin-top: 12px;">Mohon tunggu</h4>
-                    <h4 style="color: #aa8453; text-align: center; margin-top: 8px;">Sedang Mengupload Video Animasi...</h4>
+                    <h4 style="color: #aa8453; text-align: center; margin-top: 8px;">Sedang Mengupload Video Animasi...
+                    </h4>
                 </div>
             </div>
         </div>

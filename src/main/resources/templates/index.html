@@ -183,6 +183,12 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="row justify-content-center mt-5">
+            <div class="col-md-4 text-center" style="background-color: wheat; border-radius: 8px; padding: 4px 4px 4px 4px;">
+                <h4 style="margin-top: 8px;">Jumlah Visitor</h4>
+                <h1>2</h1>
+            </div>
+        </div> -->
     </section>
 
     <!-- Promo Video -->
@@ -403,6 +409,11 @@
                 }
             }
         });
+        function btnClickWA(id) {
+            $.get(`/cp/findById/${id}`, function (notelp) {
+                window.open(`https://wa.me/+62${notelp}`);
+            });
+        }
         /*]]>*/
     </script>
 </body>

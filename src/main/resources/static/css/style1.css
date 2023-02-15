@@ -4750,6 +4750,18 @@ select {
     visibility: visible;
 }
 
+.progress-wrap2 {
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    bottom: 50px;
+    left: 40px;
+    display: block;
+    z-index: 100;
+    opacity: 1;
+    visibility: visible;
+}
+
 .progress-wrap.active-progress {
     opacity: 1;
     visibility: visible;
