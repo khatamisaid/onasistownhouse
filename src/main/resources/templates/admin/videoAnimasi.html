@@ -56,6 +56,7 @@
                             <input style="display: none;" type="file" name="foto"
                                 th:attr="onchange=|changeVideo('${website.idWebsite}')|" id="video"
                                 class="custom-file-input" accept="video/mp4">
+                            <button id="testingBtn" class="btn btn-primary">Test</button>
                         </div>
                         <section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="3"
                             data-background="/images/backgroundvideo.jpg">
@@ -102,6 +103,18 @@
             </div>
         </section> -->
     </div>
+    <div id="modalLoading" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="preloader-position loader"> <span></span> </div>
+                    <h4 style="color: #aa8453; text-align: center; margin-top: 12px;">Mohon tunggu</h4>
+                    <h4 style="color: #aa8453; text-align: center; margin-top: 8px;">Sedang Mengupload Video Animasi...</h4>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
@@ -120,6 +133,7 @@
             }
         });
         function changeVideo(id) {
+            $("#modalLoading").toggle('modal');
             var formData = new FormData();
             formData.append("video", $(`#video`).prop('files')[0]);
             $.ajax({
@@ -129,6 +143,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data, textStatus, jqXHR) {
+                    $("#modalLoading").toggle('modal');
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -140,6 +155,7 @@
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    $("#modalLoading").toggle('modal');
                     Swal.fire({
                         position: 'center',
                         icon: 'error',

@@ -44,7 +44,8 @@ storage:
   images: C:\\filetemp\\images\\
   videos: C:\\filetemp\\videos\\
   file: ./laporan/
-  reports: C:\\Users\\Putri\\JaspersoftWorkspace\\MyReports\\
+  reports: C:\\Users\\MTJ 03\\Music\\reports\\
+  # reports: C:\\Users\\Putri\\JaspersoftWorkspace\\MyReports\\
 ---
 spring:
   config:
