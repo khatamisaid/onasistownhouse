@@ -54,7 +54,7 @@ spring:
   application:
     name: OnasisTownHouse
   datasource:
-      url: jdbc:mysql://localhost:3306/onasistownhouse
+      url: jdbc:mysql://localhost:3306/onas_development
       username: onas_development
       password: 4vl7fgxf@gHlJj@s
       driverClassName: com.mysql.cj.jdbc.Driver
