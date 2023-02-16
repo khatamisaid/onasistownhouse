@@ -1,6 +1,7 @@
 package com.dreamtown.onasistownhouse.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
+import com.dreamtown.onasistownhouse.entity.LogAktivitas;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Website;
 import com.dreamtown.onasistownhouse.repository.ContactPersonRepository;
+import com.dreamtown.onasistownhouse.repository.LogAktivitasRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
@@ -81,6 +84,12 @@ public class MainController {
     @Autowired
     private HttpSession session;
 
+    @Autowired
+    private LogAktivitasRepository logAktivitasRepository;
+
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
+
     @GetMapping(value = "/")
     public String index(Model model) {
         Website web = websiteRepository.findAll().get(0);
@@ -92,6 +101,9 @@ public class MainController {
         if (listContactPerson.size() > 0) {
             ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
             model.addAttribute("contactPerson", cp);
+        }
+        if (activeProfile.equalsIgnoreCase("production")) {
+            logAktivitasRepository.save(new LogAktivitas(null, "Beranda", "/"));
         }
         return "index";
     }
@@ -197,6 +209,12 @@ public class MainController {
             model.addAttribute("sizePhotoLainnya", "+" + (propertyDetails.getListPhoto().size() - 5) + " Lainnya");
         }
         model.addAttribute("lineSeparator", System.lineSeparator());
+        if (activeProfile.equalsIgnoreCase("production")) {
+            logAktivitasRepository.save(
+                    new LogAktivitas(null, namaProperty.get().trim() + " tipe " +
+                            tipeProperty.get(),
+                            "/p/" + namaProperty.get().trim() + "/" + tipeProperty.get()));
+        }
         return "propertyDetails";
     }
 
@@ -215,6 +233,11 @@ public class MainController {
                 .findAllByIdPropertyAndPropertyStatusIsNotOrderByTipePropertyAsc(property.getIdProperty()));
         model.addAttribute("website", web);
         model.addAttribute("websiteName", websiteService.websiteName());
+        if (activeProfile.equalsIgnoreCase("production")) {
+            logAktivitasRepository.save(
+                    new LogAktivitas(null, namaProperty.get().trim(), "/p/" +
+                            namaProperty.get().trim() + "/details"));
+        }
         return "listDetailsProperty";
     }
 

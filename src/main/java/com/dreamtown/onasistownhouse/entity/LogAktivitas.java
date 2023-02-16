@@ -33,7 +33,7 @@ public class LogAktivitas extends DateAudit{
     private Long idLogAktivitas;
 
     @Column(name = "content")
-    private Integer content;
+    private String content;
 
     @Column(name = "fullpath")
     private String fullpath;

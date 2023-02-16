@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
+import com.dreamtown.onasistownhouse.entity.LogAktivitas;
 import com.dreamtown.onasistownhouse.entity.Photo;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.entity.Website;
+import com.dreamtown.onasistownhouse.repository.LogAktivitasRepository;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
@@ -62,12 +65,21 @@ public class PropertyController {
     @Autowired
     private WebsiteRepository websiteRepository;
 
+    @Autowired
+    private LogAktivitasRepository logAktivitasRepository;
+
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
+
     @RequestMapping(method = RequestMethod.GET)
     public String property(Model model) {
         Website web = websiteRepository.findAll().get(0);
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
         model.addAttribute("website", web);
         model.addAttribute("websiteName", websiteService.websiteName());
+        if (activeProfile.equalsIgnoreCase("production")) {
+            logAktivitasRepository.save(new LogAktivitas(null, "Property", "/property"));
+        }
         return "property";
     }
 
