@@ -49,6 +49,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -116,14 +117,23 @@ public class MainController {
     @ResponseBody
     public ResponseEntity<InputStreamResource> loadfile(@PathVariable(required = true) String filename)
             throws MalformedURLException, IOException {
-        String splitFileName[] = filename.split("\\.");
-        String extension = splitFileName[splitFileName.length - 1];
-        File fileTemp = null;
-        if (extension.equalsIgnoreCase("mp4")) {
-            fileTemp = new File(env.getProperty("storage.videos") + filename);
-        } else if (extensionJpeg().contains(extension)) {
-            fileTemp = new File(env.getProperty("storage.images") + filename);
+        // String splitFileName[] = filename.split("\\.");
+        // String extension = splitFileName[splitFileName.length - 1];
+        File fileTemp = new File(env.getProperty("storage.images") + filename);
+        if (!fileTemp.exists()) {
+            File file = new File(env.getProperty("storage.images") + "imagenotfound.png");
+            URLConnection connection = file.toURL().openConnection();
+            String mimeType = connection.getContentType();
+            InputStream is = new FileInputStream(file);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(mimeType))
+                    .body(new InputStreamResource(is));
         }
+        // if (extension.equalsIgnoreCase("mp4")) {
+        // fileTemp = new File(env.getProperty("storage.videos") + filename);
+        // } else if (extensionJpeg().contains(extension)) {
+        // fileTemp =
+        // }
         URLConnection connection = fileTemp.toURL().openConnection();
         String mimeType = connection.getContentType();
         InputStream is = new FileInputStream(fileTemp);
@@ -132,14 +142,14 @@ public class MainController {
                 .body(new InputStreamResource(is));
     }
 
-    @RequestMapping(value = "/stream/{fileType}/{fileName}", method = RequestMethod.GET)
-    public Mono<ResponseEntity<byte[]>> streamVideo(
-            @RequestHeader(value = "Range", required = false) String httpRangeList,
-            @PathVariable("fileType") String fileType,
-            // @PathVariable("path") String path,
-            @PathVariable("fileName") String fileName) {
-        return Mono.just(videoStreamService.prepareContent(fileName, fileType, httpRangeList));
-    }
+    // @RequestMapping(value = "/stream/{fileType}/{fileName}", method = RequestMethod.GET)
+    // public Mono<ResponseEntity<byte[]>> streamVideo(
+    //         @RequestHeader(value = "Range", required = false) String httpRangeList,
+    //         @PathVariable("fileType") String fileType,
+    //         // @PathVariable("path") String path,
+    //         @PathVariable("fileName") String fileName) {
+    //     return Mono.just(videoStreamService.prepareContent(fileName, fileType, httpRangeList));
+    // }
 
     private List<String> extensionJpeg() {
         List<String> ext = new ArrayList<>();
