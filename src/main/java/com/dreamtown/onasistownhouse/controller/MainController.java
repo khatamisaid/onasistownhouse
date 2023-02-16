@@ -49,7 +49,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -142,14 +141,14 @@ public class MainController {
                 .body(new InputStreamResource(is));
     }
 
-    // @RequestMapping(value = "/stream/{fileType}/{fileName}", method = RequestMethod.GET)
-    // public Mono<ResponseEntity<byte[]>> streamVideo(
-    //         @RequestHeader(value = "Range", required = false) String httpRangeList,
-    //         @PathVariable("fileType") String fileType,
-    //         // @PathVariable("path") String path,
-    //         @PathVariable("fileName") String fileName) {
-    //     return Mono.just(videoStreamService.prepareContent(fileName, fileType, httpRangeList));
-    // }
+    @RequestMapping(value = "/stream/{fileType}/{fileName}", method = RequestMethod.GET)
+    public Mono<ResponseEntity<byte[]>> streamVideo(
+            @RequestHeader(value = "Range", required = false) String httpRangeList,
+            @PathVariable("fileType") String fileType,
+            // @PathVariable("path") String path,
+            @PathVariable("fileName") String fileName) {
+        return Mono.just(videoStreamService.prepareContent(fileName, fileType, httpRangeList));
+    }
 
     private List<String> extensionJpeg() {
         List<String> ext = new ArrayList<>();
