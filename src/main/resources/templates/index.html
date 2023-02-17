@@ -276,8 +276,13 @@
         <div class="row justify-content-center mt-5">
             <div class="col-md-4 text-center"
                 style="background-color: wheat; border-radius: 8px; padding: 4px 4px 4px 4px;">
-                <h4 style="margin-top: 8px;">Jumlah Visitor</h4>
-                <h2 th:text="${totalKeseluruhan}"></h2>
+                <h4 style="margin-top: 8px;">Jumlah Visitor Keseluruhan</h4>
+                <h2 id="pengunjungKeseluruhan"></h2>
+            </div>
+            <div class="col-md-4 text-center"
+                style="background-color: wheat; border-radius: 8px; padding: 4px 4px 4px 4px;">
+                <h4 style="margin-top: 8px;">Jumlah Visitor Hari ini</h4>
+                <h2 id="pengunjungHariIni"></h2>
             </div>
         </div>
     </section>
@@ -428,6 +433,15 @@
 
             });
         }
+        function dataLog(){
+            $.get(`/log/aktivitas?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function(data){
+                $("#pengunjungKeseluruhan").text(data.totalKeseluruhan);
+                $("#pengunjungHariIni").text(data.totalHariIni);
+            });
+        }
+        $(document).ready(function(){
+            dataLog();
+        })
         /*]]>*/
     </script>
 </body>
