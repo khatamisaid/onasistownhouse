@@ -411,7 +411,7 @@
             }
         });
         function btnClickWA(id) {
-            $.get(`/log/findById/${id}`, function (cp) {
+            $.get(`/log/whatsapp/findById/${id}`, function (cp) {
                 $.ajax({
                     url: `/log/whatsapp`,
                     method: "POST",
