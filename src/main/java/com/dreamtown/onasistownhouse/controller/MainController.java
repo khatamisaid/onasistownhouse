@@ -111,6 +111,7 @@ public class MainController {
         if (activeProfile.equalsIgnoreCase("production")) {
             logAktivitasRepository.save(new LogAktivitas(null, "Beranda", "/"));
         }
+        model.addAttribute("totalKeseluruhan", logAktivitasRepository.findAll().size());
         return "index";
     }
 

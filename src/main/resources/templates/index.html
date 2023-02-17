@@ -277,7 +277,7 @@
             <div class="col-md-4 text-center"
                 style="background-color: wheat; border-radius: 8px; padding: 4px 4px 4px 4px;">
                 <h4 style="margin-top: 8px;">Jumlah Visitor</h4>
-                <h2 id="jumlahKeseluruhan">2</h2>
+                <h2 th:text="${totalKeseluruhan}"></h2>
             </div>
         </div>
     </section>
@@ -428,14 +428,6 @@
 
             });
         }
-        function setJumlahKeseluruhan() {
-            $.get(`/log/all_aktivitas`, function (data) {
-                $("#jumlahKeseluruhan").text(data.totalKeseluruhan);
-            });
-        }
-        $(document).ready(function () {
-            setJumlahKeseluruhan();
-        })
         /*]]>*/
     </script>
 </body>

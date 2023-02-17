@@ -54,13 +54,6 @@ public class LogController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/all_aktivitas", method = RequestMethod.GET)
-    public ResponseEntity<Map> get_log_all_aktivitas() {
-        Map res = new HashMap<>();
-        res.put("totalKeseluruhan", logAktivitasRepository.findAll().size());
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/whatsapp", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Map> logWhatsApp(@RequestBody ContactPerson cp) {
         Map res = new HashMap();
