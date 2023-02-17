@@ -32,9 +32,6 @@ public class LogWhatsApp extends DateAudit{
     @Column(name = "id_log_whatsapp")
     private Long idLogWhatsApp;
 
-    @Column(name = "dihubungi")
-    private Integer dihubungi;
-
     @Column(name = "nomor_telpon")
     private String nomorTelpon;
 

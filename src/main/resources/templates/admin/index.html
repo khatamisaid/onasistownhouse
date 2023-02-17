@@ -54,6 +54,32 @@
             </div>
             <div class="container mt-5">
                 <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <h4>Total Data Pengunjung Keseluruhan</h4>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <h1 id="pengunjungKeseluruhan">0</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                    <h4>Total Data Pengunjung Hari ini</h4>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <h1 id="pengunjungHariIni">0</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-2">
+                <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
                             <canvas id="barDataNoTelpon"></canvas>
@@ -66,18 +92,26 @@
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:src="@{/js/chart-utils.min.js}"></script>
+    <script th:src="@{/js/moment.min.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:inline="javascript">
         var Utils = ChartUtils.init();
         var noTelpBarChart;
 
+        function dataLog(){
+            $.get(`/log/aktivitas?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function(data){
+                $("#pengunjungKeseluruhan").text(data.totalKeseluruhan);
+                $("#pengunjungHariIni").text(data.totalHariIni);
+            });
+        }
+
         function chartNoTelpon() {
             var listLables = [];
             var listValues = [];
-            $.get(`/cp/log_whatsapp`, function (listLog) {
+            $.get(`/log/whatsapp?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function (listLog) {
                 listLog.forEach(function (log) {
-                    listLables.push(log.namaContact);
-                    listValues.push(log.dihubungi);
+                    listLables.push(log[1]);
+                    listValues.push(log[0]);
                 });
             });
             setTimeout(() => {
@@ -164,6 +198,7 @@
 
         const labels = Utils.months({ count: 7 });
         $(document).ready(function () {
+            dataLog();
             chartNoTelpon();
         });
     </script>

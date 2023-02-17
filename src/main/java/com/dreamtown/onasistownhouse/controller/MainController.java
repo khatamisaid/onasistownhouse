@@ -28,6 +28,7 @@ import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Website;
 import com.dreamtown.onasistownhouse.repository.ContactPersonRepository;
 import com.dreamtown.onasistownhouse.repository.LogAktivitasRepository;
+import com.dreamtown.onasistownhouse.repository.LogWhatsAppRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.PropertyDetailsService;
 import com.dreamtown.onasistownhouse.service.PropertyService;
@@ -43,8 +44,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +89,9 @@ public class MainController {
 
     @Autowired
     private LogAktivitasRepository logAktivitasRepository;
+
+    @Autowired
+    private LogWhatsAppRepository logWhatsAppRepository;
 
     @Value("${spring.profiles.active}")
     private String activeProfile;
@@ -262,4 +268,14 @@ public class MainController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/cobalogwhatsapp")
+    public ResponseEntity<Map> cobalogwhatsapp() {
+        Map res = new HashMap<>();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String nextDate = new SimpleDateFormat("yyyy-MM-dd").format(utils.addDays(new Date(), 1));
+        List<Object[]> list = logWhatsAppRepository.logWhatsApp(currentDate.replace("-", ""),
+                nextDate.replace("-", ""));
+        res.put("data", list);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }

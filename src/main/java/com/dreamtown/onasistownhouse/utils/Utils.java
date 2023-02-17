@@ -1,5 +1,7 @@
 package com.dreamtown.onasistownhouse.utils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
@@ -26,5 +28,12 @@ public class Utils {
     public Integer getRandomIndex(Integer length) {
         Random rand = new Random();
         return rand.nextInt(length);
+    }
+
+    public Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
+        return cal.getTime();
     }
 }
