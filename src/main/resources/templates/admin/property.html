@@ -134,6 +134,25 @@
         });
         $("#btnHapusOption").on('click', function () {
             console.log($("#detailPropertyId").val());
+            $.ajax({
+                url: `/admin/deleteDetailsPropertyById/${$("#detailPropertyId").val()}`,
+                method: 'DELETE',
+                success: function (data, textStatus, jqXHR) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: `${data.message}`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function () {
+                        $("#modalOptions").toggle('modal');
+                        window.location.href = `/admin`;
+                    });
+                },
+                error: function (jqXHR, textStatus, err) {
+
+                }
+            })
         });
 
         function hapusProperty() {

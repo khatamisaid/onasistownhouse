@@ -52,6 +52,14 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="container mt-5">
+                <div class="d-flex justify-content-end">
+                    <label for="tglSebelum" class="ml-5" style="font-size: 16px; font-weight: 600;">Dari: </label>
+                    <input id="tglSebelum" type="date" class="form-control-sm ml-2"/>
+                    <label for="tglSesudah" class="ml-5" style="font-size: 16px; font-weight: 600;">Sampai: </label>
+                    <input id="tglSesudah" type="date" class="form-control-sm ml-2"/>
+                </div>
+            </div> -->
             <div class="container mt-5">
                 <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
                     <div class="row">
@@ -98,8 +106,8 @@
         var Utils = ChartUtils.init();
         var noTelpBarChart;
 
-        function dataLog(){
-            $.get(`/log/aktivitas?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function(data){
+        function dataLog() {
+            $.get(`/log/aktivitas?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function (data) {
                 $("#pengunjungKeseluruhan").text(data.totalKeseluruhan);
                 $("#pengunjungHariIni").text(data.totalHariIni);
             });
@@ -108,7 +116,8 @@
         function chartNoTelpon() {
             var listLables = [];
             var listValues = [];
-            $.get(`/log/whatsapp?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function (listLog) {
+            // var url = `/log/whatsapp?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`;
+            $.get(`/log/whatsapp?tglDari=2023-01-01&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function (listLog) {
                 listLog.forEach(function (log) {
                     listLables.push(log[1]);
                     listValues.push(log[0]);

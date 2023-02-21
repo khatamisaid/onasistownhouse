@@ -273,106 +273,17 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-around mt-5">
-            <div class="col-md-4 text-center"
-                style="background-color: wheat; border-radius: 8px; padding: 4px 4px 4px 4px;">
-                <h4 style="margin-top: 8px;">Jumlah Visitor Keseluruhan</h4>
-                <h2 id="pengunjungKeseluruhan"></h2>
-                <h4 style="margin-top: 8px;">Jumlah Visitor Hari ini</h4>
-                <h2 id="pengunjungHariIni"></h2>
-            </div>
-        </div>
     </section>
-    <!-- <section class="news section-padding bg-black">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-subtitle"><span>Hotel Blog</span></div>
-                    <div class="section-title"><span>Our News</span></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-carousel owl-theme">
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img src="img/news/1.jpg" alt="Image Not Found">
-                                <div class="date">
-                                    <a href="post.html"> <span>Dec</span> <i>02</i> </a>
-                                </div>
-                            </div>
-                            <div class="con"> <span class="category">
-                                    <a href="news.html">Restaurant</a>
-                                </span>
-                                <h5><a href="post.html">Historic restaurant renovated</a></h5>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img src="img/news/2.jpg" alt="Image Not Found">
-                                <div class="date">
-                                    <a href="post.html"> <span>Dec</span> <i>04</i> </a>
-                                </div>
-                            </div>
-                            <div class="con"> <span class="category">
-                                    <a href="news.html">Spa</a>
-                                </span>
-                                <h5><a href="post.html">Benefits of Spa Treatments</a></h5>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img src="img/news/3.jpg" alt="Image Not Found">
-                                <div class="date">
-                                    <a href="post.html"> <span>Dec</span> <i>06</i> </a>
-                                </div>
-                            </div>
-                            <div class="con"> <span class="category">
-                                    <a href="news.html">Bathrooms</a>
-                                </span>
-                                <h5><a href="post.html">Hotel Bathroom Collections</a></h5>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img src="img/news/4.jpg" alt="Image Not Found">
-                                <div class="date">
-                                    <a href="post.html"> <span>Dec</span> <i>08</i> </a>
-                                </div>
-                            </div>
-                            <div class="con">
-                                <span class="category">
-                                    <a href="news.html">Health</a>
-                                </span>
-                                <h5><a href="post.html">Weight Loss with Fitness Health Club</a></h5>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img src="img/news/6.jpg" alt="Image Not Found">
-                                <div class="date">
-                                    <a href="post.html"> <span>Dec</span> <i>08</i> </a>
-                                </div>
-                            </div>
-                            <div class="con"> <span class="category">
-                                    <a href="news.html">Design</a>
-                                </span>
-                                <h5><a href="post.html">Retro Lighting Design in The Hotels</a></h5>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="position-re o-hidden"> <img src="img/news/5.jpg" alt="Image Not Found">
-                                <div class="date">
-                                    <a href="post.html"> <span>Dec</span> <i>08</i> </a>
-                                </div>
-                            </div>
-                            <div class="con"> <span class="category">
-                                    <a href="news.html">Health</a>
-                                </span>
-                                <h5><a href="post.html">Benefits of Swimming for Your Health</a></h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="progress-wrap2 text-center">
+        <div class="card" style="border-radius: 8px; background-color: wheat;">
+            <div class="card-body">
+                <p style="margin-bottom: 0px;">Jumlah Visitor Keseluruhan</p>
+                <p style="margin-bottom: 0px;" id="pengunjungKeseluruhan"></p>
+                <p style="margin-bottom: 0px;">Jumlah Visitor Hari ini</p>
+                <p style="margin-bottom: 0px;" id="pengunjungHariIni"></p>
             </div>
         </div>
-    </section> -->
+    </div>
     <!-- Footer -->
     <div th:replace="fragments/footerTop :: footerTop"></div>
     <div th:replace="fragments/footerBottom :: footerBottom"></div>
@@ -431,13 +342,13 @@
 
             });
         }
-        function dataLog(){
-            $.get(`/log/aktivitas?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function(data){
+        function dataLog() {
+            $.get(`/log/aktivitas?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function (data) {
                 $("#pengunjungKeseluruhan").text(data.totalKeseluruhan);
                 $("#pengunjungHariIni").text(data.totalHariIni);
             });
         }
-        $(document).ready(function(){
+        $(document).ready(function () {
             dataLog();
         })
         /*]]>*/

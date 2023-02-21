@@ -3,6 +3,7 @@ package com.dreamtown.onasistownhouse.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -152,10 +153,19 @@ public class AdminController {
     @RequestMapping(value = "/p/{propertyName}/add", method = RequestMethod.GET)
     public String addPropertyDetails(Model model, @PathVariable String propertyName) {
         Property property = propertyRepository.findOneByPropertyName(propertyName);
+        List<String> tpProperty = propertyDetailsRepository.findDistinctTipePropertyByIdProperty(property.getIdProperty());
+        List<String> tTipeProperty = tipeProperty.getListTipeProperty();
+        for(int i = 0; i < tpProperty.size(); i++){
+            for(int e = 0; e < tTipeProperty.size(); e++){
+                if(tpProperty.get(i).equalsIgnoreCase(tTipeProperty.get(e))){
+                    tTipeProperty.remove(e);
+                }
+            }
+        }
         model.addAttribute("property", property);
         model.addAttribute("propertyDetails", new PropertyDetails());
         model.addAttribute("propertyStatus", propertyStatusRepository.findAll());
-        model.addAttribute("tipeProperty", tipeProperty.getListTipeProperty());
+        model.addAttribute("tipeProperty", tTipeProperty);
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listWilayah", mWilayahRepository.findAll());
         model.addAttribute("websiteName", websiteService.websiteNameAdmin());
@@ -200,14 +210,14 @@ public class AdminController {
             property.setP2(fileNameP2);
         } catch (NullPointerException e) {
         }
-        try{
+        try {
             String[] splitP3 = p3.getOriginalFilename().split("\\.");
             String extensionP3 = splitP3[splitP3.length - 1];
             String fileNameP3 = UUIDGenerator.generateType4UUID().toString() + "." + extensionP3;
             File fileTempP3 = new File(env.getProperty("storage.images") + fileNameP3);
             p3.transferTo(fileTempP3);
             property.setP3(fileNameP3);
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
         }
         propertyRepository.save(property);
         response.put("message", "Property Berhasil di tambahkan");
@@ -219,6 +229,14 @@ public class AdminController {
         Map response = new HashMap<>();
         propertyRepository.deleteById(propertyRepository.findOneByPropertyName(namaProperty).getIdProperty());
         response.put("message", "Berhasil menghapus property");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/deleteDetailsPropertyById/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Map> postProperty(@PathVariable Integer id) {
+        Map response = new HashMap<>();
+        propertyDetailsRepository.deleteById(id);
+        response.put("message", "Berhasil menghapus detail property");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -296,7 +314,6 @@ public class AdminController {
         model.addAttribute("tanggal", sdf.format(new Date()));
         model.addAttribute("menus", menu.getListProperty());
         model.addAttribute("listProperty", propertyRepository.findAll());
-        model.addAttribute("listTipeProperty", tipeProperty.getListTipeProperty());
         model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/formulirPemesanan";
     }
