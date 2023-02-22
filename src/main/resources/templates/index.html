@@ -18,6 +18,7 @@
 </head>
 
 
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N6EELX689J"></script>
 <script>
@@ -27,6 +28,7 @@
 
     gtag('config', 'G-N6EELX689J');
 </script>
+
 
 
 <body>
@@ -50,8 +52,8 @@
     <!-- The opacity on the image is made with "data-overlay-dark="number". You can change it using the numbers 0-9. -->
     <header class="header slider-fade" id="header">
         <div class="owl-carousel owl-theme">
-            <div th:each="photo, iter : ${website.listWebsitePhoto}" class="text-center item bg-img" data-overlay-dark="2"
-                th:attr="data-background='/loadfile/'+${photo.namaPhoto}">
+            <div th:each="photo, iter : ${website.listWebsitePhoto}" class="text-center item bg-img"
+                data-overlay-dark="2" th:attr="data-background='/loadfile/'+${photo.namaPhoto}">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row">
