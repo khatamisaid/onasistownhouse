@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Onasis Town House | CMS</title>
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/style6.css}" />
+    <style>
+        .dataTables_wrapper label select {
+            width: 160px;
+            max-width: 100%;
+            height: 35px;
+        }
+
+        .my-swal {
+            background: rgba(255, 255, 255, .8);
+            backdrop-filter: blur(2px);
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Sidebar Section -->
+    <a href="#" class="js-cappa-nav-toggle cappa-nav-toggle"><i></i></a>
+    <div th:replace="admin/fragments/aside :: sidebar"></div>
+    <!-- Main -->
+    <div id="cappa-main">
+        <section class="rooms1 section-padding bg-black">
+            <div class="container">
+                <h3>Edit Property</h3>
+                <div class="card">
+                    <div class="card-body">
+                        <form action="#" id="formTambahPropery">
+                            <div class="form-group">
+                                <label for="namaProperty">Nama Property</label>
+                                <input th:value="${property.propertyName}" placeholder="masukan nama property"
+                                    type="text" class="form-control-sm" id="namaProperty" name="namaProperty" />
+                            </div>
+                            <div class="form-group">
+                                <label for="wilayahProperty">Wilayah Property</label>
+                                <select name="wilayahProperty" id="wilayahProperty" class="custom-select">
+                                    <option value="">-- Pilih Wilayah Property--</option>
+                                    <option th:each="wilayah: ${listWilayah}" th:text="${wilayah.namaWilayah}"
+                                        th:selected="${property.wilayah.idWilayah == wilayah.idWilayah}"
+                                        th:value="${wilayah.idWilayah}"></option>
+                                </select>
+                            </div>
+                            <h5 style="color:#aa8453">Pilih Fasilitas Property</h5>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input th:checked="${property.universitas != ''}" type="checkbox"
+                                        class="form-check-input" id="checkBoxUniversitas">
+                                    <label class="form-check-label" for="checkBoxUniversitas">Universitas</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="inputanUniversitas"
+                                th:style="${property.universitas != '' ? 'display: block;':'display: none;'}">
+                                <label for="universitas">Masukan universitas terdekat</label>
+                                <textarea th:text="${property.universitas}" style="color: #1b1b1b;"
+                                    placeholder="masukan universitas terdekat" type="text" class="form-control-sm"
+                                    id="universitas" name="universitas"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input th:checked="${property.sekolah != ''}" type="checkbox"
+                                        class="form-check-input" id="checkBoxSekolah">
+                                    <label class="form-check-label" for="checkBoxSekolah">Sekolah</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="inputanSekolah"
+                                th:style="${property.sekolah != '' ? 'display: block;':'display: none;'}">
+                                <label for="sekolah">Masukan sekolah terdekat</label>
+                                <textarea th:text="${property.sekolah}" style="color: #1b1b1b;"
+                                    placeholder="masukan sekolah terdekat" type="text" class="form-control-sm"
+                                    id="sekolah" name="sekolah"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkBoxBelanja">
+                                    <label class="form-check-label" for="checkBoxBelanja">Perbelanjaan Terdekat</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="inputanBelanja" style="display: none;">
+                                <label for="belanja">Masukan perbelanjaan terdekat</label>
+                                <textarea style="color: #1b1b1b;" placeholder="masukan perbelanjaan terdekat"
+                                    type="text" class="form-control-sm" id="belanja" name="belanja"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkBoxTransportasi">
+                                    <label class="form-check-label" for="checkBoxTransportasi">Transportasi</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="inputanTransportasi" style="display: none;">
+                                <label for="transportasi">Masukan moda trasnportasi terdekat</label>
+                                <textarea style="color: #1b1b1b;" placeholder="masukan moda trasnportasi terdekat"
+                                    type="text" class="form-control-sm" id="transportasi"
+                                    name="transportasi"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkBoxRumahSakit">
+                                    <label class="form-check-label" for="checkBoxRumahSakit">Rumah Sakit</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="inputanRumahSakit" style="display: none;">
+                                <label for="rumahSakit">Masukan rumah sakit terdekat</label>
+                                <textarea style="color: #1b1b1b;" placeholder="masukan rumah sakit terdekat" type="text"
+                                    class="form-control-sm" id="rumahSakit" name="rumahSakit"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="checkBoxLainnya">
+                                    <label class="form-check-label" for="checkBoxLainnya">Fasilitas Tambahan /
+                                        Lainnya</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="inputanLainnya" style="display: none;">
+                                <label for="lainnya">Masukan fasilitas tambahan / Lainnya</label>
+                                <textarea style="color: #1b1b1b;" placeholder="masukan fasilitas tambahan / Lainnya"
+                                    type="text" class="form-control-sm" id="lainnya" name="lainnya"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="bannerProperty">Banner Property</label>
+                                <table class="table table-striped table-bordered" style="width:100%">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Photo</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <img id="bannerPropertyPriview" style="width: 400px ; height: 200px;"
+                                                        th:src="'/loadfile/'+${property.propertyBanner}"
+                                                        alt="Image Not Found" />
+                                                </center>
+
+                                            </td>
+                                            <td>
+                                                <label
+                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;" for="bannerProperty">Ganti
+                                                    Photo</label>
+                                                <input onchange="changeBannerProperty(this)" id="bannerProperty" style="display: none;" type="file" name="bannerProperty" class="custom-file-input"
+                                                    accept="image/jpeg, image/png">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <label for="photoHeaderProperty">Tambahkan untuk Photo Header Property</label>
+                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
+                                    accept="image/jpeg, image/png" id="photoHeaderProperty"
+                                    name="photoHeaderProperty" />
+                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
+                                    accept="image/jpeg, image/png" id="photoHeaderProperty1"
+                                    name="photoHeaderProperty1" />
+                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
+                                    accept="image/jpeg, image/png" id="photoHeaderProperty2"
+                                    name="photoHeaderProperty2" />
+                            </div>
+                        </form>
+                        <div class="d-flex justify-content-center mt-2">
+                            <button id="btnTambahProperty" style="background-color: #aa8453; color: white;"
+                                type="button" class="btn">Tambah
+                                Property</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div id="modalContact" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 style="color:#aa8453;">Tambah Kontak</h3>
+                        <button type="button" class="close" onclick="dismiss('modalContact')" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" id="formContact">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="namaContact">Nama Kontak</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="namaContact" name="namaContact" type="text" class="form-control-sm"
+                                        placeholder="masukan nama kontak" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="nomorTelpon">Nomor Telepon</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">+62</span>
+                                        </div>
+                                        <input type="text" class="form-control p-2" placeholder="masukan nomor telepon"
+                                            id="nomorTelpon" name="nomorTelpon">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button style="background-color: #aa8453; color: white;" type="button" onclick="tambahContact()"
+                            class="btn">Tambahkan Kontak</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/js/jquery-migrate-3.0.0.min.js}"></script>
+    <script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
+    <script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/js/jquery.isotope.v3.0.2.js}"></script>
+    <script th:src="@{/js/pace.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/scrollIt.min.js}"></script>
+    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+    <script th:src="@{/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+    <script th:src="@{/js/jquery.magnific-popup.js}"></script>
+    <script th:src="@{/js/YouTubePopUp.js}"></script>
+    <script th:src="@{/js/select2.js}"></script>
+    <script th:src="@{/js/datepicker.js}"></script>
+    <script th:src="@{/js/smooth-scroll.min.js}"></script>
+    <script th:src="@{/js/custom6.js}"></script>
+    <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:inline="javascript">
+        $("#checkBoxUniversitas").on('change', function () {
+            if ($(this).prop('checked') == true) {
+                $("#inputanUniversitas").show();
+            } else {
+                $("#inputanUniversitas").hide();
+                $("#universitas").text('');
+            }
+        });
+        $("#checkBoxSekolah").on('change', function () {
+            if ($(this).prop('checked') == true) {
+                $("#inputanSekolah").show();
+            } else {
+                $("#inputanSekolah").hide();
+                $("#sekolah").text('');
+            }
+        });
+
+        $("#checkBoxBelanja").on('change', function () {
+            if ($(this).prop('checked') == true) {
+                $("#inputanBelanja").show();
+            } else {
+                $("#inputanBelanja").hide();
+                $("#belanja").text('');
+            }
+        });
+        $("#checkBoxTransportasi").on('change', function () {
+            if ($(this).prop('checked') == true) {
+                $("#inputanTransportasi").show();
+            } else {
+                $("#inputanTransportasi").hide();
+                $("#transportasi").text('');
+            }
+        });
+
+        $("#checkBoxRumahSakit").on('change', function () {
+            if ($(this).prop('checked') == true) {
+                $("#inputanRumahSakit").show();
+            } else {
+                $("#inputanRumahSakit").hide();
+                $("#rumahSakit").text('');
+            }
+        });
+        $("#checkBoxLainnya").on('change', function () {
+            if ($(this).prop('checked') == true) {
+                $("#inputanLainnya").show();
+            } else {
+                $("#inputanLainnya").hide();
+                $("#lainnya").text('');
+            }
+        });
+
+        $("#btnTambahProperty").on('click', function () {
+            var property = {
+                "propertyName": $("#namaProperty").val(),
+                "wilayah": {
+                    "idWilayah": $("#wilayahProperty option:selected").val(),
+                    "namaWilayah": $("#wilayahProperty option:selected").text(),
+                },
+                "belanja": $("#belanja").val(),
+                "transportasi": $("#transportasi").val(),
+                "lainnya": $("#lainnya").val(),
+                "rumahSakit": $("#rumahSakit").val(),
+                "sekolah": $("#sekolah").val(),
+                "universitas": $("#universitas").val()
+            }
+            var jsonData = JSON.stringify(property);
+            var blobData = new Blob([jsonData], {
+                type: 'application/json'
+            });
+            var formData = new FormData();
+            formData.append("property", blobData);
+            formData.append("file", $("#bannerProperty").prop('files')[0]);
+            formData.append("p1", $("#photoHeaderProperty").prop('files')[0]);
+            if ($("#photoHeaderProperty1").prop('files')[0] != undefined) {
+                formData.append("p2", $("#photoHeaderProperty1").prop('files')[0]);
+            }
+            if ($("#photoHeaderProperty2").prop('files')[0] != undefined) {
+                formData.append("p3", $("#photoHeaderProperty2").prop('files')[0]);
+            }
+            $.ajax({
+                url: '/admin/property',
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data, textStatus, jqXHR) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Berhasil menambahkan property',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function () {
+                        window.location.href = '/admin'
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Gagal menambahkan property',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            });
+        });
+        function changeBannerProperty(evt){
+            $("#bannerPropertyPriview").attr("src", URL.createObjectURL(evt.files[0]));
+        }
+    </script>
+</body>
+
+</html>

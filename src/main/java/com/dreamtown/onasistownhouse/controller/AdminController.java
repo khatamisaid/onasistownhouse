@@ -115,7 +115,7 @@ public class AdminController {
 
     @RequestMapping(value = "/p/{propertyName}", method = RequestMethod.GET)
     public String findPropertyWithId(Model model, @PathVariable String propertyName) {
-        Property property = propertyRepository.findOneByPropertyName(propertyName);
+        Property property = propertyRepository.findOneByPropertyName(propertyName).get();
         model.addAttribute("website", websiteRepository.findAll().get(0));
         model.addAttribute("username", httpSession.getAttribute("username"));
         model.addAttribute("menus", menu.getListProperty());
@@ -128,7 +128,7 @@ public class AdminController {
     @RequestMapping(value = "/p/{propertyName}/{id}", method = RequestMethod.GET)
     public String propertyDetails(Model model, @PathVariable String propertyName, @PathVariable Integer id) {
         PropertyDetails propertyDetails = propertyDetailsRepository.findById(id).get();
-        Property property = propertyRepository.findOneByPropertyName(propertyName);
+        Property property = propertyRepository.findOneByPropertyName(propertyName).get();
         model.addAttribute("propertyDetails", propertyDetails);
         model.addAttribute("propertyName", propertyName);
         model.addAttribute("property", property);
@@ -152,7 +152,7 @@ public class AdminController {
 
     @RequestMapping(value = "/p/{propertyName}/add", method = RequestMethod.GET)
     public String addPropertyDetails(Model model, @PathVariable String propertyName) {
-        Property property = propertyRepository.findOneByPropertyName(propertyName);
+        Property property = propertyRepository.findOneByPropertyName(propertyName).get();
         List<String> tpProperty = propertyDetailsRepository.findDistinctTipePropertyByIdProperty(property.getIdProperty());
         List<String> tTipeProperty = tipeProperty.getListTipeProperty();
         for(int i = 0; i < tpProperty.size(); i++){
@@ -172,6 +172,18 @@ public class AdminController {
         return "admin/addDetailsProperty";
     }
 
+    @RequestMapping(value = "/p/{propertyName}/edit", method = RequestMethod.GET)
+    public String editProperty(Model model, @PathVariable String propertyName) {
+        Property property = propertyRepository.findOneByPropertyName(propertyName).get();
+        model.addAttribute("property", property);
+        model.addAttribute("website", websiteRepository.findAll().get(0));
+        model.addAttribute("username", httpSession.getAttribute("username"));
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listWilayah", mWilayahRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
+        return "admin/editProperty";
+    }
+
     @RequestMapping(value = "/property/{id}", method = RequestMethod.GET)
     public ResponseEntity<Property> getPropertyById(@PathVariable Integer id) {
         return new ResponseEntity<>(propertyRepository.findById(id).get(), HttpStatus.OK);
@@ -183,9 +195,14 @@ public class AdminController {
             @RequestPart(required = false) MultipartFile p3)
             throws IllegalStateException, IOException {
         Map response = new HashMap<>();
+        if(propertyRepository.findOneByPropertyName(property.getPropertyName()).isPresent()){
+            response.put("message", "Nama property sudah ada");
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
         if (file.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
+        property.setPropertyName(property.getPropertyName().trim());
         String[] splitFileName = file.getOriginalFilename().split("\\.");
         String extension = splitFileName[splitFileName.length - 1];
         String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
@@ -227,13 +244,13 @@ public class AdminController {
     @RequestMapping(value = "/property", method = RequestMethod.DELETE)
     public ResponseEntity<Map> postProperty(@RequestParam String namaProperty) {
         Map response = new HashMap<>();
-        propertyRepository.deleteById(propertyRepository.findOneByPropertyName(namaProperty).getIdProperty());
+        propertyRepository.deleteById(propertyRepository.findOneByPropertyName(namaProperty).get().getIdProperty());
         response.put("message", "Berhasil menghapus property");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/deleteDetailsPropertyById/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Map> postProperty(@PathVariable Integer id) {
+    public ResponseEntity<Map> deleteDetailsPropertyById(@PathVariable Integer id) {
         Map response = new HashMap<>();
         propertyDetailsRepository.deleteById(id);
         response.put("message", "Berhasil menghapus detail property");

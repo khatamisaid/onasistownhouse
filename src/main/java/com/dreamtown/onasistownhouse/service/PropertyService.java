@@ -79,6 +79,6 @@ public class PropertyService {
     }
 
     public Property getPropertyByName(String propertyName) {
-        return propertyRepository.findOneByPropertyName(propertyName);
+        return propertyRepository.findOneByPropertyName(propertyName).get();
     }
 }
