@@ -32,6 +32,7 @@ public abstract class DateAudit implements Serializable {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 
+    @JsonFormat(pattern="dd-MMMM-yyyy HH:mm:ss", timezone = "GMT+7")
     @LastModifiedDate
     @Column(name = "updated_at", nullable = true, updatable = false)
     private Date updatedAt;

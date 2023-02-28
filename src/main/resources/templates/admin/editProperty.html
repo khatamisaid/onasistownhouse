@@ -53,6 +53,8 @@
                 <div class="card">
                     <div class="card-body">
                         <form action="#" id="formTambahPropery">
+                            <input th:value="${property.idProperty}" style="display: none;" type="text"
+                                class="form-control-sm" id="idProperty" name="idProperty" />
                             <div class="form-group">
                                 <label for="namaProperty">Nama Property</label>
                                 <input th:value="${property.propertyName}" placeholder="masukan nama property"
@@ -155,7 +157,8 @@
                                         <tr>
                                             <td>
                                                 <center>
-                                                    <img id="bannerPropertyPriview" style="width: 400px ; height: 200px;"
+                                                    <img id="bannerPriview"
+                                                        style="width: 400px ; height: 200px;"
                                                         th:src="'/loadfile/'+${property.propertyBanner}"
                                                         alt="Image Not Found" />
                                                 </center>
@@ -163,81 +166,100 @@
                                             </td>
                                             <td>
                                                 <label
-                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;" for="bannerProperty">Ganti
+                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    for="bannerProperty">Ganti
                                                     Photo</label>
-                                                <input onchange="changeBannerProperty(this)" id="bannerProperty" style="display: none;" type="file" name="bannerProperty" class="custom-file-input"
-                                                    accept="image/jpeg, image/png">
+                                                <input onchange="changeImageProperty(this)" id="bannerProperty"
+                                                    style="display: none;" type="file" name="bannerProperty"
+                                                    class="custom-file-input" accept="image/jpeg, image/png">
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="form-group">
-                                <label for="photoHeaderProperty">Tambahkan untuk Photo Header Property</label>
-                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
-                                    accept="image/jpeg, image/png" id="photoHeaderProperty"
-                                    name="photoHeaderProperty" />
-                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
-                                    accept="image/jpeg, image/png" id="photoHeaderProperty1"
-                                    name="photoHeaderProperty1" />
-                                <input placeholder="masukan photo header property" type="file" class="form-control-sm"
-                                    accept="image/jpeg, image/png" id="photoHeaderProperty2"
-                                    name="photoHeaderProperty2" />
+                                <label for="photoHeaderProperty">Photo Header Property</label>
+                                <table class="table table-striped table-bordered" style="width:100%">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Photo</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <img id="p1Priview"
+                                                        style="width: 400px ; height: 200px;"
+                                                        th:src="'/loadfile/'+${property.p1}"
+                                                        alt="Image Not Found" />
+                                                </center>
+
+                                            </td>
+                                            <td>
+                                                <label
+                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    for="p1Property">Ganti
+                                                    Photo</label>
+                                                <input onchange="changeImageProperty(this)" id="p1Property"
+                                                    style="display: none;" type="file" name="p1Property"
+                                                    class="custom-file-input" accept="image/jpeg, image/png">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <img id="p2Priview"
+                                                        style="width: 400px ; height: 200px;"
+                                                        th:src="'/loadfile/'+${property.p2}"
+                                                        alt="Image Not Found" />
+                                                </center>
+
+                                            </td>
+                                            <td>
+                                                <label
+                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    for="p2Property">Ganti
+                                                    Photo</label>
+                                                <input onchange="changeImageProperty(this)" id="p2Property"
+                                                    style="display: none;" type="file" name="p2Property"
+                                                    class="custom-file-input" accept="image/jpeg, image/png">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <center>
+                                                    <img id="p3Priview"
+                                                        style="width: 400px ; height: 200px;"
+                                                        th:src="'/loadfile/'+${property.p3}"
+                                                        alt="Image Not Found" />
+                                                </center>
+
+                                            </td>
+                                            <td>
+                                                <label
+                                                    style="font-weight: 600; cursor: pointer; color: white; background-color: #aa8453; padding: 8px; border-radius: 8px;"
+                                                    for="p3Property">Ganti
+                                                    Photo</label>
+                                                <input onchange="changeImageProperty(this)" id="p3Property"
+                                                    style="display: none;" type="file" name="p3Property"
+                                                    class="custom-file-input" accept="image/jpeg, image/png">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </form>
                         <div class="d-flex justify-content-center mt-2">
                             <button id="btnTambahProperty" style="background-color: #aa8453; color: white;"
-                                type="button" class="btn">Tambah
+                                type="button" class="btn">Edit
                                 Property</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <div id="modalContact" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 style="color:#aa8453;">Tambah Kontak</h3>
-                        <button type="button" class="close" onclick="dismiss('modalContact')" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" id="formContact">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="namaContact">Nama Kontak</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input id="namaContact" name="namaContact" type="text" class="form-control-sm"
-                                        placeholder="masukan nama kontak" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="nomorTelpon">Nomor Telepon</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">+62</span>
-                                        </div>
-                                        <input type="text" class="form-control p-2" placeholder="masukan nomor telepon"
-                                            id="nomorTelpon" name="nomorTelpon">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button style="background-color: #aa8453; color: white;" type="button" onclick="tambahContact()"
-                            class="btn">Tambahkan Kontak</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- jQuery -->
     <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
@@ -314,6 +336,7 @@
 
         $("#btnTambahProperty").on('click', function () {
             var property = {
+                "idProperty": $("#idProperty").val(),
                 "propertyName": $("#namaProperty").val(),
                 "wilayah": {
                     "idWilayah": $("#wilayahProperty option:selected").val(),
@@ -333,16 +356,18 @@
             var formData = new FormData();
             formData.append("property", blobData);
             formData.append("file", $("#bannerProperty").prop('files')[0]);
-            formData.append("p1", $("#photoHeaderProperty").prop('files')[0]);
-            if ($("#photoHeaderProperty1").prop('files')[0] != undefined) {
-                formData.append("p2", $("#photoHeaderProperty1").prop('files')[0]);
-            }
-            if ($("#photoHeaderProperty2").prop('files')[0] != undefined) {
-                formData.append("p3", $("#photoHeaderProperty2").prop('files')[0]);
-            }
+            formData.append("p1", $("#p1Property").prop('files')[0]);
+            formData.append("p2", $("#p2Property").prop('files')[0]);
+            formData.append("p3", $("#p3Property").prop('files')[0]);
+            // if ($("#photoHeaderProperty1").prop('files')[0] != undefined) {
+                
+            // }
+            // if ($("#photoHeaderProperty2").prop('files')[0] != undefined) {
+                
+            // }
             $.ajax({
                 url: '/admin/property',
-                method: "POST",
+                method: "PUT",
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -368,8 +393,8 @@
                 }
             });
         });
-        function changeBannerProperty(evt){
-            $("#bannerPropertyPriview").attr("src", URL.createObjectURL(evt.files[0]));
+        function changeImageProperty(evt) {
+            $(`#${evt.id.replace('Property','Priview')}`).attr("src", URL.createObjectURL(evt.files[0]));
         }
     </script>
 </body>

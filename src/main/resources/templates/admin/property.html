@@ -62,8 +62,8 @@
                         <div th:if="${session.role == 'Super User' || session.role == 'Admin'}"><i
                                 onclick="hapusProperty()" title="hapus" style="cursor: pointer;"
                                 class="p-2 ml-2 fa-solid fa-trash"></i>
-                            <!-- <a th:href="@{${property.propertyName} + '/edit'}"><i onclick="editProperty()" title="edit" style="cursor: pointer;"
-                                    class="p-2 ml-2 fa-solid fa-pencil"></i></a> -->
+                            <a th:href="@{${property.propertyName} + '/edit'}"><i title="edit" style="cursor: pointer;"
+                                    class="p-2 ml-2 fa-solid fa-pencil"></i></a>
                         </div>
                     </div>
                     <div th:if="${session.role == 'Super User' || session.role == 'Admin'}" class="col-md-12">

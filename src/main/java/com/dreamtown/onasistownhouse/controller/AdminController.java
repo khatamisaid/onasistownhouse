@@ -153,11 +153,12 @@ public class AdminController {
     @RequestMapping(value = "/p/{propertyName}/add", method = RequestMethod.GET)
     public String addPropertyDetails(Model model, @PathVariable String propertyName) {
         Property property = propertyRepository.findOneByPropertyName(propertyName).get();
-        List<String> tpProperty = propertyDetailsRepository.findDistinctTipePropertyByIdProperty(property.getIdProperty());
+        List<String> tpProperty = propertyDetailsRepository
+                .findDistinctTipePropertyByIdProperty(property.getIdProperty());
         List<String> tTipeProperty = tipeProperty.getListTipeProperty();
-        for(int i = 0; i < tpProperty.size(); i++){
-            for(int e = 0; e < tTipeProperty.size(); e++){
-                if(tpProperty.get(i).equalsIgnoreCase(tTipeProperty.get(e))){
+        for (int i = 0; i < tpProperty.size(); i++) {
+            for (int e = 0; e < tTipeProperty.size(); e++) {
+                if (tpProperty.get(i).equalsIgnoreCase(tTipeProperty.get(e))) {
                     tTipeProperty.remove(e);
                 }
             }
@@ -189,13 +190,72 @@ public class AdminController {
         return new ResponseEntity<>(propertyRepository.findById(id).get(), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/property", method = RequestMethod.PUT)
+    public ResponseEntity<Map> putProperty(@RequestPart Property property,
+            @RequestPart(required = false) MultipartFile file,
+            @RequestPart(required = false) MultipartFile p1, @RequestPart(required = false) MultipartFile p2,
+            @RequestPart(required = false) MultipartFile p3)
+            throws IllegalStateException, IOException {
+        Map response = new HashMap<>();
+        Optional<Property> tempPropertyFindById = propertyRepository.findById(property.getIdProperty());
+        if (file != null) {
+            property.setPropertyName(property.getPropertyName().trim());
+            String[] splitFileName = file.getOriginalFilename().split("\\.");
+            String extension = splitFileName[splitFileName.length - 1];
+            String fileName = UUIDGenerator.generateType4UUID().toString() + "." +
+                    extension;
+            File fileTemp = new File(env.getProperty("storage.images") + fileName);
+            file.transferTo(fileTemp);
+            property.setPropertyBanner(fileName);
+        } else {
+            property.setPropertyBanner(tempPropertyFindById.get().getPropertyBanner());
+        }
+        if (p1 != null) {
+            String[] splitP1 = p1.getOriginalFilename().split("\\.");
+            String extensionP1 = splitP1[splitP1.length - 1];
+            String fileNameP1 = UUIDGenerator.generateType4UUID().toString() + "." +
+                    extensionP1;
+            File fileTempP1 = new File(env.getProperty("storage.images") + fileNameP1);
+            p1.transferTo(fileTempP1);
+            property.setP1(fileNameP1);
+        } else {
+            property.setP1(tempPropertyFindById.get().getP1());
+        }
+        if (p2 != null) {
+            String[] splitP2 = p2.getOriginalFilename().split("\\.");
+            String extensionP2 = splitP2[splitP2.length - 1];
+            String fileNameP2 = UUIDGenerator.generateType4UUID().toString() + "." +
+                    extensionP2;
+            File fileTempP2 = new File(env.getProperty("storage.images") + fileNameP2);
+            p2.transferTo(fileTempP2);
+            property.setP2(fileNameP2);
+        } else {
+            property.setP2(tempPropertyFindById.get().getP2());
+        }
+        if (p3 != null) {
+            String[] splitP3 = p3.getOriginalFilename().split("\\.");
+            String extensionP3 = splitP3[splitP3.length - 1];
+            String fileNameP3 = UUIDGenerator.generateType4UUID().toString() + "." +
+                    extensionP3;
+            File fileTempP3 = new File(env.getProperty("storage.images") + fileNameP3);
+            p3.transferTo(fileTempP3);
+            property.setP3(fileNameP3);
+        } else {
+            property.setP3(tempPropertyFindById.get().getP3());
+        }
+        property.setListPropertyDetails(tempPropertyFindById.get().getListPropertyDetails());
+        propertyRepository.save(property);
+        response.put("message", "Property Berhasil di edit");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/property", method = RequestMethod.POST)
     public ResponseEntity<Map> postProperty(@RequestPart Property property, @RequestPart MultipartFile file,
             @RequestPart(required = true) MultipartFile p1, @RequestPart(required = false) MultipartFile p2,
             @RequestPart(required = false) MultipartFile p3)
             throws IllegalStateException, IOException {
         Map response = new HashMap<>();
-        if(propertyRepository.findOneByPropertyName(property.getPropertyName()).isPresent()){
+        if (propertyRepository.findOneByPropertyName(property.getPropertyName()).isPresent()) {
             response.put("message", "Nama property sudah ada");
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
