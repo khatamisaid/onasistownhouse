@@ -52,15 +52,18 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="container mt-5">
+            <div class="container mt-3">
                 <div class="d-flex justify-content-end">
                     <label for="tglSebelum" class="ml-5" style="font-size: 16px; font-weight: 600;">Dari: </label>
                     <input id="tglSebelum" type="date" class="form-control-sm ml-2"/>
                     <label for="tglSesudah" class="ml-5" style="font-size: 16px; font-weight: 600;">Sampai: </label>
                     <input id="tglSesudah" type="date" class="form-control-sm ml-2"/>
                 </div>
-            </div> -->
-            <div class="container mt-5">
+                <div class="d-flex justify-content-end mt-1">
+                    <button onclick="filter()" class="btn" style="background-color: #aa8453; color: white;">submit</button>
+                </div>
+            </div>
+            <div class="container mt-2">
                 <div style="background-color: #1b1b1b; border-color: #aa8453;" class="card">
                     <div class="row">
                         <div class="col">
@@ -81,6 +84,19 @@
                                 <div class="d-flex justify-content-center">
                                     <h1 id="pengunjungHariIni">0</h1>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="sectionFilter" class="row" style="display: none;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center text-center">
+                                <h4>Total Data Pengunjung</h4>
+                            </div>
+                            <div class="d-flex justify-content-center text-center">
+                                <h4 id="tglFilter">22-02-2023 s.d 23-02-2023</h4>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <h1 id="pengunjungTglFilter">0</h1>
                             </div>
                         </div>
                     </div>
@@ -113,11 +129,25 @@
             });
         }
 
+        function filter(){
+            chartNoTelpon();
+            $("#sectionFilter").show();
+            $("#tglFilter").text(`${moment($("#tglSebelum").val()).format('DD-MM-YYYY')} s.d ${moment($("#tglSesudah").val()).format('DD-MM-YYYY')}`)
+            var tglSebelum = $("#tglSebelum").val() == '' ? '2023-01-01' : $("#tglSebelum").val();
+            var tglSesudah = $("#tglSesudah").val() == '' ? moment().add(1, 'days').format('YYYY-MM-DD') : moment($("#tglSesudah").val()).add(1, 'days').format('YYYY-MM-DD');
+            $.get(`/log/aktivitas?tglDari=${tglSebelum}&tglSampai=${tglSesudah}`, function (data) {
+                $("#pengunjungTglFilter").text(data.totalHariIni);
+            });
+            
+        }
+
         function chartNoTelpon() {
+            var tglSebelum = $("#tglSebelum").val() == '' ? '2023-01-01' : $("#tglSebelum").val();
+            var tglSesudah = $("#tglSesudah").val() == '' ? moment().add(1, 'days').format('YYYY-MM-DD') : moment($("#tglSesudah").val()).add(1, 'days').format('YYYY-MM-DD');
             var listLables = [];
             var listValues = [];
             // var url = `/log/whatsapp?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`;
-            $.get(`/log/whatsapp?tglDari=2023-01-01&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`, function (listLog) {
+            $.get(`/log/whatsapp?tglDari=${tglSebelum}&tglSampai=${tglSesudah}`, function (listLog) {
                 listLog.forEach(function (log) {
                     listLables.push(log[1]);
                     listValues.push(log[0]);
@@ -134,10 +164,10 @@
                         labels: listLables,
                         datasets: [
                             {
-                                label: 'Total Nama yang dihubungi',
+                                label: 'Total marketing yang dihubungi berdasarkan nama',
                                 data: listValues,
-                                borderColor: Utils.CHART_COLORS.blue,
-                                backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+                                borderColor: '#EEEEEE',
+                                backgroundColor: Utils.transparentize('#aa8453', 0.5),
                                 borderWidth: 2,
                                 borderRadius: 5,
                                 borderSkipped: false,
@@ -152,7 +182,7 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Total Nama yang dihubungi',
+                                text: 'Total nama marketing yang dihubungi',
                                 color: "white", // not 'fontColor:' anymore
                                 // fontSize: 18,
                                 font: {
