@@ -132,7 +132,8 @@
         function filter(){
             chartNoTelpon();
             $("#sectionFilter").show();
-            $("#tglFilter").text(`${moment($("#tglSebelum").val()).format('DD-MM-YYYY')} s.d ${moment($("#tglSesudah").val()).format('DD-MM-YYYY')}`)
+            console.log($("#tglSesudah").val());
+            $("#tglFilter").text(`${moment($("#tglSebelum").val()).format('DD-MM-YYYY')} ${ $("#tglSesudah").val() == '' ? '' : ' s.d ' + moment($("#tglSesudah").val()).format('DD-MM-YYYY')}`)
             var tglSebelum = $("#tglSebelum").val() == '' ? '2023-01-01' : $("#tglSebelum").val();
             var tglSesudah = $("#tglSesudah").val() == '' ? moment().add(1, 'days').format('YYYY-MM-DD') : moment($("#tglSesudah").val()).add(1, 'days').format('YYYY-MM-DD');
             $.get(`/log/aktivitas?tglDari=${tglSebelum}&tglSampai=${tglSesudah}`, function (data) {

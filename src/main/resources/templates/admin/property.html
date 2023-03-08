@@ -217,7 +217,7 @@
                             
                             <div class="con">
                                 <h5><a href="${property.propertyName}/${propertyDetails.idDetailsProperty}">Tipe ${propertyDetails.tipeProperty}</a> </h5>
-                                <h5><a href="${property.propertyName}/${propertyDetails.idDetailsProperty}">${formatRupiah(propertyDetails.harga.toString(), 'IDR ')}</a> </h5>
+                                <h5><a href="${property.propertyName}/${propertyDetails.idDetailsProperty}">${formatRupiah(propertyDetails.harga == null ? '0' : propertyDetails.harga.toString() , 'IDR ')}</a> </h5>
                                 <div class="line"></div>
                                 <div class="row facilities">
                                     <div class="col col-md-7">

@@ -1,6 +1,6 @@
 spring:
-   profiles:
-      active: production
+  profiles:
+    active: development
 ---
 spring:
   config:
@@ -9,15 +9,15 @@ spring:
   application:
     name: OnasisTownHouse
   datasource:
-      url: jdbc:mysql://181.215.79.190:3306/onasistownhouse
-      username: amaeschiffer
-      password: ImNumber4#@4
-      driverClassName: com.mysql.cj.jdbc.Driver
-  jpa: 
-      database: default
-      hibernate: 
-         dialect: org.hibernate.dialect.MariaDB104Dialect
-         ddl-auto: update
+    url: jdbc:mysql://181.215.79.190:3306/onasistownhouse
+    username: amaeschiffer
+    password: ImNumber4#@4
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: default
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDB104Dialect
+      ddl-auto: update
   thymeleaf:
     cache: false
     mode: HTML
@@ -40,7 +40,7 @@ server:
   servlet:
     session:
       timeout: 30m
-storage: 
+storage:
   images: C:\\filetemp\\images\\
   videos: C:\\filetemp\\videos\\
   file: ./laporan/
@@ -54,15 +54,15 @@ spring:
   application:
     name: OnasisTownHouse
   datasource:
-      url: jdbc:mysql://localhost:3306/onas_development
-      username: onas_development
-      password: 4vl7fgxf@gHlJj@s
-      driverClassName: com.mysql.cj.jdbc.Driver
-  jpa: 
-      database: default
-      hibernate: 
-         dialect: org.hibernate.dialect.MariaDB104Dialect
-         ddl-auto: update
+    url: jdbc:mysql://181.215.79.190:3306/onasistownhouse_development
+    username: amaeschiffer
+    password: ImNumber4#@4
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: default
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDB104Dialect
+      ddl-auto: update
   thymeleaf:
     cache: false
     mode: HTML
@@ -76,17 +76,7 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
-security:
-  require-ssl: true
 server:
-  ssl:
-    key-store: /etc/letsencrypt/live/onasistownhouse.com/keystore.p12
-    key-store-password: ImNumber4
-    keyStoreType: PKCS12
-    keyAlias: onasistownhouse
-  tomcat:
-    remote-ip-header: x-forwarded-for
-    protocol-header: x-forwarded-proto
   port: 8082
   error:
     whitelabel:
@@ -95,16 +85,11 @@ server:
   servlet:
     session:
       timeout: 30m
-storage: 
-  images: /home/onasistownhouse.com/storage/images/
-  videos: /home/onasistownhouse.com/storage/videos/
-  file: /home/onasistownhouse.com/storage/file/
-  reports: /home/onasistownhouse.com/storage/reports/
-logging:
-  pattern: 
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  file: /home/onasistownhouse.com/logs/onasistownhouse.com.jar_log
+storage:
+  images: C:\\filetemp\\images\\
+  videos: C:\\filetemp\\videos\\
+  file: ./laporan/
+  reports: C:\\Users\\MTJ 03\\Music\\reports\\
 ---
 spring:
   config:
@@ -113,15 +98,15 @@ spring:
   application:
     name: OnasisTownHouse
   datasource:
-      url: jdbc:mysql://181.215.79.190:3306/onasistownhouse
-      username: amaeschiffer
-      password: ImNumber4#@4
-      driverClassName: com.mysql.cj.jdbc.Driver
-  jpa: 
-      database: default
-      hibernate: 
-         dialect: org.hibernate.dialect.MariaDB104Dialect
-         ddl-auto: none
+    url: jdbc:mysql://181.215.79.190:3306/onasistownhouse
+    username: amaeschiffer
+    password: ImNumber4#@4
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: default
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDB104Dialect
+      ddl-auto: none
   thymeleaf:
     cache: false
     mode: HTML
@@ -154,13 +139,13 @@ server:
   servlet:
     session:
       timeout: 30m
-storage: 
+storage:
   images: /home/onasistownhouse.com/storage/images/
   videos: /home/onasistownhouse.com/storage/videos/
   file: /home/onasistownhouse.com/storage/file/
   reports: /home/onasistownhouse.com/storage/reports/
 logging:
-  pattern: 
+  pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file: /home/onasistownhouse.com/logs/onasistownhouse.com.jar_log

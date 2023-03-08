@@ -349,7 +349,9 @@
             });
         }
         function dataLog() {
-            $.get(`/log/activity?tglDari=${moment().startOf('month').format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}&tglHariIni=${moment().format('YYYY-MM-DD')}`, function (data) {
+            // var url = `/log/activity?tglDari=${moment().startOf('month').format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}&tglHariIni=${moment().format('YYYY-MM-DD')}`;
+            var url = `/log/aktivitas?tglDari=${moment().format('YYYY-MM-DD')}&tglSampai=${moment().add(1, 'days').format('YYYY-MM-DD')}`;
+            $.get(url, function (data) {
                 $("#pengunjungKeseluruhan").text(data.totalKeseluruhan);
                 $("#pengunjungHariIni").text(data.totalHariIni);
             });
