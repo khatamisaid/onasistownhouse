@@ -205,6 +205,7 @@ public class MainController {
         model.addAttribute("website", web);
         model.addAttribute("property", propertyDetails);
         model.addAttribute("websiteName", websiteService.websiteName());
+        model.addAttribute("contactPerson", contactPersonRepository.findAll());
         String[] splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
         String[] deskripsiArr1 = Arrays.copyOfRange(splitDeskripsi, 0, splitDeskripsi.length / 2);
         String[] deskripsiArr2 = Arrays.copyOfRange(splitDeskripsi, splitDeskripsi.length / 2, splitDeskripsi.length);

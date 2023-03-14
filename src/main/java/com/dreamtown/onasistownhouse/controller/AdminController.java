@@ -27,6 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
 import com.dreamtown.onasistownhouse.entity.Photo;
@@ -35,6 +39,7 @@ import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.entity.Website;
 import com.dreamtown.onasistownhouse.entity.WebsitePhoto;
+import com.dreamtown.onasistownhouse.repository.ContactPersonRepository;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PhotoRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
@@ -92,6 +97,9 @@ public class AdminController {
 
     @Autowired
     private WebsitePhotoRepository websitePhotoRepository;
+
+    @Autowired
+    private ContactPersonRepository contactPersonRepository;
 
     @Autowired
     private Environment env;
@@ -477,11 +485,13 @@ public class AdminController {
 
     @RequestMapping(value = "/tambah_kontak", method = RequestMethod.POST)
     public ResponseEntity<String> tambah_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak){
+        contactPersonRepository.save(new ContactPerson(vModelTambahKontak.getIdContactPerson(), vModelTambahKontak.getNomorTelpon(), vModelTambahKontak.getNamaContact()));
         return new ResponseEntity<>("Berhasil menambah kontak", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/edit_kontak", method = RequestMethod.POST)
     public ResponseEntity<String> edit_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak){
+        contactPersonRepository.save(new ContactPerson(vModelTambahKontak.getIdContactPerson(), vModelTambahKontak.getNomorTelpon(), vModelTambahKontak.getNamaContact()));
         return new ResponseEntity<>("Berhasil merubah kontak", HttpStatus.OK);
     }
 
@@ -489,7 +499,15 @@ public class AdminController {
     public ResponseEntity<Map> get_kontak_whatsapp(@RequestParam(defaultValue = "0") Integer start,
     @RequestParam(defaultValue = "5") Integer length) {
         Map data = new HashMap();
+        Pageable pageable = PageRequest.of(start, length, Sort.by("createdAt").descending());
+        Page<ContactPerson> pageCp = contactPersonRepository.findAll(pageable);
+        data.put("data", pageCp);
         return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getContactById/{id}", method = RequestMethod.GET)
+    public ResponseEntity<ContactPerson> get_kontak_whatsapp(@PathVariable Integer id) {
+        return new ResponseEntity<>(contactPersonRepository.findById(id).get(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/kontak_whatsapp", method = RequestMethod.GET)

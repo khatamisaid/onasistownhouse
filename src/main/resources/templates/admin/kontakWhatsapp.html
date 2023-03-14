@@ -61,7 +61,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5" class="text-right">
+                                        <td colspan="4" class="text-right">
                                             <button style="background-color: #aa8453; color: white;" type="button"
                                                 id="tambahKontak" class="btn" onclick="showModalTambahContact()">+
                                                 Tambah Kontak</button>
@@ -84,8 +84,9 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="#" id="formContact">
-                                    <input id="idContactPerson" name="idContactPerson" type="text" style="display: none;"/>
+                                <form action="#" id="formmodalContact">
+                                    <input id="idContactPerson" name="idContactPerson" type="text"
+                                        style="display: none;" />
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="namaContact">Nama Kontak</label>
@@ -113,10 +114,10 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button id="btnTambahContact" style="background-color: #aa8453; color: white;" type="button"
-                                    onclick="tambahContact()" class="btn">Tambahkan Kontak</button>
-                                <button id="btnEditContact" style="background-color: #aa8453; color: white;" type="button"
-                                    onclick="editContact()" class="btn">Ubah Kontak</button>
+                                <button id="btnTambahContact" style="background-color: #aa8453; color: white;"
+                                    type="button" onclick="tambahContact()" class="btn">Tambahkan Kontak</button>
+                                <button id="btnEditContact" style="background-color: #aa8453; color: white;"
+                                    type="button" onclick="editContact()" class="btn">Ubah Kontak</button>
                             </div>
                         </div>
                     </div>
@@ -135,22 +136,32 @@
             $("#modalContact").toggle('modal');
         }
 
-        function showModalEditContact() {
-            $("#heaederModal").text('Ubah Kontak')
-            $("#btnEditContact").hide();
-            $("#btnTambahContact").show();
-            $("#modalContact").toggle('modal');
+        function editKontakById(id) {
+            $.get(`/admin/getContactById/${id}`, function (kontak) {
+                $("#heaederModal").text('Ubah Kontak');
+                $("#idContactPerson").val(kontak.idContactPerson);
+                $("#namaContact").val(kontak.namaContact);
+                $("#nomorTelpon").val(kontak.nomorTelpon);
+                $("#btnEditContact").hide();
+                $("#btnTambahContact").show();
+                $("#modalContact").toggle('modal');
+            });
+        }
+
+        function deleteKontakById(id) {
+            console.log(id);
         }
 
         function dismiss(id) {
+            $(`#form${id}`).trigger("reset");
             $(`#${id}`).toggle('modal');
         }
 
         function tambahContact() {
             var contact = {
                 "idContactPerson": $("#idUser").val(),
-                "nomorTelpon": $("#username").val(),
-                "namaContact": $("#password").val()
+                "nomorTelpon": $("#nomorTelpon").val(),
+                "namaContact": $("#namaContact").val()
             }
             $.ajax({
                 url: `/admin/tambah_kontak`,
@@ -162,7 +173,7 @@
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: `${data.message}`,
+                        title: `${data}`,
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function () {
@@ -179,8 +190,8 @@
         function editContact() {
             var contact = {
                 "idContactPerson": $("#idUser").val(),
-                "nomorTelpon": $("#username").val(),
-                "namaContact": $("#password").val()
+                "nomorTelpon": $("#nomorTelpon").val(),
+                "namaContact": $("#namaContact").val()
             }
             $.ajax({
                 url: `/admin/edit_kontak`,
@@ -192,7 +203,7 @@
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
-                        title: `${data.message}`,
+                        title: `${data}`,
                         showConfirmButton: false,
                         timer: 1500
                     }).then(function () {
@@ -205,6 +216,10 @@
                 }
             });
         }
+
+        $(document).ready(function () {
+            showTableKontak();
+        });
 
         var tableKontak;
         function showTableKontak() {
@@ -231,19 +246,19 @@
                     var out = [];
                     var length = 0;
                     $.get(`/admin/get_kontak_whatsapp?start=${page}&length=${data.length}`, function (response) {
-                        response.data.content.forEach(function (user, i) {
+                        console.log(response);
+                        response.data.content.forEach(function (kontak, i) {
                             var action = `
-                                    <button title="Ubah Data User" type="button" class="btn btn-primary" onclick="editUserById(${user.idUser})">
+                                    <button title="Ubah Data Kontak" type="button" class="btn btn-primary" onclick="editKontakById(${kontak.idContactPerson})">
                                         <i class="ti-pencil"></i>
                                     </button>
-                                    <button title="Hapus Data User" type="button" class="btn btn-danger" onclick="deleteUserById(${user.idUser})" >
+                                    <button title="Hapus Data Kontak" type="button" class="btn btn-danger" onclick="deleteKontakById(${kontak.idContactPerson})" >
                                         <i class="ti-trash"></i>
                                     </button>`;
                             out.push([
                                 ++length,
-                                user.username,
-                                user.realPassword,
-                                user.role.roleName,
+                                kontak.namaContact,
+                                `+62${kontak.nomorTelpon}`,
                                 action,
                             ]);
                         });
