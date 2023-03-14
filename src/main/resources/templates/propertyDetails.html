@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-md-4" style="overflow: scroll; height: 459px;">
                     <div class="section-subtitle"><span>Whatsapp</span></div>
-                    <th:block th:each="contact : ${property.listContactPerson}">
+                    <th:block th:each="contact : ${contactPerson}">
                         <div style="cursor: pointer;" th:attr="onclick=|goToWhatsApp('${contact.nomorTelpon}')|"
                             class="reservations mb-30">
                             <div class="icon">

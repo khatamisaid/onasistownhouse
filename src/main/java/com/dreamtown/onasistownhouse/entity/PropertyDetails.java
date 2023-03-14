@@ -79,8 +79,4 @@ public class PropertyDetails extends DateAudit {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_details_property", referencedColumnName = "id_details_property")
     private List<Video> listVideo;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_details_property", referencedColumnName = "id_details_property")
-    private List<ContactPerson> listContactPerson;
 }

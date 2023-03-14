@@ -40,7 +40,4 @@ public class ContactPerson extends DateAudit{
 
     @Column(name = "nama_contact")
     private String namaContact;
-
-    @Column(name = "id_details_property")
-    private Integer idDetailsProperty;
 }

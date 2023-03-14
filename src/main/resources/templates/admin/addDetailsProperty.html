@@ -339,36 +339,6 @@
 
         }
 
-        function deleteContact() {
-            listContact.splice(i, 1);
-            setTimeout(function () {
-                phoneSection();
-            }, 200);
-        }
-
-        var listContact = [];
-
-        function tambahContact() {
-            var contactPerson = {
-                "nomorTelpon": $("#nomorTelpon").val(),
-                "namaContact": $("#namaContact").val()
-            }
-            listContact.push(contactPerson);
-            setTimeout(function () {
-                phoneSection();
-            }, 200);
-            $("#formContact").trigger('reset');
-            $("#modalContact").toggle('modal');
-        }
-
-        function clickContact(param) {
-            window.open(`http://wa.me/+62${param}`, '_blank').focus();
-        }
-
-        function showModalContact() {
-            $("#modalContact").toggle('modal');
-        }
-
         var listFotoPriview = [];
         var listFoto = [];
 
@@ -379,26 +349,6 @@
                 var reader = new FileReader();
                 reader.onload = onCallback;
                 reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function phoneSection() {
-            $("#phoneSection").empty();
-            if (listContact.length > 0) {
-                listContact.forEach(function (value, i) {
-                    $("#phoneSection").append(`<div style="background-color: #aa8453; border-radius: 12px;"
-                                            class="col-md-3 m-2">
-                                            <i onclick="deleteContact(${i})"
-                                                style="border-radius:4px; margin-right: 4px; margin-top: 2px; cursor:pointer; z-index:20; color: white; position: absolute; top:0; right:0;"
-                                                class="fa fa-times p-1"></i>
-                                            <div onclick="clickContact(${value.nomorTelpon})" class="row p-2" style="cursor: pointer; ">
-                                                <img style="width: 52px;" src="/images/whatsapp-logo.png" alt="Image Not Found">
-                                                <p
-                                                    style="color: white; font-size: 12px; font-weight: 600; margin-top: auto; margin-left: 4px;">
-                                                    ${value.namaContact}</p>
-                                            </div>
-                                        </div>`);
-                });
             }
         }
 
@@ -485,7 +435,6 @@
             propertyDetails.carPort = $("#carPort").val();
             propertyDetails.lokasi = $("#lokasi").val();
             propertyDetails.deskripsi = $("#deskripsi").val();
-            propertyDetails.listContactPerson = listContact;
             var formData = new FormData();
             if (listFoto.length > 0) {
                 listFoto.forEach(foto => {

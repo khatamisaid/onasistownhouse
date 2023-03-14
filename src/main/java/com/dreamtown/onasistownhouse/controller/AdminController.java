@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.data.domain.Example;
 
+import com.dreamtown.onasistownhouse.entity.ContactPerson;
 import com.dreamtown.onasistownhouse.entity.Photo;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
@@ -47,6 +48,7 @@ import com.dreamtown.onasistownhouse.service.WebsiteService;
 import com.dreamtown.onasistownhouse.utils.Menu;
 import com.dreamtown.onasistownhouse.utils.TipeProperty;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
+import com.dreamtown.onasistownhouse.viewmodel.ViewModelTambahKontak;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -471,5 +473,30 @@ public class AdminController {
         websiteRepository.save(website);
         video.transferTo(fileTemp);
         return new ResponseEntity<>("Berhasil mengubah video animasi", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/tambah_kontak", method = RequestMethod.POST)
+    public ResponseEntity<String> tambah_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak){
+        return new ResponseEntity<>("Berhasil menambah kontak", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/edit_kontak", method = RequestMethod.POST)
+    public ResponseEntity<String> edit_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak){
+        return new ResponseEntity<>("Berhasil merubah kontak", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/get_kontak_whatsapp", method = RequestMethod.GET)
+    public ResponseEntity<Map> get_kontak_whatsapp(@RequestParam(defaultValue = "0") Integer start,
+    @RequestParam(defaultValue = "5") Integer length) {
+        Map data = new HashMap();
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/kontak_whatsapp", method = RequestMethod.GET)
+    public String kontakWhatsApp(Model model) {
+        model.addAttribute("menus", menu.getListProperty());
+        model.addAttribute("listProperty", propertyRepository.findAll());
+        model.addAttribute("websiteName", websiteService.websiteNameAdmin());
+        return "admin/kontakWhatsapp";
     }
 }
