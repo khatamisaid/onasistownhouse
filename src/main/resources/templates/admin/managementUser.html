@@ -225,13 +225,24 @@
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Your work has been saved',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+                    $.ajax({
+                        url: `/user/${id}`,
+                        method: 'DELETE',
+                        success: function (data, textStatus, jqXHR) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: `${data}`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                tableUser.ajax.reload();
+                            });
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        }
+                    });
                 }
             });
         }

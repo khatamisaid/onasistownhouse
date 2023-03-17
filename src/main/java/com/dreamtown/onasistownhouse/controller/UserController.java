@@ -57,6 +57,12 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> postUser(@PathVariable Integer id) {
+        userRepository.deleteById(id);
+        return new ResponseEntity<>("Berhasil menghapus data user", HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
     public ResponseEntity<Map> findById(@PathVariable Integer id) {
         Map res = new HashMap<>();

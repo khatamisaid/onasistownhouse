@@ -495,6 +495,12 @@ public class AdminController {
         return new ResponseEntity<>("Berhasil merubah kontak", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/delete_kontak/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> delete_kontak(@PathVariable Integer id){
+        contactPersonRepository.deleteById(id);
+        return new ResponseEntity<>("Berhasil menghapus kontak", HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/get_kontak_whatsapp", method = RequestMethod.GET)
     public ResponseEntity<Map> get_kontak_whatsapp(@RequestParam(defaultValue = "0") Integer start,
     @RequestParam(defaultValue = "5") Integer length) {

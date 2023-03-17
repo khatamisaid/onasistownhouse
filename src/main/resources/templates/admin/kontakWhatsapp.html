@@ -139,17 +139,48 @@
         function editKontakById(id) {
             $.get(`/admin/getContactById/${id}`, function (kontak) {
                 $("#heaederModal").text('Ubah Kontak');
+                console.log(kontak.idContactPerson);
                 $("#idContactPerson").val(kontak.idContactPerson);
                 $("#namaContact").val(kontak.namaContact);
                 $("#nomorTelpon").val(kontak.nomorTelpon);
-                $("#btnEditContact").hide();
-                $("#btnTambahContact").show();
+                $("#btnEditContact").show();
+                $("#btnTambahContact").hide();
                 $("#modalContact").toggle('modal');
             });
         }
 
         function deleteKontakById(id) {
-            console.log(id);
+            Swal.fire({
+                title: 'Yakin ingin menghapus kontak ?',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                confirmButtonColor: '#dc3741',
+                cancelButtonText: 'Tidak',
+                icon: 'warning'
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/admin/delete_kontak/${id}`,
+                        method: 'DELETE',
+                        success: function (data, textStatus, jqXHR) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: `${data}`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                tableKontak.ajax.reload();
+                            });
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                        }
+                    });
+                }
+            });
+
         }
 
         function dismiss(id) {
@@ -159,7 +190,7 @@
 
         function tambahContact() {
             var contact = {
-                "idContactPerson": $("#idUser").val(),
+                "idContactPerson": $("#idContactPerson").val(),
                 "nomorTelpon": $("#nomorTelpon").val(),
                 "namaContact": $("#namaContact").val()
             }
@@ -189,7 +220,7 @@
 
         function editContact() {
             var contact = {
-                "idContactPerson": $("#idUser").val(),
+                "idContactPerson": $("#idContactPerson").val(),
                 "nomorTelpon": $("#nomorTelpon").val(),
                 "namaContact": $("#namaContact").val()
             }
