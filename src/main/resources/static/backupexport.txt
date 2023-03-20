@@ -1,0 +1,63 @@
+var vmCetakRumah = [];
+            if ($("#caraBayar option:selected").val() == 2) {
+                for (let i = 1; i <= $("#periodeCicilan option:selected").val(); i++) {
+                    var obj = {
+                        "txtCicilan": `Cicilan ${i}`,
+                        "nominalCicilan": $("#hargaCicilan").text().replace(" / Bulan", ""),
+                        "tanggalCicilan": moment($(`#tglCicilan${i}`).val(), 'YYYY-MM-DD').format("DD MMMM YYYY")
+                    }
+                    vmCetakRumah.push(obj);
+                }
+            }
+            var listSubreport1 = [];
+            var subReport1 = {
+                "namaProperty": $("#property option:selected").text(),
+                "tipeProperty": $("#tipeProperty option:selected").text(),
+                "luasBangunan": $("#luasBangunan").text(),
+                "luasTanah": $("#luasTanah").text(),
+                "namaPembeli": $("#namaPembeli").val(),
+                "noKtpPembeli": $("#nomorKtp").val(),
+                "alamatLengkap": $("#alamatLengkap").val(),
+                "noTelepon": `+62${$("#nomerTelpon").val()}`,
+                "namaMarketing": $("#namaMarketing").val(),
+                "catatan": $("#catatan").val(),
+                "caraBayar": $("#caraBayar option:selected").text(),
+                "hargaProperty": $("#hargaJual").text(),
+                "discount": $("#discount").val(),
+                "hargaSetelahDiscount": $("#totalHarga").text(),
+                "bookingFee": $("#bookingFee").val(),
+                "tanggalBooking": moment($("#tanggalBooking").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
+                "dp": $("#dpBayar option:selected").text(),
+                "tanggalDp": moment($("#tanggalDp").val(), 'YYYY-MM-DD').format("DD MMMM YYYY"),
+                "hargaDp": $("#totalDp").text(),
+                "totalHarga": $("#totalkeseluruhanHarga").text(),
+                "tanggalTotalHarga": $("#caraBayar option:selected").val() == 1 ? moment($("#tanggalAngsuran").val(), 'YYYY-MM-DD').format("DD MMMM YYYY") : null,
+                "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2
+            };
+            listSubreport1.push(subReport1);
+            var jsonData = {
+                "tanggal": moment().format("DD MMMM YYYY"),
+                "namaProperty": $("#property option:selected").text(),
+                "jasperP1": listSubreport1,
+                "jasperP2": vmCetakRumah,
+                "periodeCicilanIsTrue": $("#caraBayar option:selected").val() == 2
+
+            }
+
+            var urlHit = `/property/cetakFormulirPemesanan`;
+            $.ajax({
+                method: "POST",
+                url: `${urlHit}`,
+                data: JSON.stringify(jsonData),
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (data, textStatus, jqXHR) {
+                    var base64 = `data:application/pdf;base64,${data.file}`;
+                    var downloadLink = document.createElement("a");
+                    downloadLink.href = base64;
+                    downloadLink.download = data.filename;
+                    downloadLink.click();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
