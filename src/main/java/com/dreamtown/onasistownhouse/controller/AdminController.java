@@ -33,6 +33,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
+import com.dreamtown.onasistownhouse.entity.MWilayah;
 import com.dreamtown.onasistownhouse.entity.Photo;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
@@ -414,6 +415,15 @@ public class AdminController {
         return "admin/wilayah";
     }
 
+    @RequestMapping(value = "/wilayah/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> hapusWilayah(@PathVariable Integer id) {
+        if(propertyRepository.findByWilayah(new MWilayah(id, null)).size() > 0){
+            return new ResponseEntity<>("Tidak dapat menghapus wilayah karena terdapat property di wilayah tersebut", HttpStatus.BAD_REQUEST);
+        }
+        mWilayahRepository.deleteById(id);
+        return new ResponseEntity<>("Berhasil Menghapus Wilayah", HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/judul_website", method = RequestMethod.GET)
     public String judulWebsiteView(Model model) {
         model.addAttribute("username", httpSession.getAttribute("username"));
@@ -484,26 +494,28 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/tambah_kontak", method = RequestMethod.POST)
-    public ResponseEntity<String> tambah_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak){
-        contactPersonRepository.save(new ContactPerson(vModelTambahKontak.getIdContactPerson(), vModelTambahKontak.getNomorTelpon(), vModelTambahKontak.getNamaContact()));
+    public ResponseEntity<String> tambah_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak) {
+        contactPersonRepository.save(new ContactPerson(vModelTambahKontak.getIdContactPerson(),
+                vModelTambahKontak.getNomorTelpon(), vModelTambahKontak.getNamaContact()));
         return new ResponseEntity<>("Berhasil menambah kontak", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/edit_kontak", method = RequestMethod.POST)
-    public ResponseEntity<String> edit_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak){
-        contactPersonRepository.save(new ContactPerson(vModelTambahKontak.getIdContactPerson(), vModelTambahKontak.getNomorTelpon(), vModelTambahKontak.getNamaContact()));
+    public ResponseEntity<String> edit_kontak(@RequestBody ViewModelTambahKontak vModelTambahKontak) {
+        contactPersonRepository.save(new ContactPerson(vModelTambahKontak.getIdContactPerson(),
+                vModelTambahKontak.getNomorTelpon(), vModelTambahKontak.getNamaContact()));
         return new ResponseEntity<>("Berhasil merubah kontak", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/delete_kontak/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> delete_kontak(@PathVariable Integer id){
+    public ResponseEntity<String> delete_kontak(@PathVariable Integer id) {
         contactPersonRepository.deleteById(id);
         return new ResponseEntity<>("Berhasil menghapus kontak", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get_kontak_whatsapp", method = RequestMethod.GET)
     public ResponseEntity<Map> get_kontak_whatsapp(@RequestParam(defaultValue = "0") Integer start,
-    @RequestParam(defaultValue = "5") Integer length) {
+            @RequestParam(defaultValue = "5") Integer length) {
         Map data = new HashMap();
         Pageable pageable = PageRequest.of(start, length, Sort.by("createdAt").descending());
         Page<ContactPerson> pageCp = contactPersonRepository.findAll(pageable);

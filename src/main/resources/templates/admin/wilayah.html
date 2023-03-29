@@ -63,6 +63,7 @@
                                         <td th:text="${iter.index + 1}"></td>
                                         <td th:text="${wilayah.namaWilayah}"></td>
                                         <td th:if="${session.role == 'Super User'}"><button
+                                                th:attr="onclick=|hapusWilayah('${wilayah.idWilayah}')|"
                                                 class="btn btn-danger">Hapus</button></td>
                                     </tr>
                                 </tbody>
@@ -94,6 +95,44 @@
     <!-- jQuery -->
     <div th:replace="assets/js :: js"></div>
     <script th:inline="javascript">
+        function hapusWilayah(id) {
+
+            Swal.fire({
+                title: 'Yakin ingin menghapus wilayah ?',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                confirmButtonColor: '#dc3741',
+                cancelButtonText: 'Tidak',
+                icon: 'warning'
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/admin/wilayah/${id}`,
+                        method: 'DELETE',
+                        success: function (data, textStatus, jqXHR) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: data,
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                window.location.reload();
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: `${jqXHR.responseText}`,
+                                showConfirmButton: true,
+                            });
+                        }
+                    })
+                }
+            });
+        }
     </script>
 </body>
 
