@@ -215,6 +215,11 @@ public class MainController {
         if (propertyDetails.getListPhoto().size() > 5) {
             model.addAttribute("sizePhotoLainnya", "+" + (propertyDetails.getListPhoto().size() - 5) + " Lainnya");
         }
+        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
+        if (listContactPerson.size() > 0) {
+            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
+            model.addAttribute("contactPerson", cp);
+        }
         model.addAttribute("lineSeparator", System.lineSeparator());
         if (activeProfile.equalsIgnoreCase("production")) {
             logAktivitasRepository.save(
@@ -244,6 +249,11 @@ public class MainController {
             logAktivitasRepository.save(
                     new LogAktivitas(null, namaProperty.get().trim(), "/p/" +
                             namaProperty.get().trim() + "/details"));
+        }
+        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
+        if (listContactPerson.size() > 0) {
+            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
+            model.addAttribute("contactPerson", cp);
         }
         return "listDetailsProperty";
     }

@@ -40,6 +40,7 @@
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
+    <div th:replace="fragments/hubungikami :: hubungikami"></div>
     <!-- Navbar -->
     <div th:replace="fragments/navbar :: navbar"></div>
     <!-- Slider -->
@@ -127,6 +128,24 @@
     <script th:src="@{/js/custom1.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
+        function btnClickWA(id) {
+            $.get(`/log/whatsapp/findById/${id}`, function (cp) {
+                $.ajax({
+                    url: `/log/whatsapp`,
+                    method: "POST",
+                    data: JSON.stringify(cp),
+                    processData: false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data, textStatus, jqXHR) {
+                        var newWindow = window.open("", "_blank");
+                        newWindow.location.href = `https://wa.me/+62${cp.nomorTelpon}`;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+
+            });
+        }
         function cari(){
             getRekomendasiProperty();
             getListProperty();

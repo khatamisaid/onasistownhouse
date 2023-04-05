@@ -31,6 +31,7 @@ import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Video;
 import com.dreamtown.onasistownhouse.entity.Website;
+import com.dreamtown.onasistownhouse.repository.ContactPersonRepository;
 import com.dreamtown.onasistownhouse.repository.LogAktivitasRepository;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
@@ -39,6 +40,7 @@ import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
 import com.dreamtown.onasistownhouse.service.WebsiteService;
 import com.dreamtown.onasistownhouse.utils.CetakFormulirPemesananRumah;
 import com.dreamtown.onasistownhouse.utils.UUIDGenerator;
+import com.dreamtown.onasistownhouse.utils.Utils;
 import com.dreamtown.onasistownhouse.viewmodel.ViewModelCetakFormulirPemesananRumah;
 
 import static org.springframework.http.MediaType.*;
@@ -57,6 +59,9 @@ public class PropertyController {
     private Environment env;
 
     @Autowired
+    private Utils utils;
+
+    @Autowired
     private MWilayahRepository mWilayahRepository;
 
     @Autowired
@@ -67,6 +72,9 @@ public class PropertyController {
 
     @Autowired
     private LogAktivitasRepository logAktivitasRepository;
+
+    @Autowired
+    private ContactPersonRepository contactPersonRepository;
 
     @Value("${spring.profiles.active}")
     private String activeProfile;
@@ -79,6 +87,11 @@ public class PropertyController {
         model.addAttribute("websiteName", websiteService.websiteName());
         if (activeProfile.equalsIgnoreCase("production")) {
             logAktivitasRepository.save(new LogAktivitas(null, "Property", "/property"));
+        }
+        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
+        if (listContactPerson.size() > 0) {
+            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
+            model.addAttribute("contactPerson", cp);
         }
         return "property";
     }

@@ -41,6 +41,7 @@
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
+    <div th:replace="fragments/hubungikami :: hubungikami"></div>
     <!-- Navbar -->
     <div th:replace="fragments/navbar :: navbar"></div>
     <!-- Search Bar -->
@@ -54,7 +55,7 @@
                         <div class="row">
                             <div th:each="photo, iter : ${property.listPhoto}"
                                 th:style="${iter.index &lt; 5 ? 'display:block;':'display:none;'}"
-                                th:class="${iter.index &lt; 3} ? 'col-md-4 gallery-item' : 'col-md-6 gallery-item'">
+                                th:class="${iter.index &lt; 3} ? 'col-md-6 gallery-item' : 'col-md-8 gallery-item'">
                                 <a th:href="@{'/loadfile/'+${photo.namaPhoto}}" title="" class="img-zoom">
                                     <div class="gallery-box">
                                         <div class="gallery-img"> <img th:src="@{'/loadfile/'+${photo.namaPhoto}}"
@@ -71,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4" style="overflow: scroll; height: 459px;">
+                <!-- <div class="col-md-4" style="overflow: scroll; height: 459px;">
                     <div class="section-subtitle"><span>Whatsapp</span></div>
                     <th:block th:each="contact : ${contactPerson}">
                         <div style="cursor: pointer;" th:attr="onclick=|goToWhatsApp('${contact.idContactPerson}')|"
@@ -85,7 +86,7 @@
                             </div>
                         </div>
                     </th:block>
-                </div>
+                </div> -->
             </div>
             <div class="row mt-5">
                 <div class="col-md-4">
@@ -123,13 +124,13 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <p th:each="deskripsi1: ${deskripsiArr1}" style="white-space: pre; margin-bottom: 0px;"
+                <div th:if="${#lists.size(deskripsiArr1) > 0}" class="col">
+                    <p th:each="deskripsi1: ${deskripsiArr1}" style="margin-bottom: 0px;"
                         th:text="${deskripsi1}">
                     </p>
                 </div>
-                <div class="col-md-4">
-                    <p th:each="deskripsi2: ${deskripsiArr2}" style="white-space: pre; margin-bottom: 0px;"
+                <div th:if="${#lists.size(deskripsiArr2) > 0}" class="col">
+                    <p th:each="deskripsi2: ${deskripsiArr2}" style="margin-bottom: 0px;"
                         th:text="${deskripsi2}">
                     </p>
                 </div>
@@ -201,6 +202,24 @@
                     navigateByImgClick: !0,
                     preload: [0, 1]
                 }
+            });
+        }
+        function btnClickWA(id) {
+            $.get(`/log/whatsapp/findById/${id}`, function (cp) {
+                $.ajax({
+                    url: `/log/whatsapp`,
+                    method: "POST",
+                    data: JSON.stringify(cp),
+                    processData: false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data, textStatus, jqXHR) {
+                        var newWindow = window.open("", "_blank");
+                        newWindow.location.href = `https://wa.me/+62${cp.nomorTelpon}`;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+
             });
         }
         /*]]>*/
