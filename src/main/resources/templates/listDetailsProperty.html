@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Onasis Town House Rumah impian , onasistownhouse, onasis townhouse, onasis town house, property murah, harga terjangkau, tidak ada bunga, lokasi pusat kota, harga paling murah "/>
+    <meta name="description"
+        content="Onasis Town House Rumah impian , onasistownhouse, onasis townhouse, onasis town house, property murah, harga terjangkau, tidak ada bunga, lokasi pusat kota, harga paling murah " />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="google-site-verification" content="w_5ajaJMvXEGYDQXCbEqTVy3bAtSle5IIePlYo6H8EE" />
     <title>Onasis Town House</title>
@@ -76,6 +77,7 @@
         gtag('config', 'G-N6EELX689J');
     </script>
 </head>
+
 <body>
     <!-- Preloader -->
     <div class="preloader-bg"></div>
@@ -341,7 +343,24 @@
                 }
             }
         });
+        function btnClickWA(id) {
+            $.get(`/log/whatsapp/findById/${id}`, function (cp) {
+                $.ajax({
+                    url: `/log/whatsapp`,
+                    method: "POST",
+                    data: JSON.stringify(cp),
+                    processData: false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data, textStatus, jqXHR) {
+                        var newWindow = window.open("", "_blank");
+                        newWindow.location.href = `https://wa.me/+62${cp.nomorTelpon}`;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
 
+            });
+        }
         /*]]>*/
     </script>
 </body>
