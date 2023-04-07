@@ -194,6 +194,7 @@
         var role = /*[[${session.role}]]*/null;
 
         function printListPropertyDetails() {
+            console.log(property.listPropertyDetails);
             $("#listDetailProperty").empty();
             property.listPropertyDetails.forEach(function (propertyDetails, index) {
                 var badge;

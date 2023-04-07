@@ -119,6 +119,16 @@ public class PropertyController {
             @RequestPart(required = false) List<MultipartFile> videos)
             throws IllegalStateException, IOException {
         Map response = new HashMap<>();
+        if (propertyDetailsRepository.findOneByTipeProperty(propertyDetails.getTipeProperty()).isPresent() && propertyDetails.getIdDetailsProperty() == null) {
+            response.put("message", "Gagal Menambah detail property karna Tipe Property sudah ada");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        try{
+            System.out.println("foto: "+images.get(0).getOriginalFilename());
+        }catch(NullPointerException e){
+            response.put("message", "Gagal Menambah detail property minimal harus ada 1 foto");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
         propertyDetails.setIdProperty(idProperty);
         if (images != null && !images.isEmpty()) {
             List<Photo> listPhoto = new ArrayList<>();
@@ -134,7 +144,8 @@ public class PropertyController {
                             propertyDetails.getIdDetailsProperty());
                     listPhoto.add(photo);
                 } catch (IOException e) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    response.put("message", "Gagal menambahkan detail property");
+                    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
                 }
             }
             propertyDetails.setListPhoto(listPhoto);
@@ -153,7 +164,8 @@ public class PropertyController {
                             propertyDetails.getIdDetailsProperty());
                     listVideo.add(photo);
                 } catch (IOException e) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    response.put("message", "Gagal menambahkan detail property");
+                    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
                 }
             }
             propertyDetails.setListVideo(listVideo);

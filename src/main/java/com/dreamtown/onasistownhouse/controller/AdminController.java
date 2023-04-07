@@ -417,8 +417,9 @@ public class AdminController {
 
     @RequestMapping(value = "/wilayah/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> hapusWilayah(@PathVariable Integer id) {
-        if(propertyRepository.findByWilayah(new MWilayah(id, null)).size() > 0){
-            return new ResponseEntity<>("Tidak dapat menghapus wilayah karena terdapat property di wilayah tersebut", HttpStatus.BAD_REQUEST);
+        if (propertyRepository.findByWilayah(new MWilayah(id, null)).size() > 0) {
+            return new ResponseEntity<>("Tidak dapat menghapus wilayah karena terdapat property di wilayah tersebut",
+                    HttpStatus.BAD_REQUEST);
         }
         mWilayahRepository.deleteById(id);
         return new ResponseEntity<>("Berhasil Menghapus Wilayah", HttpStatus.OK);
@@ -534,5 +535,10 @@ public class AdminController {
         model.addAttribute("listProperty", propertyRepository.findAll());
         model.addAttribute("websiteName", websiteService.websiteNameAdmin());
         return "admin/kontakWhatsapp";
+    }
+
+    @RequestMapping(value = "/check_tipe_property", method = RequestMethod.GET)
+    public ResponseEntity<Boolean> kontakWhatsApp(@RequestParam String tipeProperty) {
+        return new ResponseEntity<Boolean>(propertyDetailsRepository.findOneByTipeProperty(tipeProperty).isPresent(), HttpStatus.OK);
     }
 }

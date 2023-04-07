@@ -60,11 +60,8 @@
                                             <label for="tipeProperty">Tipe Property</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <select name="tipeProperty" id="tipeProperty" class="custom-select"
-                                                disabled="true">
-                                                <option value="" selected disabled>-- Pilih Tipe Property --</option>
-                                                <option th:each="tipe : ${tipeProperty}" th:value="${tipe}"
-                                                    th:text="${tipe}"></option>
+                                            <input placeholder="masukan tipe property" type="text"
+                                                    id="tipeProperty" name="tipeProperty" class="form-control-sm" disabled="true"/>
                                             </select>
                                         </div>
                                     </div>
@@ -442,7 +439,7 @@
 
         function submit() {
             propertyDetails.idProperty = /*[[${property.idProperty}]]*/null;
-            propertyDetails.tipeProperty = $("#tipeProperty option:selected").val();
+            propertyDetails.tipeProperty = $("#tipeProperty").val();
             propertyDetails.propertyStatus = {
                 "idPropertyStatus": $("#statusProperty option:selected").val(),
                 "statusName": $("#statusProperty option:selected").text(),

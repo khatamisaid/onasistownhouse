@@ -60,11 +60,9 @@
                                             <label for="tipeProperty">Tipe Property</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <select name="tipeProperty" id="tipeProperty" class="custom-select">
-                                                <option value="" selected disabled>-- Pilih Tipe Property --</option>
-                                                <option th:each="tipe : ${tipeProperty}" th:value="${tipe}"
-                                                    th:text="${tipe}"></option>
-                                            </select>
+                                            <input onkeyup="checkTipeProperty(this.value)" placeholder="masukan tipe property" type="text"
+                                                    id="tipeProperty" name="tipeProperty" class="form-control-sm" />
+                                                    <span id="checkProperty" style="color:red; display: none;">*Tipe Property Sudah ada</span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -411,7 +409,7 @@
         }
         function submit() {
             propertyDetails.idProperty = /*[[${property.idProperty}]]*/null;
-            propertyDetails.tipeProperty = $("#tipeProperty option:selected").val();
+            propertyDetails.tipeProperty = $("#tipeProperty").val();
             propertyDetails.propertyStatus = {
                 "idPropertyStatus": $("#statusProperty option:selected").val(),
                 "statusName": $("#statusProperty option:selected").text(),
@@ -458,10 +456,11 @@
                     });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    var resJson = JSON.parse(jqXHR.responseText);
                     Swal.fire({
                         position: 'center',
                         icon: 'error',
-                        title: 'Gagal menambahkan detail property',
+                        title: `${resJson.message}`,
                         showConfirmButton: false,
                         timer: 1500
                     })
@@ -520,7 +519,15 @@
                 }
             });
         }
-
+        function checkTipeProperty(val){
+            $.get(`/admin/check_tipe_property?tipeProperty=${val}`,function(res){
+                if(res){
+                    $("#checkProperty").show();
+                }else{
+                    $("#checkProperty").hide();
+                }
+            });
+        }
     </script>
 </body>
 
