@@ -32,6 +32,14 @@ spring:
       max-file-size: -1
       max-request-size: -1
 server:
+  ssl:
+    key-store: C:\\ssl\\onasistownhouse\\keystore.p12
+    key-store-password: ImNumber4
+    keyStoreType: PKCS12
+    keyAlias: onasistownhouse
+  tomcat:
+    remote-ip-header: x-forwarded-for
+    protocol-header: x-forwarded-proto
   port: 8082
   error:
     whitelabel:
