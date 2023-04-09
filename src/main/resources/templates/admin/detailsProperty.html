@@ -26,6 +26,11 @@
             backdrop-filter: blur(2px);
         }
     </style>
+    <script type="text/javascript"> //<![CDATA[ 
+        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+        document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+        //]]>
+    </script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -60,8 +65,8 @@
                                             <label for="tipeProperty">Tipe Property</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input placeholder="masukan tipe property" type="text"
-                                                    id="tipeProperty" name="tipeProperty" class="form-control-sm" disabled="true"/>
+                                            <input placeholder="masukan tipe property" type="text" id="tipeProperty"
+                                                name="tipeProperty" class="form-control-sm" disabled="true" />
                                             </select>
                                         </div>
                                     </div>
@@ -208,7 +213,8 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="d-flex justify-content-center" th:if="${session.role == 'Super User' || session.role == 'Admin'}">
+                        <div class="d-flex justify-content-center"
+                            th:if="${session.role == 'Super User' || session.role == 'Admin'}">
                             <button style="background-color: #aa8453; color: white;" type="button" onclick="submit()"
                                 class="btn">Submit</button>
                         </div>
@@ -552,6 +558,10 @@
         }
 
     </script>
+    <script language="JavaScript" type="text/javascript">
+        TrustLogo("https://onasistownhouse.com/images/positivessl_trust_seal_lg_222x54.png", "CL1", "none");
+        </script>
+        <a  href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
 </body>
 
 </html>

@@ -21,6 +21,11 @@
             height: 35px;
         }
     </style>
+    <script type="text/javascript"> //<![CDATA[ 
+        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+        document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+        //]]>
+    </script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -55,12 +60,13 @@
             <div class="container mt-3">
                 <div class="d-flex justify-content-end">
                     <label for="tglSebelum" class="ml-5" style="font-size: 16px; font-weight: 600;">Dari: </label>
-                    <input id="tglSebelum" type="date" class="form-control-sm ml-2"/>
+                    <input id="tglSebelum" type="date" class="form-control-sm ml-2" />
                     <label for="tglSesudah" class="ml-5" style="font-size: 16px; font-weight: 600;">Sampai: </label>
-                    <input id="tglSesudah" type="date" class="form-control-sm ml-2"/>
+                    <input id="tglSesudah" type="date" class="form-control-sm ml-2" />
                 </div>
                 <div class="d-flex justify-content-end mt-1">
-                    <button onclick="filter()" class="btn" style="background-color: #aa8453; color: white;">submit</button>
+                    <button onclick="filter()" class="btn"
+                        style="background-color: #aa8453; color: white;">submit</button>
                 </div>
             </div>
             <div class="container mt-2">
@@ -129,17 +135,17 @@
             });
         }
 
-        function filter(){
+        function filter() {
             chartNoTelpon();
             $("#sectionFilter").show();
             console.log($("#tglSesudah").val());
-            $("#tglFilter").text(`${moment($("#tglSebelum").val()).format('DD-MM-YYYY')} ${ $("#tglSesudah").val() == '' ? '' : ' s.d ' + moment($("#tglSesudah").val()).format('DD-MM-YYYY')}`)
+            $("#tglFilter").text(`${moment($("#tglSebelum").val()).format('DD-MM-YYYY')} ${$("#tglSesudah").val() == '' ? '' : ' s.d ' + moment($("#tglSesudah").val()).format('DD-MM-YYYY')}`)
             var tglSebelum = $("#tglSebelum").val() == '' ? '2023-01-01' : $("#tglSebelum").val();
             var tglSesudah = $("#tglSesudah").val() == '' ? moment().add(1, 'days').format('YYYY-MM-DD') : moment($("#tglSesudah").val()).add(1, 'days').format('YYYY-MM-DD');
             $.get(`/log/aktivitas?tglDari=${tglSebelum}&tglSampai=${tglSesudah}`, function (data) {
                 $("#pengunjungTglFilter").text(data.totalHariIni);
             });
-            
+
         }
 
         function chartNoTelpon() {
@@ -242,6 +248,10 @@
             chartNoTelpon();
         });
     </script>
+    <script language="JavaScript" type="text/javascript">
+        TrustLogo("https://onasistownhouse.com/images/positivessl_trust_seal_lg_222x54.png", "CL1", "none");
+        </script>
+        <a  href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
 </body>
 
 </html>

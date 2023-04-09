@@ -26,6 +26,11 @@
             backdrop-filter: blur(2px);
         }
     </style>
+    <script type="text/javascript"> //<![CDATA[ 
+        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+        document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+        //]]>
+    </script>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -60,9 +65,11 @@
                                             <label for="tipeProperty">Tipe Property</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input onkeyup="checkTipeProperty(this.value)" placeholder="masukan tipe property" type="text"
-                                                    id="tipeProperty" name="tipeProperty" class="form-control-sm" />
-                                                    <span id="checkProperty" style="color:red; display: none;">*Tipe Property Sudah ada</span>
+                                            <input onkeyup="checkTipeProperty(this.value)"
+                                                placeholder="masukan tipe property" type="text" id="tipeProperty"
+                                                name="tipeProperty" class="form-control-sm" />
+                                            <span id="checkProperty" style="color:red; display: none;">*Tipe Property
+                                                Sudah ada</span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -519,16 +526,20 @@
                 }
             });
         }
-        function checkTipeProperty(val){
-            $.get(`/admin/check_tipe_property?tipeProperty=${val}`,function(res){
-                if(res){
+        function checkTipeProperty(val) {
+            $.get(`/admin/check_tipe_property?tipeProperty=${val}`, function (res) {
+                if (res) {
                     $("#checkProperty").show();
-                }else{
+                } else {
                     $("#checkProperty").hide();
                 }
             });
         }
     </script>
+    <script language="JavaScript" type="text/javascript">
+        TrustLogo("https://onasistownhouse.com/images/positivessl_trust_seal_lg_222x54.png", "CL1", "none");
+        </script>
+        <a  href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
 </body>
 
 </html>
