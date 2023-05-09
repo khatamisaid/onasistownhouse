@@ -32,6 +32,8 @@ spring:
       max-file-size: -1
       max-request-size: -1
 server:
+  session:
+    tracking-modes: cookie
   ssl:
     key-store: C:\\ssl\\onasistownhouse\\keystore.p12
     key-store-password: ImNumber4
@@ -93,6 +95,8 @@ server:
   servlet:
     session:
       timeout: 30m
+  session:
+    tracking-modes: cookie
 storage:
   images: C:\\filetemp\\images\\
   videos: C:\\filetemp\\videos\\
@@ -131,6 +135,8 @@ spring:
 security:
   require-ssl: true
 server:
+  session:
+    tracking-modes: cookie
   ssl:
     key-store: /etc/letsencrypt/live/onasistownhouse.com/keystore.p12
     key-store-password: ImNumber4
