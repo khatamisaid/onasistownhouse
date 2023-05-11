@@ -129,12 +129,12 @@
                         </p>
                     </div>
                 </div>
-                <div th:if="${#lists.size(deskripsiArr1) > 0}" class="col">
+                <div th:if="${#lists.size(deskripsiArr1) > 0}" class="col" style="text-align: justify;">
                     <p th:each="deskripsi1: ${deskripsiArr1}" style="margin-bottom: 0px;"
                         th:text="${deskripsi1}">
                     </p>
                 </div>
-                <div th:if="${#lists.size(deskripsiArr2) > 0}" class="col">
+                <div th:if="${#lists.size(deskripsiArr2) > 0}" class="col" style="text-align: justify;">
                     <p th:each="deskripsi2: ${deskripsiArr2}" style="margin-bottom: 0px;"
                         th:text="${deskripsi2}">
                     </p>
