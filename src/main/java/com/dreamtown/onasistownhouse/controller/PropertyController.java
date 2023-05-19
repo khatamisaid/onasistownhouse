@@ -198,7 +198,7 @@ public class PropertyController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Map> findByIdAndTipeProperty(@PathVariable Integer id, @RequestParam String tipeProperty) {
         Map response = new HashMap<>();
-        response.put("property", propertyRepository.findById(id).get());
+        response.put("property", propertyRepository.findById(id).orElseThrow());
         response.put("propertyDetails",
                 propertyDetailsRepository.findOneByIdPropertyAndTipeProperty(id, tipeProperty));
         return new ResponseEntity<>(response, HttpStatus.OK);

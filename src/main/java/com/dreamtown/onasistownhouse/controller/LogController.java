@@ -36,7 +36,7 @@ public class LogController {
 
     @RequestMapping(value = "/whatsapp/findById/{id}", method = RequestMethod.GET)
     public ResponseEntity<ContactPerson> findById(@PathVariable Integer id) {
-        return new ResponseEntity<>(cpRepository.findById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(cpRepository.findById(id).orElseThrow(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/whatsapp", method = RequestMethod.GET)
