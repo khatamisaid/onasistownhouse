@@ -61,7 +61,7 @@
                     </li>
                 </ul>
             </li>
-            <li th:classappend="${#httpServletRequest.getRequestURI() == '/admin/kontak_whatsapp' ? 'active':''}"><a
+            <li th:if="${session.role == 'Super User'}" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/kontak_whatsapp' ? 'active':''}"><a
                 th:href='@{/admin/kontak_whatsapp}'>Kontak WhatsApp</a></li>
             <li th:classappend="${#httpServletRequest.getRequestURI() == '/admin/simulasi_sistem_pembayaran' ? 'active':''}"><a
                     th:href='@{/admin/simulasi_sistem_pembayaran}'>Simulasi Sistem Pembayaran</a></li>
