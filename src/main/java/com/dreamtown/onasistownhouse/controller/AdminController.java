@@ -138,7 +138,7 @@ public class AdminController {
 
     @RequestMapping(value = "/p/{propertyName}/{id}", method = RequestMethod.GET)
     public String propertyDetails(Model model, @PathVariable String propertyName, @PathVariable Integer id) {
-        PropertyDetails propertyDetails = propertyDetailsRepository.findById(id).get();
+        PropertyDetails propertyDetails = propertyDetailsRepository.findById(id).orElseThrow();
         Property property = propertyRepository.findOneByPropertyName(propertyName).get();
         model.addAttribute("propertyDetails", propertyDetails);
         model.addAttribute("propertyName", propertyName);
@@ -198,7 +198,7 @@ public class AdminController {
 
     @RequestMapping(value = "/property/{id}", method = RequestMethod.GET)
     public ResponseEntity<Property> getPropertyById(@PathVariable Integer id) {
-        return new ResponseEntity<>(propertyRepository.findById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(propertyRepository.findById(id).orElseThrow(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/property", method = RequestMethod.PUT)
@@ -219,7 +219,7 @@ public class AdminController {
             file.transferTo(fileTemp);
             property.setPropertyBanner(fileName);
         } else {
-            property.setPropertyBanner(tempPropertyFindById.get().getPropertyBanner());
+            property.setPropertyBanner(tempPropertyFindById.orElseThrow().getPropertyBanner());
         }
         if (p1 != null) {
             String[] splitP1 = p1.getOriginalFilename().split("\\.");
@@ -230,7 +230,7 @@ public class AdminController {
             p1.transferTo(fileTempP1);
             property.setP1(fileNameP1);
         } else {
-            property.setP1(tempPropertyFindById.get().getP1());
+            property.setP1(tempPropertyFindById.orElseThrow().getP1());
         }
         if (p2 != null) {
             String[] splitP2 = p2.getOriginalFilename().split("\\.");
@@ -241,7 +241,7 @@ public class AdminController {
             p2.transferTo(fileTempP2);
             property.setP2(fileNameP2);
         } else {
-            property.setP2(tempPropertyFindById.get().getP2());
+            property.setP2(tempPropertyFindById.orElseThrow().getP2());
         }
         if (p3 != null) {
             String[] splitP3 = p3.getOriginalFilename().split("\\.");
@@ -252,9 +252,9 @@ public class AdminController {
             p3.transferTo(fileTempP3);
             property.setP3(fileNameP3);
         } else {
-            property.setP3(tempPropertyFindById.get().getP3());
+            property.setP3(tempPropertyFindById.orElseThrow().getP3());
         }
-        property.setListPropertyDetails(tempPropertyFindById.get().getListPropertyDetails());
+        property.setListPropertyDetails(tempPropertyFindById.orElseThrow().getListPropertyDetails());
         propertyRepository.save(property);
         response.put("message", "Property Berhasil di edit");
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -340,7 +340,7 @@ public class AdminController {
     @RequestMapping(value = "/deletePhoto", method = RequestMethod.DELETE)
     public ResponseEntity<Map> deletePhoto(@RequestParam Integer idPhoto) {
         Map response = new HashMap<>();
-        String namaFoto = photoRepository.findById(idPhoto).get().getNamaPhoto();
+        String namaFoto = photoRepository.findById(idPhoto).orElseThrow().getNamaPhoto();
         File file = new File(env.getProperty("storage") + namaFoto);
         if (!file.exists()) {
             response.put("message", "file not exists");
@@ -437,7 +437,7 @@ public class AdminController {
 
     @RequestMapping(value = "/judul_website/{idWebsite}", method = RequestMethod.POST)
     public ResponseEntity<String> gantiJudulWebsite(@PathVariable Integer idWebsite, @RequestParam String namaWebsite) {
-        Website web = websiteRepository.findById(idWebsite).get();
+        Website web = websiteRepository.findById(idWebsite).orElseThrow();
         web.setWebsiteName(namaWebsite);
         websiteRepository.save(web);
         return new ResponseEntity<>("Berhasil mengubah nama website", HttpStatus.OK);
@@ -456,7 +456,7 @@ public class AdminController {
     @RequestMapping(value = "/photo_background/{idWebsite}", method = RequestMethod.POST)
     public ResponseEntity<String> gantiPhotoBackground(@PathVariable Integer idWebsite,
             @RequestPart MultipartFile photo) throws IllegalStateException, IOException {
-        WebsitePhoto webPhoto = websitePhotoRepository.findById(idWebsite).get();
+        WebsitePhoto webPhoto = websitePhotoRepository.findById(idWebsite).orElseThrow();
         String[] splitFileName = photo.getOriginalFilename().split("\\.");
         String extension = splitFileName[splitFileName.length - 1];
         String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
@@ -483,7 +483,7 @@ public class AdminController {
     @RequestMapping(value = "/video_animasi/{idWebsite}", method = RequestMethod.POST)
     public ResponseEntity<String> gantiAnimasiVideo(@PathVariable Integer idWebsite,
             @RequestPart MultipartFile video) throws IllegalStateException, IOException {
-        Website website = websiteRepository.findById(idWebsite).get();
+        Website website = websiteRepository.findById(idWebsite).orElseThrow();
         String[] splitFileName = video.getOriginalFilename().split("\\.");
         String extension = splitFileName[splitFileName.length - 1];
         String fileName = UUIDGenerator.generateType4UUID().toString() + "." + extension;
@@ -526,7 +526,7 @@ public class AdminController {
 
     @RequestMapping(value = "/getContactById/{id}", method = RequestMethod.GET)
     public ResponseEntity<ContactPerson> get_kontak_whatsapp(@PathVariable Integer id) {
-        return new ResponseEntity<>(contactPersonRepository.findById(id).get(), HttpStatus.OK);
+        return new ResponseEntity<>(contactPersonRepository.findById(id).orElseThrow(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/kontak_whatsapp", method = RequestMethod.GET)

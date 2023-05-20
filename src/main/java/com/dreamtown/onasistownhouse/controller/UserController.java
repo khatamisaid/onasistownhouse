@@ -53,7 +53,7 @@ public class UserController {
         } else {
             res.put("message", "Berhasil menambahkan user");
         }
-        userRepository.save(new User(user.getIdUser(), user.getUsername(), encoder.encode(user.getPassword()), user.getPassword(), roleRepository.findById(user.getRole()).get())); 
+        userRepository.save(new User(user.getIdUser(), user.getUsername(), encoder.encode(user.getPassword()), user.getPassword(), roleRepository.findById(user.getRole()).orElseThrow())); 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -66,7 +66,7 @@ public class UserController {
     @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
     public ResponseEntity<Map> findById(@PathVariable Integer id) {
         Map res = new HashMap<>();
-        res.put("data", userRepository.findById(id).get());
+        res.put("data", userRepository.findById(id).orElseThrow());
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

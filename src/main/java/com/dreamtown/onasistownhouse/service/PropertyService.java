@@ -43,7 +43,7 @@ public class PropertyService {
             tempListProperty = propertyRepository.findAll();
         } else {
             tempListProperty = propertyRepository
-                    .findByWilayah(mWilayahRepository.findById(Integer.parseInt(area)).get());
+                    .findByWilayah(mWilayahRepository.findById(Integer.parseInt(area)).orElseThrow());
         }
         List<Property> listProperty = new ArrayList<>();
         for (Property p : tempListProperty) {
