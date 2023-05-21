@@ -206,9 +206,19 @@ public class MainController {
         model.addAttribute("property", propertyDetails);
         model.addAttribute("websiteName", websiteService.websiteName());
         model.addAttribute("contactPerson", contactPersonRepository.findAll());
-        String[] splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
-        String[] deskripsiArr1 = Arrays.copyOfRange(splitDeskripsi, 0, splitDeskripsi.length / 2);
-        String[] deskripsiArr2 = Arrays.copyOfRange(splitDeskripsi, splitDeskripsi.length / 2, splitDeskripsi.length);
+        String[] splitDeskripsi = null;
+        String[] deskripsiArr1 = null;
+        String[] deskripsiArr2 = null;
+        try {
+            splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
+            deskripsiArr1 = Arrays.copyOfRange(splitDeskripsi, 0, splitDeskripsi.length / 2);
+            deskripsiArr2 = Arrays.copyOfRange(splitDeskripsi, splitDeskripsi.length / 2,
+                    splitDeskripsi.length);
+        } catch (NullPointerException e) {
+            splitDeskripsi = new String[]{};
+            deskripsiArr1 = new String[]{};
+            deskripsiArr2 = new String[]{};
+        }
         model.addAttribute("deskripsiArr1", deskripsiArr1);
         model.addAttribute("deskripsiArr2", deskripsiArr2);
         model.addAttribute("namaProperty", namaProperty.get());
