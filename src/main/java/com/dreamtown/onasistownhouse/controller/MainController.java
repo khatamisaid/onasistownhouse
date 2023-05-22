@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
 import com.dreamtown.onasistownhouse.entity.LogAktivitas;
+import com.dreamtown.onasistownhouse.entity.LogWhatsApp;
 import com.dreamtown.onasistownhouse.entity.Property;
 import com.dreamtown.onasistownhouse.entity.PropertyDetails;
 import com.dreamtown.onasistownhouse.entity.Website;
@@ -105,13 +106,29 @@ public class MainController {
         model.addAttribute("websiteVideo", "/stream/mp4/" + namafile);
         List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
         if (listContactPerson.size() > 0) {
-            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
-            model.addAttribute("contactPerson", cp);
+            model.addAttribute("contactPerson", true);
         }
         if (activeProfile.equalsIgnoreCase("production")) {
             logAktivitasRepository.save(new LogAktivitas(null, "Beranda", "/"));
         }
         return "index";
+    }
+
+    @GetMapping("/getWhatsApp")
+    public ResponseEntity<Map> getWhatsApp() {
+        Map data = new HashMap<>();
+        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
+        if (listContactPerson.size() > 0) {
+            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
+            data.put("res", "https://wa.me/+62" + cp.getNomorTelpon());
+            if (activeProfile.equalsIgnoreCase("production")) {
+                logWhatsAppRepository.save(new LogWhatsApp(null, cp.getNomorTelpon(),
+                        cp.getNamaContact()));
+            }
+            return new ResponseEntity<>(data, HttpStatus.OK);
+        }
+        data.put("res", "Kontak WhatsApp Belum Tersedia");
+        return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/upload")
@@ -201,7 +218,7 @@ public class MainController {
         Property property = propertyService.getPropertyByName(namaProperty.get());
         Optional<PropertyDetails> propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(),
                 tipeProperty.get());
-        if(!propertyDetails.isPresent()){
+        if (!propertyDetails.isPresent()) {
             return "redirect:/";
         }
         Website web = websiteRepository.findAll().get(0);
@@ -218,20 +235,20 @@ public class MainController {
             deskripsiArr2 = Arrays.copyOfRange(splitDeskripsi, splitDeskripsi.length / 2,
                     splitDeskripsi.length);
         } catch (NullPointerException e) {
-            splitDeskripsi = new String[]{};
-            deskripsiArr1 = new String[]{};
-            deskripsiArr2 = new String[]{};
+            splitDeskripsi = new String[] {};
+            deskripsiArr1 = new String[] {};
+            deskripsiArr2 = new String[] {};
         }
         model.addAttribute("deskripsiArr1", deskripsiArr1);
         model.addAttribute("deskripsiArr2", deskripsiArr2);
         model.addAttribute("namaProperty", namaProperty.get());
         if (propertyDetails.get().getListPhoto().size() > 5) {
-            model.addAttribute("sizePhotoLainnya", "+" + (propertyDetails.get().getListPhoto().size() - 5) + " Lainnya");
+            model.addAttribute("sizePhotoLainnya",
+                    "+" + (propertyDetails.get().getListPhoto().size() - 5) + " Lainnya");
         }
         List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
         if (listContactPerson.size() > 0) {
-            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
-            model.addAttribute("contactPerson", cp);
+            model.addAttribute("contactPerson", true);
         }
         model.addAttribute("lineSeparator", System.lineSeparator());
         if (activeProfile.equalsIgnoreCase("production")) {
@@ -265,8 +282,7 @@ public class MainController {
         }
         List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
         if (listContactPerson.size() > 0) {
-            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
-            model.addAttribute("contactPerson", cp);
+            model.addAttribute("contactPerson", true);
         }
         return "listDetailsProperty";
     }

@@ -90,8 +90,7 @@ public class PropertyController {
         }
         List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
         if (listContactPerson.size() > 0) {
-            ContactPerson cp = listContactPerson.get(utils.getRandomIndex(listContactPerson.size()));
-            model.addAttribute("contactPerson", cp);
+            model.addAttribute("contactPerson", true);
         }
         return "property";
     }
