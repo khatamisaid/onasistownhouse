@@ -53,14 +53,14 @@
                 <div class="row mb-3">
                     <div class="form-check mr-5">
                         <label class="form-check-label">
-                            <input onclick="radio1Clicked()" checked="checked" type="radio" class="form-check-input"
-                                name="optradio">Otomatis
+                            <input onclick="radio1Clicked()" id="radio1" checked="checked" type="radio"
+                                class="form-check-input" name="optradio">Otomatis
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input onclick="radio2Clicked()" id="radio2" type="radio"
-                                class="form-check-input" name="optradio">Manual
+                            <input onclick="radio2Clicked()" id="radio2" type="radio" class="form-check-input"
+                                name="optradio">Manual
                         </label>
                     </div>
                 </div>
@@ -114,59 +114,6 @@
                             </div>
                             <div class="col-md-3">
                                 <p style="color: black;" id="luasTanah"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="namaPembeli">Nama Pembeli: </label>
-                            </div>
-                            <div class="col-md-6">
-                                <input onchange="this.setAttribute('value', this.value)"
-                                    placeholder="masukan nama pembeli" type="text" name="namaPembeli" id="namaPembeli"
-                                    class="form-control-sm" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="nomorKtp">No KTP: </label>
-                            </div>
-                            <div class="col-md-6">
-                                <input onchange="this.setAttribute('value', this.value)" placeholder="masukan nomor KTP"
-                                    type="text" name="nomorKtp" id="nomorKtp" class="form-control-sm" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="alamatLengkap">Alamat Lengkap: </label>
-                            </div>
-                            <div class="col-md-6">
-                                <textarea onchange="this.setAttribute('value', this.value)" style="color: black;"
-                                    name="alamatLengkap" id="alamatLengkap" cols="30" rows="2"></textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="nomerTelpon">Nomor Telepon</label>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="border:0;background-color: white; font-weight: 600;">+62</span>
-                                    </div>
-                                    <input onchange="this.setAttribute('value', this.value)" type="text"
-                                        class="form-control p-2" placeholder="masukan nomor telepon" id="nomerTelpon"
-                                        name="nomerTelpon">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label for="namaMarketing">Nama Marketing: </label>
-                            </div>
-                            <div class="col-md-6">
-                                <input onchange="this.setAttribute('value', this.value)"
-                                    placeholder="masukan nama marketing" type="text" name="namaMarketing"
-                                    id="namaMarketing" class="form-control-sm" />
                             </div>
                         </div>
                         <div id="sectionPembayaran" style="display: none;">
@@ -347,6 +294,82 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="sectionRadioDataPembeli">
+                            <div class="row mb-3">
+                                <div class="col-md-2">
+                                    <label for="radio3">Data Pembeli: </label>
+                                </div>
+                                <div class="form-check mr-5">
+                                    <label class="form-check-label">
+                                        <input onclick="radio3Clicked()" id="radio3" type="radio"
+                                            class="form-check-input" name="optradio">Ya
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input onclick="radio4Clicked()" checked="checked" id="radio4" type="radio"
+                                            class="form-check-input" name="optradio">Tidak
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sectionPembeli" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="namaPembeli">Nama Pembeli: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input onchange="this.setAttribute('value', this.value)"
+                                        placeholder="masukan nama pembeli" type="text" name="namaPembeli"
+                                        id="namaPembeli" class="form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="nomorKtp">No KTP: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input onchange="this.setAttribute('value', this.value)"
+                                        placeholder="masukan nomor KTP" type="text" name="nomorKtp" id="nomorKtp"
+                                        class="form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="alamatLengkap">Alamat Lengkap: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <textarea onchange="this.setAttribute('value', this.value)" style="color: black;"
+                                        name="alamatLengkap" id="alamatLengkap" cols="30" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="nomerTelpon">Nomor Telepon</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"
+                                                style="border:0;background-color: white; font-weight: 600;">+62</span>
+                                        </div>
+                                        <input onchange="this.setAttribute('value', this.value)" type="text"
+                                            class="form-control p-2" placeholder="masukan nomor telepon"
+                                            id="nomerTelpon" name="nomerTelpon">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="namaMarketing">Nama Marketing: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input onchange="this.setAttribute('value', this.value)"
+                                        placeholder="masukan nama marketing" type="text" name="namaMarketing"
+                                        id="namaMarketing" class="form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div style="display:none;" class="card-body" id="bodyRadio2">
                         <div class="row">
@@ -446,9 +469,9 @@
                                         <span class="input-group-text" id="basic-addon1"
                                             style="border:0;background-color: white; font-weight: 600;">+62</span>
                                     </div>
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)" type="text"
-                                        class="form-control p-2" placeholder="masukan nomor telepon" id="nomerTelpon1"
-                                        name="nomerTelpon1">
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        type="text" class="form-control p-2" placeholder="masukan nomor telepon"
+                                        id="nomerTelpon1" name="nomerTelpon1">
                                 </div>
                             </div>
                         </div>
@@ -491,8 +514,9 @@
                                     <label for="discount1">Discount: </label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)" type="text"
-                                        name="discount1" id="discount1" placeholder="masukan discount harga" />
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        type="text" name="discount1" id="discount1"
+                                        placeholder="masukan discount harga" />
                                 </div>
                             </div>
                             <div class="row">
@@ -508,8 +532,9 @@
                                     <label for="catatan1">Catatan:</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <textarea onchange="this.setAttribute('value', this.value)" style="font-weight: 600;color: black;"
-                                        name="catatan1" id="catatan1" cols="30" rows="2"></textarea>
+                                    <textarea onchange="this.setAttribute('value', this.value)"
+                                        style="font-weight: 600;color: black;" name="catatan1" id="catatan1" cols="30"
+                                        rows="2"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -517,16 +542,16 @@
                                     <label for="bookingFee1">Booking Fee: </label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)" class="form-control-sm"
-                                        type="text" name="bookingFee1" id="bookingFee1"
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        class="form-control-sm" type="text" name="bookingFee1" id="bookingFee1"
                                         placeholder="masukan booking fee" />
                                 </div>
                                 <div class="col-md-2">
                                     <label for="tanggalBooking1">Tanggal: </label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)" class="form-control"
-                                        type="date" name="tanggalBooking1" id="tanggalBooking1"
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        class="form-control" type="date" name="tanggalBooking1" id="tanggalBooking1"
                                         placeholder="masukan booking fee" />
                                 </div>
                             </div>
@@ -554,8 +579,8 @@
                                     <label for="tanggalDp1">Tanggal: </label>
                                 </div>
                                 <div class="col-md-4">
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)" class="form-control"
-                                        type="date" name="tanggalDp1" id="tanggalDp1"
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        class="form-control" type="date" name="tanggalDp1" id="tanggalDp1"
                                         placeholder="masukan tanggal dp" />
                                 </div>
                             </div>
@@ -578,8 +603,8 @@
                                     <label for="tanggalAngsuran1">Tanggal: </label>
                                 </div>
                                 <div class="col-md-4" id="inputTglAngsuran1" style="display: none;">
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)" class="form-control"
-                                        type="date" name="tanggalAngsuran1" id="tanggalAngsuran1"
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        class="form-control" type="date" name="tanggalAngsuran1" id="tanggalAngsuran1"
                                         placeholder="masukan tanggal angsuran" />
                                 </div>
                             </div>
@@ -850,6 +875,8 @@
             mywindow.document.getElementById('catatan').innerHTML = $("#catatan").val() ?? '';
             const box = mywindow.document.getElementById('footerCard');
             box.style.display = 'none';
+            const boxRadioPembeli = mywindow.document.getElementById('sectionRadioDataPembeli');
+            boxRadioPembeli.style.display = 'none';
             mywindow.print();
             mywindow.close();
             return true;
@@ -877,6 +904,8 @@
             mywindow.document.getElementById('catatan1').innerHTML = $("#catatan1").val() ?? '';
             const box = mywindow.document.getElementById('footerCard');
             box.style.display = 'none';
+            const boxRadioPembeli = mywindow.document.getElementById('sectionRadioDataPembeli');
+            boxRadioPembeli.style.display = 'none';
             mywindow.print();
             mywindow.close();
             return true;
@@ -900,6 +929,12 @@
             $("#bodyRadio1").hide(1000);
             $("#bodyRadio2").slideUp("slow");
             $("#bodyRadio2").show(1000);
+        }
+        function radio3Clicked() {
+            $("#sectionPembeli").show(1000);
+        }
+        function radio4Clicked() {
+            $("#sectionPembeli").hide(1000);
         }
         /* Fungsi */
         function formatRupiah(angka, prefix) {
@@ -936,8 +971,8 @@
     </script>
     <script language="JavaScript" type="text/javascript">
         TrustLogo("https://onasistownhouse.com/images/positivessl_trust_seal_lg_222x54.png", "CL1", "none");
-        </script>
-        <a  href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
+    </script>
+    <a href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
 </body>
 
 </html>
