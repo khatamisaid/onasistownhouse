@@ -70,7 +70,7 @@ public class VideoStreamService {
                     .header(CONTENT_LENGTH, contentLength)
                     .header(CONTENT_RANGE, BYTES + " " + rangeStart + "-" + rangeEnd + "/" + fileSize)
                     .body(data);
-        } catch (IOException e) {
+        } catch (IOException | OutOfMemoryError e) {
             logger.error("Exception while reading the file {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -86,7 +86,7 @@ public class VideoStreamService {
      * @return byte array.
      * @throws IOException exception.
      */
-    public byte[] readByteRangeNew(String filename, long start, long end) throws IOException {
+    public byte[] readByteRangeNew(String filename, long start, long end) throws IOException, OutOfMemoryError {
         Path path = Paths.get(getFilePath(), filename);
         byte[] data = Files.readAllBytes(path);
         byte[] result = new byte[(int) (end - start) + 1];
@@ -94,7 +94,7 @@ public class VideoStreamService {
         return result;
     }
 
-    public byte[] readByteRange(String filename, long start, long end) throws IOException {
+    public byte[] readByteRange(String filename, long start, long end) throws IOException, OutOfMemoryError {
         Path path = Paths.get(getFilePath(), filename);
         try (InputStream inputStream = (Files.newInputStream(path));
                 ByteArrayOutputStream bufferedOutputStream = new ByteArrayOutputStream()) {
