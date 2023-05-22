@@ -104,10 +104,7 @@ public class MainController {
         model.addAttribute("websiteName", websiteService.websiteName());
         String namafile = web.getWebsiteVideo().split("\\.")[0];
         model.addAttribute("websiteVideo", "/stream/mp4/" + namafile);
-        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
-        if (listContactPerson.size() > 0) {
-            model.addAttribute("contactPerson", true);
-        }
+        model.addAttribute("contactPerson", contactPersonRepository.findAll().size() > 0);
         if (activeProfile.equalsIgnoreCase("production")) {
             logAktivitasRepository.save(new LogAktivitas(null, "Beranda", "/"));
         }
@@ -225,7 +222,6 @@ public class MainController {
         model.addAttribute("website", web);
         model.addAttribute("property", propertyDetails.get());
         model.addAttribute("websiteName", websiteService.websiteName());
-        model.addAttribute("contactPerson", contactPersonRepository.findAll());
         String[] splitDeskripsi = null;
         String[] deskripsiArr1 = null;
         String[] deskripsiArr2 = null;
@@ -246,10 +242,7 @@ public class MainController {
             model.addAttribute("sizePhotoLainnya",
                     "+" + (propertyDetails.get().getListPhoto().size() - 5) + " Lainnya");
         }
-        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
-        if (listContactPerson.size() > 0) {
-            model.addAttribute("contactPerson", true);
-        }
+        model.addAttribute("contactPerson", contactPersonRepository.findAll().size() > 0);
         model.addAttribute("lineSeparator", System.lineSeparator());
         if (activeProfile.equalsIgnoreCase("production")) {
             logAktivitasRepository.save(
@@ -280,10 +273,8 @@ public class MainController {
                     new LogAktivitas(null, namaProperty.get().trim(), "/p/" +
                             namaProperty.get().trim() + "/details"));
         }
-        List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
-        if (listContactPerson.size() > 0) {
-            model.addAttribute("contactPerson", true);
-        }
+        model.addAttribute("contactPerson", contactPersonRepository.findAll().size() > 0);
+        
         return "listDetailsProperty";
     }
 

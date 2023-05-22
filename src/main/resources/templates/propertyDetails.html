@@ -169,6 +169,7 @@
     <script th:src="@{/js/torupiah.js}"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
+        var website = /*[[${website}]]*/null;
         var property = /*[[${property}]]*/null;
         $(document).ready(function () {
             $("#harga").text(formatRupiah(property.harga.toString()))
