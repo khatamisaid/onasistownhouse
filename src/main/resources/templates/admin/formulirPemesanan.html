@@ -760,7 +760,7 @@
             var totalkeseluruhanHarga = $("#totalkeseluruhanHarga1").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
             var cicilanPerBulan = totalkeseluruhanHarga / this.value;
             $("#hargaCicilan1").text(formatRupiahPerBulan(Math.ceil(cicilanPerBulan).toString(), 'Rp. '));
-            if (this.value <= 12) {
+            if (this.value <= 11) {
                 $("#sectionBiayaAdmin1").hide();
             } else {
                 $("#sectionBiayaAdmin1").show();
@@ -784,7 +784,7 @@
             var totalkeseluruhanHarga = $("#totalkeseluruhanHarga").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
             var cicilanPerBulan = totalkeseluruhanHarga / this.value;
             $("#hargaCicilan").text(formatRupiahPerBulan(Math.ceil(cicilanPerBulan).toString(), 'Rp. '));
-            if (this.value <= 12) {
+            if (this.value <= 11) {
                 $("#sectionBiayaAdmin").hide();
             } else {
                 $("#sectionBiayaAdmin").show();

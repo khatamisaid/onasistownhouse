@@ -199,18 +199,21 @@ public class MainController {
     public String detailsProperty(Model model, @PathVariable Optional<String> namaProperty,
             @PathVariable Optional<String> tipeProperty) {
         Property property = propertyService.getPropertyByName(namaProperty.get());
-        PropertyDetails propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(),
+        Optional<PropertyDetails> propertyDetails = propertyDetailsService.getPropertyDetails(property.getIdProperty(),
                 tipeProperty.get());
+        if(!propertyDetails.isPresent()){
+            return "redirect:/";
+        }
         Website web = websiteRepository.findAll().get(0);
         model.addAttribute("website", web);
-        model.addAttribute("property", propertyDetails);
+        model.addAttribute("property", propertyDetails.get());
         model.addAttribute("websiteName", websiteService.websiteName());
         model.addAttribute("contactPerson", contactPersonRepository.findAll());
         String[] splitDeskripsi = null;
         String[] deskripsiArr1 = null;
         String[] deskripsiArr2 = null;
         try {
-            splitDeskripsi = propertyDetails.getDeskripsi().split("\n");
+            splitDeskripsi = propertyDetails.get().getDeskripsi().split("\n");
             deskripsiArr1 = Arrays.copyOfRange(splitDeskripsi, 0, splitDeskripsi.length / 2);
             deskripsiArr2 = Arrays.copyOfRange(splitDeskripsi, splitDeskripsi.length / 2,
                     splitDeskripsi.length);
@@ -222,8 +225,8 @@ public class MainController {
         model.addAttribute("deskripsiArr1", deskripsiArr1);
         model.addAttribute("deskripsiArr2", deskripsiArr2);
         model.addAttribute("namaProperty", namaProperty.get());
-        if (propertyDetails.getListPhoto().size() > 5) {
-            model.addAttribute("sizePhotoLainnya", "+" + (propertyDetails.getListPhoto().size() - 5) + " Lainnya");
+        if (propertyDetails.get().getListPhoto().size() > 5) {
+            model.addAttribute("sizePhotoLainnya", "+" + (propertyDetails.get().getListPhoto().size() - 5) + " Lainnya");
         }
         List<ContactPerson> listContactPerson = contactPersonRepository.findAll();
         if (listContactPerson.size() > 0) {

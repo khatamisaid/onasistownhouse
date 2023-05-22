@@ -1,6 +1,7 @@
 package com.dreamtown.onasistownhouse.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class PropertyDetailsService {
     @Autowired
     private PropertyDetailsRepository propertyDetailsRepository;
 
-    public PropertyDetails getPropertyDetails(Integer id, String tipeProperty) {
+    public Optional<PropertyDetails> getPropertyDetails(Integer id, String tipeProperty) {
         return propertyDetailsRepository.findFirstByIdPropertyAndTipeProperty(id, tipeProperty);
     }
 
