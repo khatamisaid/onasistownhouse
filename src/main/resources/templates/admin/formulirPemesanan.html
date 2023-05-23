@@ -164,24 +164,6 @@
                                         name="catatan" id="catatan" cols="30" rows="2"></textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label for="bookingFee">Booking Fee: </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input onchange="this.setAttribute('value', this.value)" class="form-control-sm"
-                                        type="text" name="bookingFee" id="bookingFee"
-                                        placeholder="masukan booking fee" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="tanggalBooking">Tanggal: </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input onchange="this.setAttribute('value', this.value)" class="form-control"
-                                        type="date" name="tanggalBooking" id="tanggalBooking"
-                                        placeholder="masukan booking fee" />
-                                </div>
-                            </div>
                             <div class="row mb-2">
                                 <div class="col-md-2">
                                     <label for="dpBayar">DP: </label>
@@ -218,6 +200,25 @@
                                     <p style="color:black" id="totalDp">Rp. 0</p>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="bookingFee">Booking Fee: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input onchange="this.setAttribute('value', this.value)" class="form-control-sm"
+                                        type="text" name="bookingFee" id="bookingFee"
+                                        placeholder="masukan booking fee" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="tanggalBooking">Tanggal: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input onchange="this.setAttribute('value', this.value)" class="form-control"
+                                        type="date" name="tanggalBooking" id="tanggalBooking"
+                                        placeholder="masukan booking fee" />
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-2">
                                     <label for="totalkeseluruhanHarga">Total Angsuran</label>
@@ -481,24 +482,6 @@
                                         rows="2"></textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label for="bookingFee1">Booking Fee: </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
-                                        class="form-control-sm" type="text" name="bookingFee1" id="bookingFee1"
-                                        placeholder="masukan booking fee" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="tanggalBooking1">Tanggal: </label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
-                                        class="form-control" type="date" name="tanggalBooking1" id="tanggalBooking1"
-                                        placeholder="masukan booking fee" />
-                                </div>
-                            </div>
                             <div class="row mb-2">
                                 <div class="col-md-2">
                                     <label for="dpBayar1">DP: </label>
@@ -534,6 +517,24 @@
                                 </div>
                                 <div class="col-md-4">
                                     <p style="color:black" id="totalDp1">Rp. 0</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="bookingFee1">Booking Fee: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        class="form-control-sm" type="text" name="bookingFee1" id="bookingFee1"
+                                        placeholder="masukan booking fee" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="tanggalBooking1">Tanggal: </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
+                                        class="form-control" type="date" name="tanggalBooking1" id="tanggalBooking1"
+                                        placeholder="masukan booking fee" />
                                 </div>
                             </div>
                             <div class="row">
@@ -638,8 +639,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
-                                        placeholder="masukan nama pembeli" type="text" name="namaPembeli1" id="namaPembeli1"
-                                        class="form-control-sm" />
+                                        placeholder="masukan nama pembeli" type="text" name="namaPembeli1"
+                                        id="namaPembeli1" class="form-control-sm" />
                                 </div>
                             </div>
                             <div class="row">
@@ -672,8 +673,9 @@
                                             <span class="input-group-text" id="basic-addon1"
                                                 style="border:0;background-color: white; font-weight: 600;">+62</span>
                                         </div>
-                                        <input style="font-weight: 600;" onchange="this.setAttribute('value', this.value)"
-                                            type="text" class="form-control p-2" placeholder="masukan nomor telepon"
+                                        <input style="font-weight: 600;"
+                                            onchange="this.setAttribute('value', this.value)" type="text"
+                                            class="form-control p-2" placeholder="masukan nomor telepon"
                                             id="nomerTelpon1" name="nomerTelpon1">
                                     </div>
                                 </div>
@@ -754,6 +756,14 @@
 
         $('#bookingFee1').on('keyup', function (e) {
             this.value = formatRupiah(this.value, 'Rp. ');
+            var dpBayar = $("#dpBayar1").find("option:selected").text().replace("%", "");
+            var totalHarga = $("#totalHarga1").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var bookingFee = $(this).val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var totalHargaMinBookingFee = (totalHarga - bookingFee);
+            var hargaSetelahBookingFee = totalHargaMinBookingFee * (dpBayar / 100);
+            var totalDp = totalHargaMinBookingFee - hargaSetelahBookingFee;
+            $("#totalDp1").text(formatRupiah(Math.ceil(hargaSetelahBookingFee).toString(), 'Rp. '));
+            $("#totalkeseluruhanHarga1").text(formatRupiah(Math.ceil(totalDp).toString(), 'Rp. '));
         });
 
         $('#discount').on('keyup', function (e) {
@@ -762,6 +772,14 @@
 
         $('#bookingFee').on('keyup', function (e) {
             this.value = formatRupiah(this.value, 'Rp. ');
+            var dpBayar = $("#dpBayar").find("option:selected").text().replace("%", "");
+            var totalHarga = $("#totalHarga").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var bookingFee = $(this).val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var totalHargaMinBookingFee = (totalHarga - bookingFee);
+            var hargaSetelahBookingFee = totalHargaMinBookingFee * (dpBayar / 100);
+            var totalDp = totalHargaMinBookingFee - hargaSetelahBookingFee;
+            // $("#totalDp").text(formatRupiah(Math.ceil(hargaSetelahBookingFee).toString(), 'Rp. '));
+            $("#totalkeseluruhanHarga").text(formatRupiah(Math.ceil(totalDp).toString(), 'Rp. '));
         });
 
         $("#discount1").on('change', function () {
@@ -771,7 +789,11 @@
         });
 
         $('#hargaJual1').on('keyup', function (e) {
+            console.log($("#discount1").val() == '' ? "Rp. 0" : $("#discount1").val());
             this.value = formatRupiah(this.value, 'Rp. ');
+            var hargaJual = $("#hargaJual1").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            var hargaDiscount = $("#discount1").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+            $("#totalHarga1").text(formatRupiah(Math.ceil((hargaJual - hargaDiscount)).toString(), 'Rp. '));
         });
 
         $("#discount").on('change', function () {
@@ -795,11 +817,39 @@
             var dpBayar = $(this).find("option:selected").text().replace("%", "");
             var totalHarga = $("#totalHarga").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
             var bookingFee = $("#bookingFee").val().trim().replaceAll("Rp. ", "").replaceAll(".", "");
-            var totalHargaMinBookingFee = (totalHarga - bookingFee);
+            var totalHargaMinBookingFee = (totalHarga);
             var hargaSetelahBookingFee = totalHargaMinBookingFee * (dpBayar / 100);
             var totalDp = totalHargaMinBookingFee - hargaSetelahBookingFee;
             $("#totalDp").text(formatRupiah(Math.ceil(hargaSetelahBookingFee).toString(), 'Rp. '));
-            $("#totalkeseluruhanHarga").text(formatRupiah(Math.ceil(totalDp).toString(), 'Rp. '));
+            if ($("#bookingFee").val() != '') {
+                $("#totalkeseluruhanHarga").text(formatRupiah(Math.ceil(totalDp).toString(), 'Rp. '));
+            }
+        });
+
+        $("#tanggalDp1").on('change', function () {
+            if ($("#periodeCicilan1").val() != '') {
+                var totalkeseluruhanHarga = $("#totalkeseluruhanHarga1").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+                var cicilanPerBulan = totalkeseluruhanHarga / $("#periodeCicilan1").val();
+                $("#hargaCicilan1").text(formatRupiahPerBulan(Math.ceil(cicilanPerBulan).toString(), 'Rp. '));
+                if ($("#periodeCicilan1").val() <= 11) {
+                    $("#sectionBiayaAdmin1").hide();
+                } else {
+                    $("#sectionBiayaAdmin1").show();
+                }
+                $("#tableCicilan1").find('tbody').empty();
+                for (let i = 1; i <= $("#periodeCicilan1").val(); i++) {
+                    var tanggalCicilan = moment($("#tanggalDp1").val()).add(i, 'months').format('YYYY-MM-DD');
+                    $("#tableCicilan1").find('tbody').append(
+                        `<tr><td style="color:#aa8453">Cicilan ${i}</td>
+                                            <td style="color:#aa8453">${$("#hargaCicilan1").text().replace(" / Bulan", "")}</td>
+                                            <td>
+                                                <input value="${tanggalCicilan}" class="form-control" type="date" name="tglCicilan[]" id="tglCicilan${i}"
+                                                    placeholder="masukan tanggal cicilan" />
+                                            </td></tr>`
+                    );
+                }
+                return;
+            }
         });
 
         $("#periodeCicilan1").on('change', function () {
@@ -824,6 +874,32 @@
                 );
             }
             return;
+        });
+
+        $("#tanggalDp").on('change', function () {
+            if ($("#periodeCicilan").val() != '') {
+                var totalkeseluruhanHarga = $("#totalkeseluruhanHarga").text().trim().replaceAll("Rp. ", "").replaceAll(".", "");
+                var cicilanPerBulan = totalkeseluruhanHarga / $("#periodeCicilan").val();
+                $("#hargaCicilan").text(formatRupiahPerBulan(Math.ceil(cicilanPerBulan).toString(), 'Rp. '));
+                if ($("#periodeCicilan").val() <= 11) {
+                    $("#sectionBiayaAdmin").hide();
+                } else {
+                    $("#sectionBiayaAdmin").show();
+                }
+                $("#tableCicilan").find('tbody').empty();
+                for (let i = 1; i <= $("#periodeCicilan").val(); i++) {
+                    var tanggalCicilan = moment($("#tanggalDp").val()).add(i, 'months').format('YYYY-MM-DD');
+                    $("#tableCicilan").find('tbody').append(
+                        `<tr><td style="color:#aa8453">Cicilan ${i}</td>
+                                            <td style="color:#aa8453">${$("#hargaCicilan").text().replace(" / Bulan", "")}</td>
+                                            <td>
+                                                <input value="${tanggalCicilan}" class="form-control" type="date" name="tglCicilan[]" id="tglCicilan${i}"
+                                                    placeholder="masukan tanggal cicilan" />
+                                            </td></tr>`
+                    );
+                }
+                return;
+            }
         });
 
         $("#periodeCicilan").on('change', function () {
