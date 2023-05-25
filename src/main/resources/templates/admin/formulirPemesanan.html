@@ -1012,7 +1012,8 @@
 
 
         $("#btnPrint1").on('click', function () {
-            PrintElem1('#printData');
+            cetakFormulirPemesanan();
+            // PrintElem1('#printData');
         });
         $("#btnPrint").on('click', function () {
             PrintElem('#printData');
@@ -1073,6 +1074,42 @@
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah + ' / Bulan' : '');
         }
+
+        function cetakFormulirPemesanan() {
+            var cicilanKe = "";
+            var nominal = "";
+            var tglCicilan = "";
+            for (let i = 1; i <= $("#periodeCicilan option:selected").val(); i++) {
+                cicilanKe += `Cicilan ${i}`;
+                nominal += `${$("#hargaCicilan").text().replace(" / Bulan", "")}`;
+                tglCicilan += `${moment($(`#tglCicilan${i}`).val()).format('DD MMMM YYYY')}`;
+                if(i < $("#periodeCicilan option:selected").val()){
+                    cicilanKe += "\n";
+                    nominal += "\n";
+                    tglCicilan += "\n";
+                }
+            }
+            var vmCetakFormulirPemesananRumah = {
+                "namaProperty": $("#property option:selected").text(),
+                "tipeProperty": $("#tipeProperty option:selected").text(),
+                "tglHariIni": $("#tanggal").val(),
+                "caraBayar": `${$("#caraBayar option:selected").text()} ${$("#periodeCicilan option:selected").text()}`,
+                "statusCaraBayar": $("#caraBayar option:selected").val() == 2,
+                "discount": $("#discount").val(),
+                "hargaProperty": $("#hargaJual").text(),
+                "dp": $("#totalDp").text(),
+                "tglDp": moment($("#tanggalDp").val()).format('DD MMMM YYYY'),
+                "bookingFee": $("#bookingFee").val(),
+                "tglBookingFee": moment($("#tanggalBooking").val()).format('DD MMMM YYYY'),
+                "kenaAdmin": $("#periodeCicilan option:selected").val() > 11,
+                "cicilan": $("#hargaCicilan").text(),
+                "cicilanKe": cicilanKe,
+                "nominal": nominal,
+                "tglCicilan": tglCicilan
+            };
+            console.log(vmCetakFormulirPemesananRumah);
+        }
+
     </script>
     <script language="JavaScript" type="text/javascript">
         TrustLogo("https://onasistownhouse.com/images/positivessl_trust_seal_lg_222x54.png", "CL1", "none");

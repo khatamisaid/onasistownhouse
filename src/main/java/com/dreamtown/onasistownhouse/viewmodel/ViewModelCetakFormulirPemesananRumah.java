@@ -1,7 +1,5 @@
 package com.dreamtown.onasistownhouse.viewmodel;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +12,20 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ViewModelCetakFormulirPemesananRumah {
-    private String tanggal;
     private String namaProperty;
-    private List<JasperP1> jasperP1;
-    private List<JasperP2> jasperP2;
-    private Boolean periodeCicilanIsTrue;
+    private String tipeProperty;
+    private String tglHariIni;
+    private String caraBayar;
+    private Boolean statusCaraBayar;
+    private String discount;
+    private String hargaProperty;
+    private String dp;
+    private String tglDp;
+    private String bookingFee;
+    private String tglBookingFee;
+    private Boolean kenaAdmin;
+    private String cicilan;
+    private String cicilanKe;
+    private String nominal;
+    private String tglCicilan;
 }

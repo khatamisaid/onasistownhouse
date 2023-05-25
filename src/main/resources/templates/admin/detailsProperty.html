@@ -76,9 +76,12 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input placeholder="masukan harga property" type="text"
-                                                    id="hargaProperty" name="hargaProperty" class="form-control-sm"
-                                                    th:attr="readOnly=${session.role == 'Marketing'}" />
+                                                <input th:if="${session.role == 'Super User'}"
+                                                    placeholder="masukan harga property" type="text" id="hargaProperty"
+                                                    name="hargaProperty" class="form-control-sm" />
+                                                <input th:unless="${session.role == 'Super User'}"
+                                                    placeholder="masukan harga property" type="text" id="hargaProperty"
+                                                    name="hargaProperty" class="form-control-sm" readonly="" />
                                             </div>
                                         </div>
                                     </div>
@@ -101,9 +104,13 @@
                                             <label for="luasTanah">Luas Tanah (m²)</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input onkeypress="validate(event)" placeholder="masukan luas tanah"
+                                            <input th:if="${session.role == 'Super User'}" onkeypress="validate(event)"
+                                                placeholder="masukan luas tanah" type="text" id="luasTanah"
+                                                name="luasTanah" class="form-control-sm" />
+                                            <input th:unless="${session.role == 'Super User'}"
+                                                onkeypress="validate(event)" placeholder="masukan luas tanah"
                                                 type="text" id="luasTanah" name="luasTanah" class="form-control-sm"
-                                                th:attr="readOnly=${session.role == 'Marketing'}" />
+                                                readonly="" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -111,9 +118,12 @@
                                             <label for="luasBangunan">Luas Bangunan (m²)</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input placeholder="masukan luas bangunan" type="text" id="luasBangunan"
-                                                name="luasBangunan" class="form-control-sm"
-                                                th:attr="readOnly=${session.role == 'Marketing'}" />
+                                            <input th:if="${session.role == 'Super User'}"
+                                                placeholder="masukan luas bangunan" type="text" id="luasBangunan"
+                                                name="luasBangunan" class="form-control-sm" />
+                                            <input th:unless="${session.role == 'Super User'}"
+                                                placeholder="masukan luas bangunan" type="text" id="luasBangunan"
+                                                name="luasBangunan" class="form-control-sm" readonly="" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -121,9 +131,12 @@
                                             <label for="kamarTidur">Jumlah Kamar Tidur</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input placeholder="masukan jumlah kamar Tidur" type="text" id="kamarTidur"
-                                                name="kamarTidur" class="form-control-sm"
-                                                th:attr="readOnly=${session.role == 'Marketing'}" />
+                                            <input th:if="${session.role == 'Super User'}"
+                                                placeholder="masukan jumlah kamar Tidur" type="text" id="kamarTidur"
+                                                name="kamarTidur" class="form-control-sm" />
+                                            <input th:unless="${session.role == 'Super User'}"
+                                                placeholder="masukan jumlah kamar Tidur" type="text" id="kamarTidur"
+                                                name="kamarTidur" class="form-control-sm" readonly="" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -131,9 +144,12 @@
                                             <label for="kamarMandi">Jumlah Kamar Mandi</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input placeholder="masukan jumlah kamar Mandi" type="text" id="kamarMandi"
-                                                name="kamarMandi" class="form-control-sm"
-                                                th:attr="readOnly=${session.role == 'Marketing'}" />
+                                            <input th:if="${session.role == 'Super User'}"
+                                                placeholder="masukan jumlah kamar Mandi" type="text" id="kamarMandi"
+                                                name="kamarMandi" class="form-control-sm" />
+                                            <input th:unless="${session.role == 'Super User'}"
+                                                placeholder="masukan jumlah kamar Mandi" type="text" id="kamarMandi"
+                                                name="kamarMandi" class="form-control-sm" readonly="" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -141,9 +157,12 @@
                                             <label for="carPort">Car Port</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input placeholder="masukan jumlah car port" type="text" id="carPort"
-                                                name="carPort" class="form-control-sm"
-                                                th:attr="readOnly=${session.role == 'Marketing'}" />
+                                            <input th:if="${session.role == 'Super User'}"
+                                                placeholder="masukan jumlah car port" type="text" id="carPort"
+                                                name="carPort" class="form-control-sm" />
+                                            <input th:unless="${session.role == 'Super User'}"
+                                                placeholder="masukan jumlah car port" type="text" id="carPort"
+                                                name="carPort" class="form-control-sm" readonly="" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -151,9 +170,13 @@
                                             <label for="lokasi">Lokasi</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <textarea placeholder="masukan lokasi property" style="color: black;"
+                                            <textarea th:if="${session.role == 'Super User'}"
+                                                placeholder="masukan lokasi property" style="color: black;"
+                                                class="form-control-sm" name="lokasi" id="lokasi"></textarea>
+                                            <textarea th:unless="${session.role == 'Super User'}"
+                                                placeholder="masukan lokasi property" style="color: black;"
                                                 class="form-control-sm" name="lokasi" id="lokasi"
-                                                th:attr="readOnly=${session.role == 'Marketing'}"></textarea>
+                                                readonly=""></textarea>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -161,9 +184,10 @@
                                             <label for="deskripsi">Deskripsi</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <textarea placeholder="masukan deskripsi property" style="color: black;"
-                                                class="form-control-sm" name="deskripsi" id="deskripsi"
-                                                th:attr="readOnly=${session.role == 'Marketing'}"></textarea>
+                                            <textarea th:if="${session.role == 'Super User'}" placeholder="masukan deskripsi property" style="color: black;"
+                                                class="form-control-sm" name="deskripsi" id="deskripsi" ></textarea>
+                                            <textarea th:unless="${session.role == 'Super User'}" placeholder="masukan deskripsi property" style="color: black;"
+                                                class="form-control-sm" name="deskripsi" id="deskripsi" readonly=""></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -560,8 +584,8 @@
     </script>
     <script language="JavaScript" type="text/javascript">
         TrustLogo("https://onasistownhouse.com/images/positivessl_trust_seal_lg_222x54.png", "CL1", "none");
-        </script>
-        <a  href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
+    </script>
+    <a href="https://www.positivessl.com/" id="comodoTL">Positive SSL</a>
 </body>
 
 </html>

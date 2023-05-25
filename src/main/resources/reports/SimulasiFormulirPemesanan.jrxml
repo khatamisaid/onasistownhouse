@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SimulasiFormulirPemesanan" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bc72108a-c1b1-4fd8-88ea-7d3a1b856dc3">
+	<parameter name="logo" class="java.io.InputStream"/>
+	<parameter name="fotoProperty" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="namaProperty" class="java.lang.String"/>
+	<field name="tipeProperty" class="java.lang.String"/>
+	<field name="tglHariIni" class="java.lang.String"/>
+	<field name="caraBayar" class="java.lang.String"/>
+	<field name="statusCaraBayar" class="java.lang.Boolean"/>
+	<field name="hargaProperty" class="java.lang.String"/>
+	<field name="dp" class="java.lang.String"/>
+	<field name="tglDp" class="java.lang.String"/>
+	<field name="discount" class="java.lang.String"/>
+	<field name="bookingFee" class="java.lang.String"/>
+	<field name="tglBookingFee" class="java.lang.String"/>
+	<field name="cicilan" class="java.lang.String"/>
+	<field name="totalAngsuran" class="java.lang.String"/>
+	<field name="cicilanKe" class="java.lang.String"/>
+	<field name="nominal" class="java.lang.String"/>
+	<field name="tglCicilan" class="java.lang.String"/>
+	<field name="kenaAdmin" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="409" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement positionType="Float" x="430" y="83" width="315" height="326" uuid="f551d801-dd26-4dc0-9bcf-3fcf0a996a74"/>
+				<imageExpression><![CDATA[$P{fotoProperty}]]></imageExpression>
+			</image>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="30" y="128" width="260" height="20" uuid="31f35ed4-d64d-491d-8438-0e9b3f6cd0c0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Harga Property    : " + $F{hargaProperty}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="30" y="148" width="260" height="20" uuid="2ca049a8-4ab5-4e69-9607-f5273ef50e9b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DP                       : " + $F{dp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="30" y="93" width="260" height="30" uuid="2c9d92af-373c-4778-88df-348b1c1c55b7"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{caraBayar}]]></textFieldExpression>
+			</textField>
+			<ellipse>
+				<reportElement positionType="Float" x="434" y="84" width="85" height="71" forecolor="#FFFFFF" backcolor="#050505" uuid="d2b827ad-2df6-4d8a-82d4-a1dd0b737fce"/>
+			</ellipse>
+			<ellipse>
+				<reportElement positionType="Float" x="436" y="86" width="80" height="67" forecolor="#FFFFFF" backcolor="#DE9145" uuid="cd81b679-e9a0-4f6d-b860-74a9e75f3dd6"/>
+			</ellipse>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="436" y="93" width="80" height="55" forecolor="#FFFFFF" uuid="831411ff-84d1-4b99-807e-c959bbe15a7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Discount\n"+ $F{discount}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="30" y="5" width="80" height="72" uuid="b859f19b-5a7f-4090-b2c5-288e527ac6ed"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="137" y="37" width="500" height="28" uuid="ebd9767a-65d1-4b70-a872-4824713fc6ec">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="22"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipeProperty}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="137" y="5" width="500" height="32" uuid="1ef97630-7699-44c0-a2ca-eefc1ac5960e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{namaProperty}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="80" width="740" height="1" uuid="8288c93d-0db7-400b-a58e-4304e23b2396"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="30" y="168" width="260" height="20" uuid="6d4739cb-9273-4151-9ae1-6179dbfc0dc8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Booking Fee        : " + $F{bookingFee}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="30" y="188" width="260" height="20" uuid="90d64f44-48ef-4091-a150-32ef4de879bb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Angsuran    : " + $F{totalAngsuran}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="30" y="208" width="260" height="20" uuid="f9451408-2717-4fe3-8920-c9a88d7a64ec">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[$F{kenaAdmin}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Biaya Admin        :  Rp. 6.000.000"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="30" y="228" width="260" height="20" uuid="7f67c050-a344-46dc-b013-7a269e875773">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cicilan per Bulan : " + $F{cicilan}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement positionType="Float" x="30" y="250" width="350" height="28" uuid="7e3ab19b-02ea-4863-ba43-e61fb2d9754e">
+					<printWhenExpression><![CDATA[$F{statusCaraBayar}]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="0" y="0" width="90" height="14" forecolor="#FFFFFF" backcolor="#E8A72E" uuid="42dae59b-b73a-4660-8989-e3cd07bda9ff">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top"/>
+					<text><![CDATA[Cicilan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="90" y="0" width="130" height="14" forecolor="#FFFFFF" backcolor="#E8A72E" uuid="3d553147-f4e3-4874-848a-deec117f1c68">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top"/>
+					<text><![CDATA[Nominal]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" mode="Opaque" x="220" y="0" width="130" height="14" forecolor="#FFFFFF" backcolor="#E8A72E" uuid="14429ed0-e367-43c1-9d57-e46c2d631452">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top"/>
+					<text><![CDATA[Tanggal Cicilan]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight">
+					<reportElement positionType="Float" x="0" y="14" width="90" height="14" uuid="51725bba-559f-47e2-88a7-891740228293">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{cicilanKe}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement positionType="Float" x="90" y="14" width="130" height="14" uuid="5d017b67-06f2-413e-b8d9-d956622fc191">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{nominal}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement positionType="Float" x="220" y="14" width="130" height="14" uuid="a82fd276-1788-4e59-bf6e-144c8c64d47d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{tglCicilan}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<textField>
+				<reportElement positionType="Float" x="290" y="148" width="100" height="20" uuid="7268f628-521c-4be9-b728-c81f50c726a8"/>
+				<textFieldExpression><![CDATA[$F{tglDp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="290" y="168" width="100" height="20" uuid="f8fca8d0-9383-4d0e-8e34-fda1892cb1e7"/>
+				<textFieldExpression><![CDATA[$F{tglBookingFee}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="640" y="60" width="120" height="20" uuid="42a2798e-aa95-444f-825e-055450bf0cb4"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{tglHariIni}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
