@@ -16,7 +16,7 @@ public interface PropertyDetailsRepository extends JpaRepository<PropertyDetails
     @Query("delete from PropertyDetails pd where pd.idProperty=:idProperty")
     void deleteWhereIdProperty(@Param("idProperty") Integer idProperty);
 
-    PropertyDetails findOneByIdPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty);
+    Optional<PropertyDetails> findOneByIdPropertyAndTipeProperty(Integer idDetailsProperty, String tipeProperty);
 
     @Query(value = "SELECT * from property_details where id_property = ?1 order by harga ASC", nativeQuery = true)
     List<PropertyDetails> findDetailsPropertyByIdOrderByHargaAsc(Integer id);

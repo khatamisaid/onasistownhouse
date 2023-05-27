@@ -26,28 +26,44 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 public class CetakFormulirPemesananRumah {
 
-        @Autowired
-        private Environment env;
-
-        public Boolean writePdf(List<ViewModelCetakFormulirPemesananRumah> list, String path)
+        public Boolean writePdf(List<ViewModelCetakFormulirPemesananRumah> list, String path,
+                        Map<String, Object> paramater)
                         throws FileNotFoundException {
-                String masterReportFileName = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaran.jrxml";
-                String subReportFileName1 = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaranP1.jasper";
-                String subReportFileName2 = env.getProperty("storage.reports")
-                                + "SimulasiSistemPembayaranP2.jasper";
+                // String masterReportFileName = env.getProperty("storage.reports")
+                // + "SimulasiFormulirPemesanan.jrxml";
                 JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(list);
                 try {
+                        // JasperReport jasperMasterReport = JasperCompileManager
+                        // .compileReport(new FileInputStream(new File(masterReportFileName)));
+                        InputStream employeeReportStream = getClass()
+                                        .getResourceAsStream("/reports/SimulasiFormulirPemesanan.jrxml");
                         JasperReport jasperMasterReport = JasperCompileManager
-                                        .compileReport(new FileInputStream(new File(masterReportFileName)));
-                        Map<String, Object> parameters = new HashMap<>();
-                        parameters.put("SUBREPORT_DIR1",
-                                        subReportFileName1);
-                        parameters.put("SUBREPORT_DIR2",
-                                        subReportFileName2);
+                                        .compileReport(employeeReportStream);
                         JasperPrint jrPrint = JasperFillManager.fillReport(jasperMasterReport,
-                                        parameters, beanColDataSource);
+                                        paramater, beanColDataSource);
+                        JasperExportManager.exportReportToPdfFile(jrPrint, path);
+                        return true;
+                } catch (JRException ex) {
+                        System.out.println(ex.getMessage());
+                }
+                return false;
+        }
+
+        public Boolean writePdfManual(List<ViewModelCetakFormulirPemesananRumah> list, String path,
+                        Map<String, Object> paramater)
+                        throws FileNotFoundException {
+                // String masterReportFileName = env.getProperty("storage.reports")
+                // + "SimulasiFormulirPemesanan.jrxml";
+                JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(list);
+                try {
+                        // JasperReport jasperMasterReport = JasperCompileManager
+                        // .compileReport(new FileInputStream(new File(masterReportFileName)));
+                        InputStream employeeReportStream = getClass()
+                                        .getResourceAsStream("/reports/SimulasiFormulirPemesananManual.jrxml");
+                        JasperReport jasperMasterReport = JasperCompileManager
+                                        .compileReport(employeeReportStream);
+                        JasperPrint jrPrint = JasperFillManager.fillReport(jasperMasterReport,
+                                        paramater, beanColDataSource);
                         JasperExportManager.exportReportToPdfFile(jrPrint, path);
                         return true;
                 } catch (JRException ex) {

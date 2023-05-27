@@ -708,7 +708,6 @@
     <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script th:inline="javascript">
         var tableCicilan;
-
         $("#property").on('change', function () {
             $("#tipeProperty").empty();
             var option = `<option value="" selected disabled>-- Pilih Tipe --</option>`;
@@ -762,7 +761,7 @@
             var totalHargaMinBookingFee = (totalHarga - bookingFee);
             var hargaSetelahBookingFee = totalHargaMinBookingFee * (dpBayar / 100);
             var totalDp = totalHargaMinBookingFee - hargaSetelahBookingFee;
-            $("#totalDp1").text(formatRupiah(Math.ceil(hargaSetelahBookingFee).toString(), 'Rp. '));
+            // $("#totalDp1").text(formatRupiah(Math.ceil(hargaSetelahBookingFee).toString(), 'Rp. '));
             $("#totalkeseluruhanHarga1").text(formatRupiah(Math.ceil(totalDp).toString(), 'Rp. '));
         });
 
@@ -1016,31 +1015,40 @@
             // PrintElem1('#printData');
         });
         $("#btnPrint").on('click', function () {
-            PrintElem('#printData');
+            cetakFormulirPemesananManual();
         });
         function radio1Clicked() {
             $("#bodyRadio2").slideDown("slow");
             $("#bodyRadio2").hide(1000);
             $("#bodyRadio1").slideUp("slow");
             $("#bodyRadio1").show(1000);
+            $("#btnPrint1").show();
+            $("#btnPrint").hide();
         }
         function radio2Clicked() {
             $("#bodyRadio1").slideDown("slow");
             $("#bodyRadio1").hide(1000);
             $("#bodyRadio2").slideUp("slow");
             $("#bodyRadio2").show(1000);
+            $("#btnPrint1").hide();
+            $("#btnPrint").show();
         }
+        var statusPembeli = false;
         function radio3Clicked() {
             $("#sectionPembeli").show(1000);
+            statusPembeli = true;
         }
         function radio4Clicked() {
             $("#sectionPembeli").hide(1000);
+            statusPembeli = false;
         }
         function radio5Clicked() {
             $("#sectionPembeli1").show(1000);
+            statusPembeli = true;
         }
         function radio6Clicked() {
             $("#sectionPembeli1").hide(1000);
+            statusPembeli = false;
         }
         /* Fungsi */
         function formatRupiah(angka, prefix) {
@@ -1073,6 +1081,68 @@
 
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah + ' / Bulan' : '');
+        }   
+
+        function cetakFormulirPemesananManual(){
+            var cicilanKe = "";
+            var nominal = "";
+            var tglCicilan = "";
+            for (let i = 1; i <= $("#periodeCicilan1 option:selected").val(); i++) {
+                cicilanKe += `Cicilan ${i}`;
+                nominal += `${$("#hargaCicilan1").text().replace(" / Bulan", "")}`;
+                tglCicilan += `${moment($(`#tglCicilan${i}`).val()).format('DD MMMM YYYY')}`;
+                if (i < $("#periodeCicilan1 option:selected").val()) {
+                    cicilanKe += "\n";
+                    nominal += "\n";
+                    tglCicilan += "\n";
+                }
+            }
+            var vmCetakFormulirPemesananRumah = {
+                "namaProperty": $("#property1").val(),
+                "tipeProperty": $("#tipeProperty1").val(),
+                "tglHariIni": $("#tanggal").val(),
+                "caraBayar": `${$("#caraBayar1 option:selected").text()} ${$("#periodeCicilan1 option:selected").text() == '-- Pilih Periode Cicilan --' ? '' : $("#periodeCicilan1 option:selected").text()}`,
+                "statusCaraBayar": $("#caraBayar1 option:selected").val() == 2,
+                "discount": $("#discount1").val(),
+                "hargaProperty": $("#hargaJual1").val(),
+                "dp": $("#totalDp1").text(),
+                "tglDp": moment($("#tanggalDp1").val()).format('DD MMMM YYYY'),
+                "bookingFee": $("#bookingFee1").val(),
+                "tglBookingFee": moment($("#tanggalBooking1").val()).format('DD MMMM YYYY'),
+                "kenaAdmin": $("#periodeCicilan1 option:selected").val() > 11,
+                "cicilan": $("#hargaCicilan1").text(),
+                "cicilanKe": cicilanKe,
+                "nominal": nominal,
+                "tglCicilan": tglCicilan,
+                "totalAngsuran": $("#totalkeseluruhanHarga1").text(),
+                "namaMarketing": $("#namaMarketing1").val(),
+                "namaPembeli": $("#namaPembeli1").val(),
+                "noKtp": $("#nomorKtp1").val(),
+                "noTelpon": `+62${$("#nomerTelpon1").val()}`,
+                "alamatPembeli": $("#alamatLengkap1").val(),
+                "catatanPembeli":$("#catatan1").val(),
+                "dataPembeli": statusPembeli,
+                "luasTanah": `${$("#luasTanah1").val()} (m²)`,
+                "luasBangunan":`${$("#luasBangunan1").val()} (m²)`,
+                "tglAngsuran": moment($("#tanggalAngsuran1").val()).format('DD MMMM YYYY')
+            };
+            $.ajax({
+                method: "POST",
+                url: `/property/cetakFormulirPemesananManual`,
+                data: JSON.stringify(vmCetakFormulirPemesananRumah),
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (data, textStatus, jqXHR) {
+                    var base64 = `data:application/pdf;base64,${data.file}`;
+                    var downloadLink = document.createElement("a");
+                    downloadLink.href = base64;
+                    downloadLink.download = data.filename;
+                    downloadLink.click();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
         }
 
         function cetakFormulirPemesanan() {
@@ -1083,7 +1153,7 @@
                 cicilanKe += `Cicilan ${i}`;
                 nominal += `${$("#hargaCicilan").text().replace(" / Bulan", "")}`;
                 tglCicilan += `${moment($(`#tglCicilan${i}`).val()).format('DD MMMM YYYY')}`;
-                if(i < $("#periodeCicilan option:selected").val()){
+                if (i < $("#periodeCicilan option:selected").val()) {
                     cicilanKe += "\n";
                     nominal += "\n";
                     tglCicilan += "\n";
@@ -1093,7 +1163,7 @@
                 "namaProperty": $("#property option:selected").text(),
                 "tipeProperty": $("#tipeProperty option:selected").text(),
                 "tglHariIni": $("#tanggal").val(),
-                "caraBayar": `${$("#caraBayar option:selected").text()} ${$("#periodeCicilan option:selected").text()}`,
+                "caraBayar": `${$("#caraBayar option:selected").text()} ${$("#periodeCicilan option:selected").text() == '-- Pilih Periode Cicilan --' ? '' : $("#periodeCicilan option:selected").text()}`,
                 "statusCaraBayar": $("#caraBayar option:selected").val() == 2,
                 "discount": $("#discount").val(),
                 "hargaProperty": $("#hargaJual").text(),
@@ -1105,9 +1175,36 @@
                 "cicilan": $("#hargaCicilan").text(),
                 "cicilanKe": cicilanKe,
                 "nominal": nominal,
-                "tglCicilan": tglCicilan
+                "tglCicilan": tglCicilan,
+                "totalAngsuran": $("#totalkeseluruhanHarga").text(),
+                "namaMarketing": $("#namaMarketing").val(),
+                "namaPembeli": $("#namaPembeli").val(),
+                "noKtp": $("#nomorKtp").val(),
+                "noTelpon": `+62${$("#nomerTelpon").val()}`,
+                "alamatPembeli": $("#alamatLengkap").val(),
+                "catatanPembeli":$("#catatan").val(),
+                "dataPembeli": statusPembeli,
+                "luasTanah": $("#luasTanah").text(),
+                "luasBangunan":$("#luasBangunan").text(),
+                "tglAngsuran": moment($("#tanggalAngsuran").val()).format('DD MMMM YYYY')
             };
-            console.log(vmCetakFormulirPemesananRumah);
+            $.ajax({
+                method: "POST",
+                url: `/property/cetakFormulirPemesanan/${$("#property option:selected").val()}`,
+                data: JSON.stringify(vmCetakFormulirPemesananRumah),
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (data, textStatus, jqXHR) {
+                    var base64 = `data:application/pdf;base64,${data.file}`;
+                    var downloadLink = document.createElement("a");
+                    downloadLink.href = base64;
+                    downloadLink.download = data.filename;
+                    downloadLink.click();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
         }
 
     </script>

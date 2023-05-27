@@ -2,26 +2,31 @@ package com.dreamtown.onasistownhouse.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dreamtown.onasistownhouse.entity.ContactPerson;
@@ -34,6 +39,7 @@ import com.dreamtown.onasistownhouse.entity.Website;
 import com.dreamtown.onasistownhouse.repository.ContactPersonRepository;
 import com.dreamtown.onasistownhouse.repository.LogAktivitasRepository;
 import com.dreamtown.onasistownhouse.repository.MWilayahRepository;
+import com.dreamtown.onasistownhouse.repository.PhotoRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyDetailsRepository;
 import com.dreamtown.onasistownhouse.repository.PropertyRepository;
 import com.dreamtown.onasistownhouse.repository.WebsiteRepository;
@@ -66,6 +72,9 @@ public class PropertyController {
 
     @Autowired
     private WebsiteService websiteService;
+
+    @Autowired
+    private PhotoRepository photoRepository;
 
     @Autowired
     private WebsiteRepository websiteRepository;
@@ -118,13 +127,14 @@ public class PropertyController {
             @RequestPart(required = false) List<MultipartFile> videos)
             throws IllegalStateException, IOException {
         Map response = new HashMap<>();
-        if (propertyDetailsRepository.findOneByTipeProperty(propertyDetails.getTipeProperty()).isPresent() && propertyDetails.getIdDetailsProperty() == null) {
+        if (propertyDetailsRepository.findOneByTipeProperty(propertyDetails.getTipeProperty()).isPresent()
+                && propertyDetails.getIdDetailsProperty() == null) {
             response.put("message", "Gagal Menambah detail property karna Tipe Property sudah ada");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        try{
-            System.out.println("foto: "+images.get(0).getOriginalFilename());
-        }catch(NullPointerException e){
+        try {
+            System.out.println("foto: " + images.get(0).getOriginalFilename());
+        } catch (NullPointerException e) {
             response.put("message", "Gagal Menambah detail property minimal harus ada 1 foto");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -213,21 +223,57 @@ public class PropertyController {
     @Autowired
     private CetakFormulirPemesananRumah cetakFormulirPemesananRumah;
 
-    @RequestMapping(value = "/cetakFormulirPemesanan", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<Map> cetakFormulirPemesanan(
+    @RequestMapping(value = "/cetakFormulirPemesanan/{idProperty}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Map> cetakFormulirPemesanan(@PathVariable Integer idProperty,
             @RequestBody ViewModelCetakFormulirPemesananRumah vmCetakRumah) throws IOException {
         if (vmCetakRumah.getNamaProperty().equalsIgnoreCase("")) {
             Map response = new HashMap();
             response.put("message", "File Not Found");
-            ResponseEntity respEntity = new ResponseEntity(response, HttpStatus.NOT_FOUND);
+            ResponseEntity respEntity = new ResponseEntity(response,
+                    HttpStatus.NOT_FOUND);
             return respEntity;
         }
         Map response = new HashMap();
-        String filename = "Formulir_Pemesanan_Rumah_" + vmCetakRumah.getNamaProperty() + ".pdf";
+        Optional<PropertyDetails> tempPropertyDetails = propertyDetailsRepository.findOneByIdPropertyAndTipeProperty(
+                idProperty,
+                vmCetakRumah.getTipeProperty().trim());
+        String filename = "Simulasi_Pemesanan_Rumah_" +
+                vmCetakRumah.getNamaProperty() + "_" + vmCetakRumah.getTipeProperty().trim() + ".pdf";
         String path = env.getProperty("storage.file") + "test.pdf";
         List<ViewModelCetakFormulirPemesananRumah> list = new ArrayList<>();
         list.add(vmCetakRumah);
-        cetakFormulirPemesananRumah.writePdf(list, path);
+        Map<String, Object> parameter = new HashMap<>();
+        InputStream fotoProerty = new FileInputStream(
+                env.getProperty("storage.images") + tempPropertyDetails.get().getListPhoto().get(0).getNamaPhoto());
+        parameter.put("logo", getClass().getResourceAsStream("/static/img/favicon.png"));
+        parameter.put("fotoProperty", fotoProerty);
+        cetakFormulirPemesananRumah.writePdf(list, path, parameter);
+        InputStream inputStream = new FileInputStream(path);
+        byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
+        response.put("file", out);
+        response.put("filename", filename);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/cetakFormulirPemesananManual", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Map> cetakFormulirPemesananManual(
+            @RequestBody ViewModelCetakFormulirPemesananRumah vmCetakRumah) throws IOException {
+        if (vmCetakRumah.getNamaProperty().equalsIgnoreCase("")) {
+            Map response = new HashMap();
+            response.put("message", "File Not Found");
+            ResponseEntity respEntity = new ResponseEntity(response,
+                    HttpStatus.NOT_FOUND);
+            return respEntity;
+        }
+        Map response = new HashMap();
+        String filename = "Simulasi_Pemesanan_Rumah_" +
+                vmCetakRumah.getNamaProperty() + "_" + vmCetakRumah.getTipeProperty().trim() + ".pdf";
+        String path = env.getProperty("storage.file") + "test.pdf";
+        List<ViewModelCetakFormulirPemesananRumah> list = new ArrayList<>();
+        list.add(vmCetakRumah);
+        Map<String, Object> parameter = new HashMap<>();
+        parameter.put("logo", getClass().getResourceAsStream("/static/img/favicon.png"));
+        cetakFormulirPemesananRumah.writePdfManual(list, path, parameter);
         InputStream inputStream = new FileInputStream(path);
         byte[] out = org.apache.commons.io.IOUtils.toByteArray(inputStream);
         response.put("file", out);
