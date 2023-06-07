@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -38,6 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();
+    }
+
+    @Bean
+    public HttpFirewall getHttpFirewall() {
+        StrictHttpFirewall strictHttpFirewall = new StrictHttpFirewall();
+        strictHttpFirewall.setAllowSemicolon(true);
+        return strictHttpFirewall;
     }
 
     @Override
